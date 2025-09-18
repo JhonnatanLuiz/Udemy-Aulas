@@ -1,0 +1,253 @@
+<html><head>
+    <meta charset="utf-8"><base href="Index.html">
+    <title>Notícias Cidade - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        header {
+            background: url(https://media.istockphoto.com/id/1206191265/de/vektor/satz-von-stadtbild-hintergrund-skyline-silhouetten-moderne-architektur-horizontales-banner.jpg?s=1024x1024&w=is&k=20&c=_nMQi52kmXKZa2JCyvLOv1sPyn903ePNmn58HLG5YRk=);
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo {
+            font-size: 4em;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 20px;
+            line-height: 1;
+        }
+        .logo .noticias {
+            display: block;
+            font-size: 0.8em;
+            color: #e50000;
+        }
+        .logo .cidade {
+            display: block;
+        }
+        .map-icon {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: url('map-icon.png') no-repeat;
+            background-size: contain;
+            opacity: 0.5;
+        }
+        nav.horizontal {
+            background: #b10333;
+            padding: 0;
+        }
+        nav.horizontal ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav.horizontal ul li {
+            margin: 0;
+        }
+        nav.horizontal ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        nav.horizontal ul li a:hover, nav.horizontal ul li a.active {
+            background-color: #e50000;
+        }
+        .content {
+            display: flex;
+            padding: 20px 0;
+        }
+        .sidebar {
+            width: 20%;
+            background: #f7f7f7;
+            padding: 20px;
+        }
+        .sidebar h3 {
+            background: #294c71;
+            color: white;
+            padding: 10px;
+            margin-top: 0;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+            padding: 5px;
+            background: #e6e6e6;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li:hover {
+            background-color: #d4d4d4;
+        }
+        .main-content {
+            width: 80%;
+            padding: 20px;
+        }
+        .top-columns, .bottom-columns {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .column {
+            width: 48%;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .column h2 {
+            background: #294c71;
+            color: white;
+            padding: 10px;
+            margin-top: 0;
+            border-radius: 5px 5px 0 0;
+        }
+        .email-form {
+            margin-top: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .email-form input[type="email"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .email-form input[type="submit"] {
+            padding: 10px 15px;
+            background: #b10333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .email-form input[type="submit"]:hover {
+            background: #e50000;
+        }
+        footer {
+            background: #294c71;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9em;
+        }
+        .city-silhouette {
+            background: url('city-silhouette.png') repeat-x;
+            height: 50px;
+            margin-top: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="noticias">Notícias</span>
+                <span class="cidade">Cidade</span>
+            </div>
+            <div class="map-icon"></div>
+        </header>
+        
+        <nav class="horizontal">
+            <ul>
+                <li><a href="/Index/Index.html" class="active">Home</a></li>
+                <li><a href="/Brasil/Brasil.html">Brasil</a></li>
+                <li><a href="/Internacional/Internacional.html">Internacional</a></li>
+                <li><a href="/Economia/Economia.html">Economia</a></li>
+                <li><a href="/Saúde/Saúde.html">Saúde</a></li>
+                <li><a href="/Fotos/Fotos.html">Fotos</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <aside class="sidebar">
+                <h3>Entrevistas</h3>
+                <ul>
+                    <li>José Almeida</li>
+                    <li>Felipe Silva</li>
+                    <li>Renato Rodrigues</li>
+                    <li>Abelardo Silveira</li>
+                    <li>André Carlos</li>
+                    <li>Márcio Mello</li>
+                    <li>João Pedro</li>
+                    <li>Fernando Weiss</li>
+                </ul>
+                
+                <div class="email-form">
+                    <h3>Receba nossa newsletter</h3>
+                    <form method="GET" action="newsletter-signup">
+                        <input type="email" name="email" placeholder="Seu e-mail">
+                        <input type="submit" value="Cadastrar">
+                    </form>
+                </div>
+            </aside>
+            
+            <main class="main-content">
+                <div class="top-columns">
+                    <div class="column">
+                        <h2>Última entrevista</h2>
+                        <img src="https://th.bing.com/th/id/OIP.8FFAylUNAwhQu7yQgbj9EgHaEl?rs=1&pid=ImgDetMain" alt="Médico de jaleco branco com estetoscópio, olhando diretamente para a câmera com expressão séria e confiante" width="300" height="200" style="width:100%; max-width:300px; border-radius:5px;">
+                        <p>Entrevista exclusiva com Dr. Carlos Silva sobre os avanços na medicina preventiva e seu impacto na saúde pública.</p>
+                        <a href="/Index/Última entrevista.html" style="color:#b10333; text-decoration:none;">Leia mais!</a>
+                    </div>
+                    
+                    <div class="column">
+                        <h2>Destaque</h2>
+                        <h3>NOVA LEGISLAÇÃO</h3>
+                        <img src="https://th.bing.com/th/id/OIP.uuFGxpkNEdJwUeq3PPHLRQHaEK?rs=1&pid=ImgDetMain" alt="Táxis amarelos em uma rua movimentada de cidade grande, com prédios altos ao fundo" width="300" height="200" style="width:100%; max-width:300px; border-radius:5px;">
+                        <p>Nova lei regula serviços de transporte por aplicativo, impactando taxistas e motoristas de apps.</p>
+                        <a href="/Index/Destaque.html" style="color:#b10333; text-decoration:none;">Leia mais!</a>
+                    </div>
+                </div>
+                
+                <div class="bottom-columns">
+                    <div class="column">
+                        <h2>Mundo</h2>
+                        <img src="https://th.bing.com/th/id/OIP.Uue8KxRNYK161XM8IsrfOgHaEL?rs=1&pid=ImgDetMain" alt="Globo terrestre iluminado com manchetes de notícias projetadas ao redor" width="300" height="200" style="width:100%; max-width:300px; border-radius:5px;">
+                        <p>Cúpula do G20 discute mudanças climáticas e propõe medidas para redução de emissões de carbono.</p>
+                        <a href="/Index/Mundo.html" style="color:#b10333; text-decoration:none;">Leia mais!</a>
+                    </div>
+                    
+                    <div class="column">
+                        <h2>Notícias recentes</h2>
+                        <img src="https://th.bing.com/th/id/R.c3b301edbde3fa57bd71141331d79238?rik=eFT3oyMc70AhZQ&riu=http%3a%2f%2fwww.3750lsd.net%2fwp-content%2fuploads%2f2020%2f03%2flatest-news-isolated-icon-megaphone-bullhorn-breaking-report-vector-info-announcement-tv-radio-broadcast-web-article-161471413.jpg&ehk=aoO21cHnoqdGVbTRlkW1%2fog1yiRu%2b030SQOZnJyZkLc%3d&risl=&pid=ImgRaw&r=0" alt="Tela de computador exibindo várias janelas de notícias, representando a diversidade de informações atuais" width="300" height="200" style="width:100%; max-width:300px; border-radius:5px;">
+                        <ul>
+                            <li>Economia brasileira mostra sinais de recuperação no segundo trimestre</li>
+                            <li>Pesquisadores desenvolvem novo tratamento promissor contra o câncer</li>
+                            <li>Startup brasileira recebe investimento milionário para expansão internacional</li>
+                        </ul>
+                        <a href="/Index/Notícias recentes.html" style="color:#b10333; text-decoration:none;">Mais notícias</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <div class="city-silhouette"></div>
+        
+        <footer>
+            <p>&copy; 2024 Notícias Cidade. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body></html>

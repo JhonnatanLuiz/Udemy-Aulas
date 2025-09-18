@@ -1,0 +1,21 @@
+{
+  "name": "Spotify Clone Estudo",
+  "short_name": "SpotifyEdu",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#7c25f8",
+  "description": "Interface inspirada no Spotify para fins educacionais.",
+  "icons": [
+    {
+      "src": "imagens/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "imagens/favicon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}

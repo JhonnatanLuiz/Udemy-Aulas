@@ -1,0 +1,190 @@
+<html><head><base href="/Index/Notícias recentes.html">
+    <title>Notícias Cidade - Últimas Notícias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        header {
+            background: #294c71;
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 20px;
+            line-height: 1;
+        }
+        .logo .noticias {
+            display: block;
+            font-size: 0.8em;
+            color: #e50000;
+        }
+        .logo .cidade {
+            display: block;
+        }
+        .map-icon {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: url('map-icon.png') no-repeat;
+            background-size: contain;
+            opacity: 0.5;
+        }
+        nav.horizontal {
+            background: #b10333;
+            padding: 0;
+        }
+        nav.horizontal ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav.horizontal ul li {
+            margin: 0;
+        }
+        nav.horizontal ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        nav.horizontal ul li a:hover {
+            background-color: #e50000;
+        }
+        .content {
+            padding: 20px;
+        }
+        .news-item {
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .news-item h2 {
+            color: #294c71;
+            margin-top: 0;
+        }
+        .news-item .meta {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .news-item img {
+            float: left;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .news-item p {
+            margin-top: 0;
+        }
+        .read-more {
+            display: inline-block;
+            background: #b10333;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .read-more:hover {
+            background-color: #e50000;
+        }
+        footer {
+            background: #294c71;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="noticias">Notícias</span>
+                <span class="cidade">Cidade</span>
+            </div>
+            <div class="map-icon"></div>
+        </header>
+        
+        <nav class="horizontal">
+            <ul>
+                <li><a href="/Index/Index.html" class="active">Home</a></li>
+                <li><a href="/Brasil/Brasil.html">Brasil</a></li>
+                <li><a href="/Internacional/Internacional.html">Internacional</a></li>
+                <li><a href="/Economia/Economia.html">Economia</a></li>
+                <li><a href="/Saúde/Saúde.html">Saúde</a></li>
+                <li><a href="/Fotos/Fotos.html">Fotos</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <h1>Últimas Notícias</h1>
+            
+            <div class="news-item">
+                <h2>Economia brasileira mostra sinais de recuperação no segundo trimestre</h2>
+                <div class="meta">Publicado em: 15 de Julho de 2023 | Por: Carlos Oliveira</div>
+                <img src="https://thumbs.dreamstime.com/z/carta-de-crescimento-com-seta-ascendente-formou-por-n%C3%BAmeros-52174027.jpg" alt="Gráfico de crescimento econômico com seta ascendente e cifrão ao fundo" width="200" height="150">
+                <p>Os dados mais recentes divulgados pelo IBGE apontam para uma recuperação gradual da economia brasileira no segundo trimestre de 2023. O PIB cresceu 0,7% em comparação com o trimestre anterior, superando as expectativas dos analistas. Este crescimento foi impulsionado principalmente pelo setor de serviços e pela indústria...</p>
+                <a href="economia-recuperacao-segundo-trimestre" class="read-more">Leia mais</a>
+            </div>
+            
+            <div class="news-item">
+                <h2>Pesquisadores desenvolvem novo tratamento promissor contra o câncer</h2>
+                <div class="meta">Publicado em: 14 de Julho de 2023 | Por: Dra. Amanda Santos</div>
+                <img src="https://th.bing.com/th/id/OIP.gLxV0vrEfXpk2GTyuZ_IJwHaE8?rs=1&pid=ImgDetMain" alt="Cientista olhando através de um microscópio em um laboratório moderno" width="200" height="150">
+                <p>Uma equipe de pesquisadores da Universidade de São Paulo (USP) anunciou o desenvolvimento de um novo tratamento que mostra resultados promissores no combate a diversos tipos de câncer. A terapia, que combina imunoterapia com nanotecnologia, demonstrou eficácia em testes laboratoriais, reduzindo significativamente o tamanho dos tumores...</p>
+                <a href="novo-tratamento-cancer" class="read-more">Leia mais</a>
+            </div>
+            
+            <div class="news-item">
+                <h2>Startup brasileira recebe investimento milionário para expansão internacional</h2>
+                <div class="meta">Publicado em: 13 de Julho de 2023 | Por: Rafael Mendes</div>
+                <img src="https://asociaciondidactica.es/wp-content/uploads/2023/08/unnamed.png" alt="Equipe de jovens empreendedores em um escritório moderno e colorido" width="200" height="150">
+                <p>A TechBrasil, uma startup de tecnologia sediada em São Paulo, acaba de anunciar que recebeu um investimento de 50 milhões de dólares de um grupo de investidores internacionais. A empresa, que desenvolveu uma plataforma inovadora de inteligência artificial para otimização de processos industriais, planeja usar os recursos para expandir suas operações para a Europa e América do Norte...</p>
+                <a href="startup-investimento-expansao" class="read-more">Leia mais</a>
+            </div>
+            
+            <div class="news-item">
+                <h2>Governo anuncia novo pacote de medidas para estimular energia renovável</h2>
+                <div class="meta">Publicado em: 12 de Julho de 2023 | Por: Mariana Costa</div>
+                <img src="https://th.bing.com/th/id/OIP.QGu9C-eBG0eftVsphNlbCwHaFV?rs=1&pid=ImgDetMain" alt="Campo com turbinas eólicas e painéis solares ao pôr do sol" width="200" height="150">
+                <p>O Ministério de Minas e Energia anunciou hoje um novo pacote de medidas destinado a impulsionar o setor de energia renovável no Brasil. O plano inclui incentivos fiscais para empresas que investirem em fontes de energia limpa, como solar e eólica, além de financiamentos especiais para projetos de pequena e média escala...</p>
+                <a href="pacote-energia-renovavel" class="read-more">Leia mais</a>
+            </div>
+            
+            <div class="news-item">
+                <h2>Descoberta arqueológica revela cidade perdida na Amazônia</h2>
+                <div class="meta">Publicado em: 11 de Julho de 2023 | Por: Dr. Felipe Araújo</div>
+                <img src="https://th.bing.com/th/id/OIP.Lrhd0qmPDn9zSp5vvvuOkwHaEK?rs=1&pid=ImgDetMain" alt="Escavação arqueológica na floresta amazônica com artefatos antigos" width="200" height="150">
+                <p>Uma equipe de arqueólogos brasileiros e internacionais anunciou a descoberta de uma antiga cidade na região amazônica, datada de aproximadamente 1.500 anos atrás. O sítio arqueológico, localizado no estado do Pará, apresenta evidências de uma civilização avançada, com sistemas de irrigação complexos e estruturas arquitetônicas sofisticadas...</p>
+                <a href="descoberta-cidade-amazonia" class="read-more">Leia mais</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 Notícias Cidade. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body></html>

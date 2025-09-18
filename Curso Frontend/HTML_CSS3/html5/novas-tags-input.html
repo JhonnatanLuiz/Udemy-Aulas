@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novas tags de input</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+    
+    <form>
+        <!--Novos input e atributos HTML 5-->
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required placeholder="Digite seu nome" autofocus>
+        <br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required placeholder="Digite seu email">
+        <br><br>
+
+        <label for="Numero">Número:</label>
+        <input type="number" id="Numero" min="1" max="20" step="5" name="Numero" required placeholder="Digite seu número">
+        <br><br>
+
+        <label for="url">Url</label>
+        <input type="url" id="url" name="url" required placeholder="Digite sua url">
+        <br><br>
+
+        <label for="pesquisa">Pesquisa:</label>
+        <input type="search" id="pesquisa" name="pesquisa" required placeholder="Digite sua pesquisa">
+        <br><br>
+
+        <label for="range">Range:</label>
+        <input type="range" id="range" name="range" min="1" max="20" value="10" required placeholder="Digite seu range">
+        <br><br>
+
+        <label for="data">Data:</label>
+        <input type="date" id="data" name="data" required placeholder="Digite sua data">
+        <br><br>
+
+        <label for="color">Cor:</label>
+        <input type="color" id="color" name="color" required placeholder="Escolha uma cor">
+        <br><br>
+        
+        <input type="submit" value="Enviar">
+
+
+    </form>
+</body>
+</html>

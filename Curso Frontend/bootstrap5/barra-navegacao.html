@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+
+    <title>Bootstrap - botões</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+
+  </head>
+
+  <body>
+
+    <!--
+      Este arquivo demonstra diferentes tipos de navegação utilizando o Bootstrap 5.
+      Comentários explicativos foram adicionados para cada bloco de navegação.
+    -->
+
+    <!-- Navegação
+      Tipos de navegação:
+        nav-pills: Navegação em formato de pílulas.
+        nav-tabs: Navegação em formato de abas.
+      Opções de alinhamento:
+        justify-content-center: Centraliza os itens.
+        justify-content-end: Alinha à direita.
+        flex-column: Navegação vertical.
+    -->
+    <h2>Navegação simples / abas</h2>
+    <ul class="nav nav-pills justify-content-center">
+      <!-- Cada item de navegação -->
+      <li class="nav-item">
+        <a href="" class="nav-link">Home</a>
+      </li>
+      <li>
+        <a href="" class="nav-link active">Sobre</a>
+      </li>
+      <li>
+        <a href="" class="nav-link disabled">Serviços</a>
+      </li>
+    </ul>
+    
+    <!-- Barra de navegação simples
+      navbar: Componente de barra de navegação do Bootstrap.
+      navbar-expand-sm: Expande a barra em telas >= small.
+      navbar-light: Usa cores claras para texto.
+      bg-danger: Cor de fundo vermelha.
+      navbar-brand: Logo ou nome do site.
+      navbar-nav: Container dos itens de navegação.
+      ms-auto: Margem automática à esquerda (alinha itens à direita).
+      nav-item/nav-link: Estrutura dos links.
+    -->
+    <h2>Barra de navegação simples</h2>
+    <nav class="navbar navbar-expand-sm navbar-light bg-danger">
+      <a href="" class="navbar-brand">Chalé Hotel</a>
+      <ul class="navbar-nav ms-auto" style="list-style: none; padding-left: 0; margin-bottom: 0;">
+        <li class="nav-item"><a href="" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="" class="nav-link">Sobre</a></li>
+        <li class="nav-item"><a href="" class="nav-link">Serviços</a></li>
+      </ul>
+    </nav>
+
+    <style>
+      /* Remove a marcação de lista padrão das listas de navegação */
+      .nav, .navbar-nav {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0;
+      }
+    </style>
+    
+    <!-- Barra de navegação responsiva
+      navbar-expand-lg: Expande a barra em telas >= large.
+      navbar-toggler: Botão hamburguer para menu colapsável.
+      data-bs-toggle/data-bs-target: Controla o menu responsivo.
+      collapse navbar-collapse: Container do menu colapsável.
+    -->
+    <h2>Barra de navegação com menu responsivo</h2>
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+      <a href="" class="navbar-brand">Chalé Hotel</a>
+      <!--Menu Hamburguer-->
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navegacao">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navegacao">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="" class="nav-link">Sobre</a></li>
+          <li class="nav-item"><a href="" class="nav-link">Serviços</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Barra de navegação com formulário
+      form-inline: Formulário na barra de navegação.
+      form-control: Estiliza o campo de texto.
+      btn-outline-success: Botão de pesquisa.
+    -->
+    <h2>Barra de navegação com formulário</h2>
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+      <a href="" class="navbar-brand">Chalé Hotel</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navegacao2">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navegacao2">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="" class="nav-link">Sobre</a></li>
+          <li class="nav-item"><a href="" class="nav-link">Serviços</a></li>
+        </ul>
+        <form class="form-inline">
+          <input type="text" class="form-control" placeholder="Pesquisar...">
+          <button class="btn btn-outline-success">ok</button>
+        </form>
+      </div>
+    </nav>
+    
+    <!-- Barra de navegação com menu dropdown
+      nav-item dropdown: Item de menu com submenu.
+      nav-link dropdown-toggle: Link que abre o dropdown.
+      data-bs-toggle="dropdown": Ativa o menu suspenso.
+      dropdown-menu: Container dos itens do submenu.
+      dropdown-item: Itens do submenu.
+    -->
+    <h2>Barra de navegação com menu dropdown</h2>
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+      <a href="" class="navbar-brand">Chalé Hotel</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navegacao3">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navegacao3">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="" class="nav-link">Sobre</a></li>
+          <li class="nav-item dropdown"><a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Serviços</a>
+            <div class="dropdown-menu">
+              <a href="" class="dropdown-item">Serviço1</a>
+              <a href="" class="dropdown-item">Serviço2</a>
+              <a href="" class="dropdown-item">Serviço3</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    <!-- Cores
+      bg-primary, bg-secondary, bg-success, bg-info,
+      bg-warning, bg-danger, bg-light, bg-dark: Cores de fundo para a barra de navegação.
+    -->
+    <h2>Cores</h2>
+    <nav class="navbar navbar-expand-sm navbar-light bg-info">
+      <a href="" class="navbar-brand">Chalé Hotel</a>
+      <ul class="navbar-nav ms-auto" style="list-style: none; padding-left: 0; margin-bottom: 0;">
+        <li class="nav-item"><a href="" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="" class="nav-link">Sobre</a></li>
+        <li class="nav-item"><a href="" class="nav-link">Serviços</a></li>
+      </ul>
+    </nav>
+
+    <!-- Alinhamentos
+      fixed-top: Barra fixa no topo.
+      fixed-bottom: Barra fixa no rodapé.
+      sticky: Barra fixa no topo ao rolar a página.
+    -->
+    <h2>Alinhamentos</h2>
+    <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-info">
+      <a href="" class="navbar-brand">Chalé Hotel</a>
+      <ul class="navbar-nav ms-auto" style="list-style: none; padding-left: 0; margin-bottom: 0;">
+        <li class="nav-item"><a href="" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="" class="nav-link">Sobre</a></li>
+        <li class="nav-item"><a href="" class="nav-link">Serviços</a></li>
+      </ul>
+    </nav>
+    <h1>Lorem ipsum dolor sit amet</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et libero id erat tristique fermentum placerat a erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed ac lobortis quam. Nunc vestibulum tincidunt arcu, at scelerisque velit ornare et. Vestibulum ut malesuada nibh.</p>
+
+
+    <!-- Bootstrap 5 JS (Popper incluído) -->
+    <script src="/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

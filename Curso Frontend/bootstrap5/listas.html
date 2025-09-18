@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+
+    <title>Bootstrap - listas</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+
+  </head>
+
+  <body style="margin-bottom: 200px;padding: 16px;">
+
+    <!--
+      Este arquivo demonstra o uso de listas, badges e breadcrumbs com Bootstrap 5.
+      Comentários explicativos foram adicionados para cada bloco.
+    -->
+
+    <!-- Listas padrão do Bootstrap -->
+    <ul class="list-group">
+        <!-- Cada item da lista recebe a classe list-group-item -->
+        <li class="list-group-item">Meu item de lista 1</li>
+        <li class="list-group-item active">Meu item de lista 2</li> <!-- 'active' destaca o item -->
+        <li class="list-group-item">Meu item de lista 3</li>
+        <li class="list-group-item">Meu item de lista 4</li>
+    </ul>
+    <br><br>
+
+    <!-- Listas com classe flush (remove bordas e arredondamento) -->
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Meu item de lista 1</li>
+        <li class="list-group-item active">Meu item de lista 2</li>
+        <li class="list-group-item">Meu item de lista 3</li>
+        <li class="list-group-item">Meu item de lista 4</li>
+    </ul>
+    <br><br>
+
+    <!-- Listas com links -->
+    <ul class="list-group">
+        <li class="list-group-item"><a href="#" class="text-decoration-none text-reset">Meu item de lista 1</a></li>
+        <!-- 'active' destaca o item selecionado -->
+        <li class="list-group-item active"><a href="#" class="text-decoration-none text-white fw-bold">Meu item de lista 2</a></li>
+        <li class="list-group-item"><a href="#" class="text-decoration-none text-reset">Meu item de lista 3</a></li>
+        <li class="list-group-item"><a href="#" class="text-decoration-none text-reset">Meu item de lista 4</a></li>
+    </ul>
+    <br><br>
+
+    <!-- Listas com classes contextuais
+         list-group-item-<opcao> altera a cor do item -->
+    <ul class="list-group">
+        <li class="list-group-item">Lista normal</li>
+        <li class="list-group-item list-group-item-primary">Lista primary</li>
+        <li class="list-group-item list-group-item-secondary">Lista secondary</li>
+        <li class="list-group-item list-group-item-success">Lista success</li>
+        <li class="list-group-item list-group-item-info">Lista info</li>
+        <li class="list-group-item list-group-item-warning">Lista warning</li>
+        <li class="list-group-item list-group-item-danger">Lista danger</li>
+        <li class="list-group-item list-group-item-light">Lista light</li>
+        <li class="list-group-item list-group-item-dark">Lista dark</li>
+    </ul>
+    <br><br>
+
+    <!-- Badges (contadores ou destaques) dentro de listas -->
+    <ul class="list-group">
+        <li class="list-group-item">Meu item de lista 1</li>
+        <li class="list-group-item">Meu item de lista 2</li>
+        <li class="list-group-item">
+            Caixa de entrada
+            <span class="badge bg-primary">4</span> <!-- Badge azul -->
+        </li>
+        <li class="list-group-item">
+            Rascunhos
+            <span class="badge bg-danger">4</span> <!-- Badge vermelho -->
+        </li>
+    </ul>
+    <br><br>
+
+    <!-- Breadcrumbs (navegação hierárquica) -->
+    <ol class="breadcrumb bg-info">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+    </ol>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Notícias</li> <!-- 'active' indica a página atual -->
+    </ol>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Usuários</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Jamilton Damasceno</li>
+    </ol>
+    <br><br>
+
+    <!-- Bootstrap Bundle JS (já inclui Popper.js) para componentes interativos -->
+    <script src="/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

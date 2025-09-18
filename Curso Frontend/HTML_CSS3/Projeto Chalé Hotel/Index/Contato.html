@@ -1,0 +1,172 @@
+<html><head><base href="">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chalé Hotel - Contato</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f1e8;
+        color: #333;
+        font-size: xx-large;
+    }
+    header {
+        background-image: url('/a/d0199b33-69c6-4390-8e67-426ae30ddf92');
+        background-size: cover;
+        background-position: center;
+        height: 300px;
+        display: flex;
+        align-items: flex-end;
+    }
+    .logo {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        margin: 20px;
+    }
+    nav {
+        background-color: #5c4f3d;
+        padding: 10px 0;
+    }
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    nav ul li {
+        margin: 5px 15px;
+    }
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    main {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+    h1, h2 {
+        color: #5c4f3d;
+    }
+    .contact-info, .contact-form {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .contact-form form {
+        display: grid;
+        gap: 15px;
+    }
+    .contact-form label {
+        font-weight: bold;
+    }
+    .contact-form input, .contact-form textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .contact-form button {
+        background-color: #5c4f3d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .contact-form button:hover {
+        background-color: #4a3f31;
+    }
+    footer {
+        background-color: #5c4f3d;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: 20px;
+    }
+    @media screen and (max-width: 600px) {
+        header {
+            height: 200px;
+        }
+        nav ul {
+            flex-direction: column;
+            align-items: center;
+        }
+        nav ul li {
+            margin: 5px 0;
+        }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Chalé Hotel</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/Index/Index.html">Home</a></li>
+            <li><a href="/Index/História.html">História</a></li>
+            <li><a href="/Index/Imprensa.html">Imprensa</a></li>
+            <li><a href="/Index/Gastrônomia.html">Gastronomia</a></li>
+            <li><a href="/Index/Contato.html">Contato</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Entre em Contato</h1>
+        <p>Estamos aqui para atender você. Entre em contato conosco para reservas, informações ou qualquer dúvida que possa ter.</p>
+
+        <div class="contact-info">
+            <h2>Informações de Contato</h2>
+            <p><strong>Endereço:</strong> Rua das Montanhas, 123 - Serra Alegre, SP</p>
+            <p><strong>Telefone:</strong> (11) 1234-5678</p>
+            <p><strong>E-mail:</strong> contato@chalehotel.com</p>
+            <p><strong>Horário de Funcionamento:</strong> 24 horas, todos os dias</p>
+        </div>
+
+        <div class="contact-form">
+            <h2>Formulário de Contato</h2>
+            <form action="#" method="post">
+                <div>
+                    <label for="name">Nome:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div>
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div>
+                    <label for="subject">Assunto:</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div>
+                    <label for="message">Mensagem:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <div>
+                    <button type="submit">Enviar Mensagem</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="map">
+            <h2>Nossa Localização</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1024075844493!2d-46.65390708528308!3d-23.56492878467584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%20Brasil!5e0!3m2!1spt-BR!2sbr!4v1605723582546!5m2!1spt-BR!2sbr" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chalé Hotel. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

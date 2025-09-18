@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arredondamentos com Imagens em CSS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .rounded-box {
+            width: 300px;
+            height: 200px;
+            background-color: #4CAF50;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .corner {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            background-size: cover;
+        }
+
+        .top-left {
+            top: 0;
+            left: 0;
+            background-image: url('/api/placeholder/20/20');
+        }
+
+        .top-right {
+            top: 0;
+            right: 0;
+            background-image: url('/api/placeholder/20/20');
+            transform: scaleX(-1);
+        }
+
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+            background-image: url('/api/placeholder/20/20');
+            transform: scaleY(-1);
+        }
+
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            background-image: url('/api/placeholder/20/20');
+            transform: scale(-1);
+        }
+
+        .content {
+            padding: 20px;
+            color: white;
+        }
+
+        .border-image-box {
+            width: 300px;
+            height: 200px;
+            border: 20px solid transparent;
+            background-color: #3498db;
+            border-image: url('/api/placeholder/60/60') 20 round;
+            box-sizing: border-box;
+        }
+
+        .border-image-content {
+            padding: 10px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Arredondamentos com Imagens</h2>
+        
+        <h3>Método 1: Usando imagens nos cantos</h3>
+        <div class="rounded-box">
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+            <div class="content">
+                <p>Este é um exemplo de box com cantos arredondados usando imagens.</p>
+            </div>
+        </div>
+
+        <h3>Método 2: Usando border-image</h3>
+        <div class="border-image-box">
+            <div class="border-image-content">
+                <p>Este é um exemplo de box com borda arredondada usando border-image.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

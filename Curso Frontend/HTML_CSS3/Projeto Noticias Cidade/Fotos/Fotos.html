@@ -1,0 +1,190 @@
+<html><head>
+    <meta charset="utf-8"><base href="Fotos.html">
+    <title>Notícias Cidade - Fotos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+        }
+        header {
+            background: url(https://media.istockphoto.com/id/1206191265/de/vektor/satz-von-stadtbild-hintergrund-skyline-silhouetten-moderne-architektur-horizontales-banner.jpg?s=1024x1024&w=is&k=20&c=_nMQi52kmXKZa2JCyvLOv1sPyn903ePNmn58HLG5YRk=);
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo {
+            font-size: 4em;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 20px;
+            line-height: 1;
+        }
+        .logo .noticias {
+            display: block;
+            font-size: 0.8em;
+            color: #e50000;
+        }
+        .logo .cidade {
+            display: block;
+        }
+        .map-icon {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: url('map-icon.png') no-repeat;
+            background-size: contain;
+            opacity: 0.5;
+        }
+        nav.horizontal {
+            background: #b10333;
+            padding: 0;
+        }
+        nav.horizontal ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav.horizontal ul li {
+            margin: 0;
+        }
+        nav.horizontal ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        nav.horizontal ul li a:hover, nav.horizontal ul li a.active {
+            background-color: #e50000;
+        }
+        .content {
+            padding: 20px;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .photo-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .photo-item h2 {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #294c71;
+        }
+        .photo-item p {
+            font-size: 0.9em;
+            color: #666;
+        }
+        footer {
+            background: #294c71;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9em;
+        }
+        .city-silhouette {
+            background: url('city-silhouette.png') repeat-x;
+            height: 50px;
+            margin-top: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="noticias">Notícias</span>
+                <span class="cidade">Cidade</span>
+            </div>
+            <div class="map-icon"></div>
+        </header>
+        
+        <nav class="horizontal">
+            <ul>
+                <li><a href="/Index/Index.html">Home</a></li>
+                <li><a href="/Brasil/Brasil.html">Brasil</a></li>
+                <li><a href="/Internacional/Internacional.html">Internacional</a></li>
+                <li><a href="/Economia/Economia.html">Economia</a></li>
+                <li><a href="/Saúde/Saúde.html">Saúde</a></li>
+                <li><a href="/Fotos/Fotos.html" class="active">Fotos</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <h1>Galeria de Fotos</h1>
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="https://th.bing.com/th/id/OIP.1BF6Mh5GJAvsbD25v0dw4wHaE8?rs=1&pid=ImgDetMain" alt="Vista aérea de uma cidade moderna com arranha-céus e parques" width="250" height="200">
+                    <h2>Paisagem Urbana</h2>
+                    <p>Uma vista deslumbrante da nossa cidade em crescimento</p>
+                </div>
+                <div class="photo-item">
+                    <img src="https://th.bing.com/th/id/OIP.o9KusszGEBQdKat8mhmFKwAAAA?rs=1&pid=ImgDetMain" alt="Pessoas em trajes coloridos dançando em um festival cultural" width="250" height="200">
+                    <h2>Festival Cultural</h2>
+                    <p>Celebrando a diversidade em nossa comunidade</p>
+                </div>
+                <div class="photo-item">
+                    <img src="https://uploads-ssl.webflow.com/5b9672c36708aa54bae34337/5bd5b2f62e7deca75a2b5683_os-jovens-e-as-startups.jpeg" alt="Jovem empreendedor apresentando uma nova tecnologia em uma conferência" width="250" height="200">
+                    <h2>Inovação Tecnológica</h2>
+                    <p>O futuro sendo moldado por mentes brilhantes</p>
+                </div>
+                <div class="photo-item">
+                    <img src="https://th.bing.com/th/id/OIP.obGSBhR3g1yaR0CG30L66QHaEJ?rs=1&pid=ImgDetMain" alt="Voluntários plantando árvores em um projeto de reflorestamento urbano" width="250" height="200">
+                    <h2>Projeto Ambiental</h2>
+                    <p>Tornando nossa cidade mais verde, um dia de cada vez</p>
+                </div>
+                <div class="photo-item">
+                    <img src="https://th.bing.com/th/id/OIP.U0P5dgeUu8LF5-ToDTIAVQHaE7?rs=1&pid=ImgDetMain" alt="Chef preparando um prato tradicional em um restaurante local" width="250" height="200">
+                    <h2>Culinária Local</h2>
+                    <p>Sabores que contam a história de nossa região</p>
+                </div>
+                <div class="photo-item">
+                    <img src="https://th.bing.com/th/id/R.725376f1d942cfa5a495a5f2db21cb0f?rik=Qj86qP2taL32LA&riu=http%3a%2f%2fs.glbimg.com%2fes%2fge%2ff%2foriginal%2f2013%2f10%2f06%2fmaratonadesaopaulo_rib13.jpg&ehk=hQ38%2bxMoCZTtqzSCFQAk4Hp6MAu0r%2f5x4D%2fh7V8jLRY%3d&risl=&pid=ImgRaw&r=0" alt="Atletas locais competindo em uma maratona pela cidade" width="250" height="200">
+                    <h2>Evento Esportivo</h2>
+                    <p>Promovendo saúde e união através do esporte</p>
+                </div>
+                <div class="photo-item">
+                    <img src="https://thumbs.dreamstime.com/b/visitantes-admirando-las-obras-de-arte-en-el-recinto-ferial-discovery-frankfurt-los-que-admiran-artes-descubrimiento-260972002.jpg" alt="Visitantes admirando obras de arte em uma galeria moderna" width="250" height="200">
+                    <h2>Exposição de Arte</h2>
+                    <p>Expressões criativas que inspiram nossa comunidade</p>
+                </div>
+                <div class="photo-item">
+                    <img src="https://th.bing.com/th/id/OIP.DVgMgMCDaCAZHgrZjLIhaAHaE8?rs=1&pid=ImgDetMain" alt="Crianças participando de uma aula interativa em uma escola inovadora" width="250" height="200">
+                    <h2>Iniciativa Educacional</h2>
+                    <p>Formando os líderes do amanhã</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="city-silhouette"></div>
+        
+        <footer>
+            <p>&copy; 2024 Notícias Cidade. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body></html>

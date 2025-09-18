@@ -1,0 +1,191 @@
+<html><head>
+    <meta charset="utf-8"><base href="Economia.html">
+    <title>Notícias Cidade - Economia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+        }
+        header {
+            background: url(https://media.istockphoto.com/id/1206191265/de/vektor/satz-von-stadtbild-hintergrund-skyline-silhouetten-moderne-architektur-horizontales-banner.jpg?s=1024x1024&w=is&k=20&c=_nMQi52kmXKZa2JCyvLOv1sPyn903ePNmn58HLG5YRk=);
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo {
+            font-size: 4em;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 20px;
+            line-height: 1;
+        }
+        .logo .noticias {
+            display: block;
+            font-size: 0.8em;
+            color: #e50000;
+        }
+        .logo .cidade {
+            display: block;
+        }
+        .map-icon {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: url('map-icon.png') no-repeat;
+            background-size: contain;
+            opacity: 0.5;
+        }
+        nav.horizontal {
+            background: #b10333;
+            padding: 0;
+        }
+        nav.horizontal ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav.horizontal ul li {
+            margin: 0;
+        }
+        nav.horizontal ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        nav.horizontal ul li a:hover, nav.horizontal ul li a.active {
+            background-color: #e50000;
+        }
+        .content {
+            padding: 20px;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .news-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .news-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .news-item h2 {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #294c71;
+        }
+        .news-item p {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .news-item a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #b10333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        footer {
+            background: #294c71;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9em;
+        }
+        .city-silhouette {
+            background: url('city-silhouette.png') repeat-x;
+            height: 50px;
+            margin-top: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="noticias">Notícias</span>
+                <span class="cidade">Cidade</span>
+            </div>
+            <div class="map-icon"></div>
+        </header>
+        
+        <nav class="horizontal">
+            <ul>
+                <li><a href="/Index/Index.html">Home</a></li>
+                <li><a href="/Brasil/Brasil.html">Brasil</a></li>
+                <li><a href="/Internacional/Internacional.html">Internacional</a></li>
+                <li><a href="/Economia/Economia.html" class="active">Economia</a></li>
+                <li><a href="/Saúde/Saúde.html">Saúde</a></li>
+                <li><a href="/Fotos/Fotos.html">Fotos</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <h1>Notícias de Economia</h1>
+            <div class="news-grid">
+                <div class="news-item">
+                    <img src="https://th.bing.com/th/id/OIP.lX0pqjtnEjDGNDWJDO3BNwHaE7?rs=1&pid=ImgDetMain" alt="Tela de computador exibindo gráficos de ações e índices econômicos em ascensão" width="300" height="200">
+                    <h2>Mercado de Ações Atinge Novo Recorde</h2>
+                    <p>Índices das principais bolsas de valores do mundo registram alta histórica, impulsionados por otimismo econômico.</p>
+                    <a href="/Economia/Mercado de Ações Atinge Novo Recorde.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://th.bing.com/th/id/OIP.snJzdo8UYKLSeTirIeBAxgHaE8?rs=1&pid=ImgDetMain" alt="Equipe jovem e diversa de uma startup comemorando em um escritório moderno" width="300" height="200">
+                    <h2>Startup Brasileira Recebe Investimento Bilionário</h2>
+                    <p>Empresa de tecnologia fundada por jovens empreendedores atrai atenção de investidores internacionais.</p>
+                    <a href="/Economia/Startup Brasileira Recebe Investimento Bilionário.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://th.bing.com/th/id/OIP.b8GhM-gpncZ5beDh_BwUtgHaE-?rs=1&pid=ImgDetMain" alt="Fazenda solar com painéis fotovoltaicos e turbinas eólicas ao fundo" width="300" height="200">
+                    <h2>Economia Verde Impulsiona Criação de Empregos</h2>
+                    <p>Setor de energias renováveis e tecnologias sustentáveis gera milhares de novos postos de trabalho.</p>
+                    <a href="/Economia/Economia Verde Impulsiona Criação de Empregos.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://www.cartacapital.com.br/wp-content/uploads/2021/08/iStock-1046518034.jpg" alt="Moedas físicas e representações digitais de criptomoedas" width="300" height="200">
+                    <h2>Banco Central Anuncia Moeda Digital Oficial</h2>
+                    <p>Nova criptomoeda estatal promete revolucionar transações financeiras e inclusão bancária.</p>
+                    <a href="/Economia/Banco Central Anuncia Moeda Digital Oficial.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://th.bing.com/th/id/R.7231573654880b68e47b584c1a3c2849?rik=ossguqeFpjrocg&pid=ImgRaw&r=0" alt="Líderes de diferentes países assinando acordo comercial" width="300" height="200">
+                    <h2>Novo Acordo Comercial Entre Países do BRICS</h2>
+                    <p>Tratado visa fortalecer laços econômicos e facilitar trocas comerciais entre nações emergentes.</p>
+                    <a href="/Economia/Novo Acordo Comercial Entre Países do BRICS.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://as1.ftcdn.net/v2/jpg/07/06/01/04/1000_F_706010437_Bv0ev5QOUfxLN105Ryze0SDshZtmRkzv.jpg" alt="Robôs trabalhando ao lado de humanos em uma fábrica moderna" width="300" height="200">
+                    <h2>IA e Automação: O Futuro do Trabalho</h2>
+                    <p>Estudo revela impactos da inteligência artificial e automação no mercado de trabalho nas próximas décadas.</p>
+                    <a href="/Economia/IA e Automação O Futuro do Trabalho.html">Leia mais</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="city-silhouette"></div>
+        
+        <footer>
+            <p>&copy; 2024 Notícias Cidade. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body></html>

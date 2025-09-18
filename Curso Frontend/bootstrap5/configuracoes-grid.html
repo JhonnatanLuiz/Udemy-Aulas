@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+
+    <title>Bootstrap - Configurações do grid</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+
+  </head>
+
+  <body>
+
+    <!--
+      Demonstrações do sistema de grid do Bootstrap 5.
+      Conceitos-chave:
+      - container: define largura e centraliza o conteúdo.
+      - row: cria uma linha flexível para as colunas.
+      - col: colunas responsivas (o grid é dividido em 12 colunas por linha).
+      - col-{n}: largura fixa (n de 1 a 12).
+      - col-{breakpoint}-{n}: largura fixa a partir do breakpoint.
+      - offset-{n}: desloca a coluna (adiciona espaço à esquerda).
+      - order / order-{breakpoint}: reordena colunas visualmente.
+    -->
+    <div class="container my-4">
+      <!-- Largura fixa: col-4, col-8 -->
+      <h2>Largura fixa</h2>
+      <div class="row mb-4">
+        <div class="col-4 bg-primary text-white p-3">col-4</div>
+        <div class="col-8 bg-success text-white p-3">col-8</div>
+      </div>
+      <!--
+        Cada coluna recebe largura fixa somando 12 (4 + 8 = 12).
+      -->
+
+      <!-- Largura automática (auto-layout): col -->
+      <h2>Largura automática (auto-layout)</h2>
+      <div class="row mb-2">
+        <div class="col bg-warning p-3">Auto 1</div>
+        <div class="col bg-info p-3">Auto 2</div>
+        <div class="col bg-danger text-white p-3">Auto 3</div>
+      </div>
+      <div class="row mb-4">
+        <div class="col bg-secondary text-white p-3">Divide igual</div>
+        <div class="col-6 bg-light p-3">col-6 fixa</div>
+        <div class="col bg-secondary text-white p-3">Divide resto</div>
+      </div>
+      <!--
+        col: colunas dividem o espaço restante igualmente.
+        Você pode misturar col (auto) com col-6 (fixa).
+      -->
+
+      <!-- Largura igual empilhada -->
+      <h2>Largura igual empilhada</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+        <div class="col"><div class="bg-primary text-white p-3 h-100">Igual 1 (empilha no mobile)</div></div>
+        <div class="col"><div class="bg-success text-white p-3 h-100">Igual 2 (3 colunas ≥ md)</div></div>
+        <div class="col"><div class="bg-info text-white p-3 h-100">Igual 3</div></div>
+      </div>
+      <!--
+        row-cols-1: 1 coluna por linha em telas pequenas (empilhado).
+        row-cols-md-3: 3 colunas por linha a partir de md.
+      -->
+
+      <!-- Ordenando -->
+      <h2>Ordenando</h2>
+      <div class="row mb-2">
+        <div class="col order-2 bg-warning p-3">Segundo (order-2)</div>
+        <div class="col order-1 bg-info p-3">Primeiro (order-1)</div>
+        <div class="col order-3 bg-danger text-white p-3">Terceiro (order-3)</div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-12 col-md order-md-3 bg-secondary text-white p-3">Terceiro ≥ md (order-md-3)</div>
+        <div class="col-12 col-md order-md-1 bg-primary text-white p-3">Primeiro ≥ md (order-md-1)</div>
+        <div class="col-12 col-md order-md-2 bg-success text-white p-3">Segundo ≥ md (order-md-2)</div>
+      </div>
+      <!--
+        order-{n}: reordena as colunas. Com breakpoints (order-md-*), a ordem muda só a partir daquele tamanho.
+      -->
+
+      <!-- Offset -->
+      <h2>offset</h2>
+      <div class="row mb-2">
+        <div class="col-4 offset-2 bg-primary text-white p-3">col-4 offset-2</div>
+        <div class="col-4 bg-success text-white p-3">col-4</div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-6 col-md-4 offset-md-4 bg-dark text-white p-3">Centraliza ≥ md com offset-md-4</div>
+      </div>
+      <!--
+        offset empurra a coluna para a direita.
+        Ex.: offset-md-4 desloca 4 colunas a partir de md (centralizando col-4/col-6, etc.).
+      -->
+
+      <!-- Offset múltiplos alinhamentos -->
+      <h2>offset múltiplos alinhamentos</h2>
+      <div class="row mb-2">
+        <div class="col-3 offset-3 bg-warning p-3">col-3 offset-3</div>
+        <div class="col-3 offset-3 bg-info p-3">col-3 offset-3</div>
+      </div>
+      <div class="row justify-content-center mb-4">
+        <div class="col-12 col-sm-6 col-lg-4 bg-light p-3 text-center border">Alternativa: centralizado com justify-content-center</div>
+      </div>
+      <!--
+        É possível combinar múltiplos offsets na mesma linha.
+        Alternativa moderna: usar justify-content-center (Flexbox) para centralização sem calcular offsets.
+      -->
+
+      <!-- Aninhamento -->
+      <h2>Aninhamento</h2>
+      <div class="row g-2 mb-4">
+        <div class="col-12 col-md-6">
+          <div class="bg-secondary text-white p-3">
+            Coluna principal (col-md-6)
+            <div class="row mt-2 g-2">
+              <div class="col-6"><div class="bg-light text-dark p-2 h-100">Coluna interna 1</div></div>
+              <div class="col-6"><div class="bg-dark text-white p-2 h-100">Coluna interna 2</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="bg-primary text-white p-3 h-100">Coluna principal (col-md-6)</div>
+        </div>
+      </div>
+      <!--
+        Grid aninhado: dentro de uma .col você pode criar uma nova .row com novas .col.
+        g-* adiciona espaçamento (gutter) entre colunas internas.
+      -->
+    </div>
+
+    <!-- Bootstrap Bundle JS (inclui Popper) -->
+    <script src="/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

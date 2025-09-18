@@ -1,0 +1,21 @@
+"""
+ Repetições significam executar um bloco de código várias vezes.
+ Repetições são úteis quando você precisa executar uma ação repetidamente, como processar uma lista de itens ou realizar cálculos em um loop.
+ while (enquanto) significa "enquanto" e é uma estrutura de controle de fluxo que executa um bloco de código enquanto uma condição for verdadeira.
+ O loop while é útil quando você não sabe quantas vezes precisará repetir o código, pois ele continuará até que a condição se torne falsa.
+ Executa uma ação enquanto uma condição for verdadeira
+ Loop infinito -> Quando um código não tem fim
+ """
+qtd_linhas = 5
+qtd_colunas = 5
+ 
+linha = 1
+while linha <= qtd_linhas:
+     coluna = 1
+     while coluna <= qtd_colunas:
+         print(f'{linha=} {coluna=}')
+         coluna += 1
+     linha += 1
+ 
+ 
+print('Acabou')

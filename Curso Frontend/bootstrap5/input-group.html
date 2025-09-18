@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+
+    <title>Bootstrap - input group</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+
+  </head>
+
+  <body style="margin-bottom: 200px;padding: 16px;">
+
+    <form>
+       <!-- Grupo prepend: adiciona um elemento antes do input -->
+       <h2>Grupo prepend</h2>
+       <div class="input-group">
+           <span class="input-group-text">@</span>
+           <input class="form-control" type="text" placeholder="e-mail">
+       </div> 
+
+       <!-- Grupo append: adiciona um elemento depois do input -->
+       <h2>Grupo append</h2>
+       <div class="input-group">
+           <input class="form-control" type="text" placeholder="e-mail">
+           <span class="input-group-text">@site.com</span>
+       </div> 
+
+       <!-- URL customizada -->
+       <h2>URL customizada</h2>
+        <div class="input-group">
+           <span class="input-group-text">https://site.com/usuario/</span>
+           <input class="form-control" type="text" placeholder="Digite seu usuário">
+        </div>
+
+        <!-- Moeda: símbolo antes e sufixo depois do input -->
+        <h2>Moeda</h2>
+        <div class="input-group">
+           <span class="input-group-text">$</span>
+           <input class="form-control" type="text" placeholder="Digite um valor">
+           <span class="input-group-text">,00</span>
+        </div>
+
+        <!-- Checkbox ou radio dentro do grupo -->
+        <h2>Checkbox / radio</h2>
+        <div class="input-group">
+           <span class="input-group-text">
+               <input type="radio">
+           </span>
+           <input type="text" class="form-control">
+        </div>
+
+        <!-- Múltiplos inputs no mesmo grupo -->
+        <h2>Múltiplos inputs</h2>
+        <div class="input-group">
+           <span class="input-group-text">nome/e-mail</span>
+           <input class="form-control" type="text" placeholder="e-mail">
+           <input class="form-control" type="password" placeholder="senha">
+       </div> 
+
+       <!-- Grupo de pesquisa com botão -->
+       <h2>Pesquisas</h2>
+       <div class="input-group">
+           <input class="form-control" type="text" placeholder="Pesquisar" >
+           <button type="button" class="btn btn-outline-secondary">Pesquisar</button>
+       </div>
+    </form>
+    
+    <!-- Bootstrap Bundle JS (já inclui Popper.js) para componentes interativos -->
+    <script src="/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

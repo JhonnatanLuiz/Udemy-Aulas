@@ -1,0 +1,185 @@
+<html><head><base href="">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apartamentos - Chalé Hotel</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f1e8;
+        color: #333;
+        font-size: xx-large;
+    }
+    header {
+        background-color: #5c4f3d;
+        color: white;
+        text-align: center;
+        padding: 1em 0;
+    }
+    nav {
+        background-color: #7d6b52;
+        padding: 10px 0;
+    }
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 0 15px;
+    }
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+    }
+    main {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+    .apartment-types {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .apartment {
+        flex-basis: calc(33.333% - 20px);
+        margin-bottom: 40px;
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .apartment img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .apartment-info {
+        padding: 20px;
+    }
+    .apartment h3 {
+        margin-top: 0;
+    }
+    .features {
+        list-style-type: none;
+        padding: 0;
+    }
+    .features li {
+        margin-bottom: 5px;
+    }
+    .book-now {
+        display: inline-block;
+        background-color: #5c4f3d;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    footer {
+        background-color: #5c4f3d;
+        color: white;
+        text-align: center;
+        padding: 1em 0;
+        margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+        .apartment {
+            flex-basis: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Apartamentos do Chalé Hotel</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/Index/Index.html">Home</a></li>
+            <li><a href="/Index/História.html">História</a></li>
+            <li><a href="/Index/Imprensa.html">Imprensa</a></li>
+            <li><a href="/Index/Gastrônomia.html">Gastronomia</a></li>
+            <li><a href="/Index/Contato.html">Contato</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Nossos Confortáveis Apartamentos</h2>
+        <p>Descubra o conforto e a elegância dos nossos apartamentos cuidadosamente projetados para proporcionar uma estadia inesquecível. Cada espaço foi pensado para oferecer o máximo de comodidade, aliando o charme rústico do Chalé Hotel com modernidade e sofisticação.</p>
+
+        <div class="apartment-types">
+            <div class="apartment">
+                <img src="https://example.com/chale-standard.jpg" alt="Apartamento Standard do Chalé Hotel com decoração aconchegante e vista para o jardim">
+                <div class="apartment-info">
+                    <h3>Apartamento Standard</h3>
+                    <p>Perfeito para casais ou viajantes solo, nosso apartamento standard oferece conforto e praticidade.</p>
+                    <ul class="features">
+                        <li>Cama queen-size</li>
+                        <li>Área: 25m²</li>
+                        <li>Vista para o jardim</li>
+                        <li>TV de tela plana</li>
+                        <li>Minibar</li>
+                    </ul>
+                    <a href="https://example.com/reservas?tipo=standard" class="book-now">Reservar Agora</a>
+                </div>
+            </div>
+
+            <div class="apartment">
+                <img src="https://example.com/chale-deluxe.jpg" alt="Apartamento Deluxe do Chalé Hotel com ampla área de estar e vista panorâmica">
+                <div class="apartment-info">
+                    <h3>Apartamento Deluxe</h3>
+                    <p>Espaçoso e elegante, ideal para quem busca um pouco mais de luxo e conforto.</p>
+                    <ul class="features">
+                        <li>Cama king-size</li>
+                        <li>Área: 40m²</li>
+                        <li>Vista panorâmica</li>
+                        <li>Área de estar separada</li>
+                        <li>Banheira de hidromassagem</li>
+                    </ul>
+                    <a href="https://example.com/reservas?tipo=deluxe" class="book-now">Reservar Agora</a>
+                </div>
+            </div>
+
+            <div class="apartment">
+                <img src="https://example.com/chale-familia.jpg" alt="Apartamento Família do Chalé Hotel com dois quartos e ampla sala de estar">
+                <div class="apartment-info">
+                    <h3>Apartamento Família</h3>
+                    <p>Projetado para acomodar famílias ou grupos de amigos com todo o conforto.</p>
+                    <ul class="features">
+                        <li>2 quartos (1 com cama king, 1 com 2 camas de solteiro)</li>
+                        <li>Área: 60m²</li>
+                        <li>Sala de estar espaçosa</li>
+                        <li>Cozinha compacta</li>
+                        <li>Varanda privativa</li>
+                    </ul>
+                    <a href="https://example.com/reservas?tipo=familia" class="book-now">Reservar Agora</a>
+                </div>
+            </div>
+        </div>
+
+        <h2>Comodidades em Todos os Apartamentos</h2>
+        <ul>
+            <li>Ar-condicionado</li>
+            <li>Wi-Fi gratuito de alta velocidade</li>
+            <li>Cofre eletrônico</li>
+            <li>Roupões e chinelos</li>
+            <li>Amenities de luxo</li>
+            <li>Serviço de quarto 24 horas</li>
+        </ul>
+
+        <p>Todos os nossos apartamentos são decorados com materiais naturais e mobiliário de alta qualidade, refletindo o ambiente sereno e acolhedor do Chalé Hotel. Independentemente da sua escolha, garantimos uma estadia confortável e relaxante, com vistas deslumbrantes e o melhor atendimento.</p>
+
+        <p>Para mais informações sobre disponibilidade ou para fazer uma reserva personalizada, entre em contato com nossa equipe de recepção. Estamos ansiosos para recebê-lo no Chalé Hotel e proporcionar uma experiência inesquecível!</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chalé Hotel. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

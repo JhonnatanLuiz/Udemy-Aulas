@@ -1,0 +1,222 @@
+<html><head><base href="/Economia/Mercado de Ações Atinge Novo Recorde.html">
+    <title>Mercado de Ações Atinge Novo Recorde | Notícias Cidade - Economia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        header {
+            background: #294c71;
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 20px;
+            line-height: 1;
+        }
+        .logo .noticias {
+            display: block;
+            font-size: 0.8em;
+            color: #e50000;
+        }
+        .logo .cidade {
+            display: block;
+        }
+        .map-icon {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: url('map-icon.png') no-repeat;
+            background-size: contain;
+            opacity: 0.5;
+        }
+        nav.horizontal {
+            background: #b10333;
+            padding: 0;
+        }
+        nav.horizontal ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav.horizontal ul li {
+            margin: 0;
+        }
+        nav.horizontal ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        nav.horizontal ul li a:hover, nav.horizontal ul li a.active {
+            background-color: #e50000;
+        }
+        .content {
+            padding: 20px;
+        }
+        h1 {
+            color: #294c71;
+            border-bottom: 2px solid #b10333;
+            padding-bottom: 10px;
+        }
+        .article-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .article-content {
+            line-height: 1.6;
+            color: #333;
+        }
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: 20px 0;
+        }
+        .related-news {
+            margin-top: 40px;
+            border-top: 2px solid #b10333;
+            padding-top: 20px;
+        }
+        .related-news h2 {
+            color: #294c71;
+        }
+        .related-news ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .related-news ul li {
+            margin-bottom: 10px;
+        }
+        .related-news ul li a {
+            color: #b10333;
+            text-decoration: none;
+        }
+        .related-news ul li a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            background: #294c71;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9em;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="noticias">Notícias</span>
+                <span class="cidade">Cidade</span>
+            </div>
+            <div class="map-icon"></div>
+        </header>
+        
+        <nav class="horizontal">
+            <ul>
+                <li><a href="/Index/Index.html">Home</a></li>
+                <li><a href="/Brasil/Brasil.html">Brasil</a></li>
+                <li><a href="/Internacional/Internacional.html">Internacional</a></li>
+                <li><a href="/Economia/Economia.html" class="active">Economia</a></li>
+                <li><a href="/Saúde/Saúde.html">Saúde</a></li>
+                <li><a href="/Fotos/Fotos.html">Fotos</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <h1>Mercado de Ações Atinge Novo Recorde</h1>
+            
+            <img src="https://th.bing.com/th/id/OIP.05Sb8MGh98X5yebkoTbG-wHaE7?rs=1&pid=ImgDetMain" alt="Painel eletrônico mostrando índices de ações em alta" class="article-image">
+            
+            <div class="article-content">
+                <p>Os principais índices das bolsas de valores ao redor do mundo atingiram novos patamares históricos nesta semana, impulsionados por um crescente otimismo econômico e resultados corporativos surpreendentes. O S&P 500, nos Estados Unidos, o DAX, na Alemanha, e o Nikkei 225, no Japão, são apenas alguns dos índices que quebraram recordes, sinalizando uma forte recuperação econômica global.</p>
+                
+                <p>Analistas atribuem essa alta a diversos fatores, incluindo o avanço da vacinação contra a COVID-19, políticas monetárias acomodatícias dos bancos centrais e a expectativa de novos estímulos fiscais em várias economias. Além disso, o setor de tecnologia continua liderando os ganhos, com empresas de inteligência artificial e computação em nuvem apresentando resultados excepcionais.</p>
+                
+                <div class="chart-container">
+                    <canvas id="stockChart"></canvas>
+                </div>
+                
+                <p>No entanto, alguns especialistas alertam para o risco de uma possível bolha especulativa. "Embora os fundamentos econômicos estejam melhorando, é importante lembrar que os mercados muitas vezes antecipam a realidade econômica", afirma a economista Maria Silva. "Investidores devem manter-se vigilantes e diversificar seus portfólios para mitigar riscos."</p>
+                
+                <p>O volume de negociações também atingiu níveis recordes, com um aumento significativo de investidores individuais participando do mercado. Plataformas de negociação online relataram um crescimento exponencial de novos usuários, levantando questões sobre a democratização do mercado de ações e seus potenciais impactos a longo prazo.</p>
+                
+                <p>À medida que o mercado continua sua ascensão, reguladores e formuladores de políticas estão atentos a possíveis riscos sistêmicos. Bancos centrais ao redor do mundo têm sinalizado que manterão políticas de apoio, mas também indicaram que estão preparados para agir caso sinais de instabilidade financeira se manifestem.</p>
+            </div>
+            
+            <div class="related-news">
+                <h2>Notícias Relacionadas</h2>
+                <ul>
+                    <li><a href="/Economia/Startup Brasileira Recebe Investimento Bilionário.html">Startup Brasileira Recebe Investimento Bilionário</a></li>
+                    <li><a href="/Economia/Economia Verde Impulsiona Criação de Empregos.html">Economia Verde Impulsiona Criação de Empregos</a></li>
+                    <li><a href="/Economia/Banco Central Anuncia Moeda Digital Oficial.html">Banco Central Anuncia Moeda Digital Oficial</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 Notícias Cidade. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('stockChart').getContext('2d');
+        var stockChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'S&P 500',
+                    data: [3700, 3850, 3950, 4100, 4200, 4300, 4500],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }, {
+                    label: 'FTSE 100',
+                    data: [6460, 6500, 6650, 6750, 6900, 7000, 7200],
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1
+                }, {
+                    label: 'Nikkei 225',
+                    data: [27000, 28000, 29000, 29500, 30000, 30500, 31000],
+                    borderColor: 'rgb(54, 162, 235)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    </script>
+</body></html>

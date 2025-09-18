@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <title>Bootstrap - Margin e Wrap</title>
+    <!-- Meta tags obrigatórios -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+    <style type="text/css">
+      .caixa {
+        background: #f5f5f5;
+        min-height: 120px;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+      .item {
+        border:1px solid black;
+        padding: 5px 12px;
+        background: #fff;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-4">
+      <!-- Margem automática à esquerda (me-auto) empurra o item para a direita -->
+      <h2>Margem automática à esquerda (me-auto)</h2>
+      <div class="caixa d-flex">
+        <div class="item bg-primary text-white">Item 1</div>
+        <div class="item me-auto bg-success text-white">Item 2 (me-auto)</div>
+        <div class="item bg-warning">Item 3</div>
+      </div>
+      <!-- Margem automática à direita (ms-auto) empurra o item para a esquerda -->
+      <h2>Margem automática à direita (ms-auto)</h2>
+      <div class="caixa d-flex">
+        <div class="item bg-info text-white">Item 1</div>
+        <div class="item ms-auto bg-danger text-white">Item 2 (ms-auto)</div>
+        <div class="item bg-secondary text-white">Item 3</div>
+      </div>
+      <!-- Margem vertical automática (mt-auto, mb-auto) em coluna -->
+      <h2>Margem vertical automática (mt-auto, mb-auto)</h2>
+      <div class="caixa d-flex flex-column" style="height: 180px;">
+        <div class="item mb-auto bg-success text-white">Item 1 (mb-auto)</div>
+        <div class="item bg-light">Item 2</div>
+        <div class="item mt-auto bg-primary text-white">Item 3 (mt-auto)</div>
+      </div>
+      <!-- Utilitários de margem: m-*, mx-*, my-*, mt-*, mb-*, ms-*, me-* -->
+      <h2>Utilitários de margem</h2>
+      <div class="caixa d-flex flex-wrap gap-2">
+        <div class="item m-3 bg-primary text-white">m-3 (todas as margens)</div>
+        <div class="item mt-4 bg-success text-white">mt-4 (margem topo)</div>
+        <div class="item mb-4 bg-warning">mb-4 (margem base)</div>
+        <div class="item ms-5 bg-info text-white">ms-5 (margem esquerda)</div>
+        <div class="item me-5 bg-danger text-white">me-5 (margem direita)</div>
+        <div class="item mx-2 bg-secondary text-white">mx-2 (horizontal)</div>
+        <div class="item my-2 bg-light">my-2 (vertical)</div>
+      </div>
+      <!-- Flex-wrap: permite quebra de linha dos itens -->
+      <h2>Flex-wrap (d-flex flex-wrap)</h2>
+      <div class="caixa d-flex flex-wrap gap-2" style="max-width: 600px;">
+        <!-- Cada item tem uma cor diferente para visualização -->
+        <div class="item bg-primary text-white">1</div><div class="item bg-success text-white">2</div><div class="item bg-warning">3</div><div class="item bg-info text-white">4</div><div class="item bg-danger text-white">5</div><div class="item bg-secondary text-white">6</div><div class="item bg-light">7</div><div class="item bg-primary text-white">8</div><div class="item bg-success text-white">9</div><div class="item bg-warning">10</div>
+      </div>
+      <!-- Flex-nowrap: impede quebra de linha dos itens -->
+      <h2>Flex-nowrap (d-flex flex-nowrap)</h2>
+      <div class="caixa d-flex flex-nowrap gap-2" style="max-width: 600px; overflow-x: auto;">
+        <!-- Cada item tem uma cor diferente para visualização -->
+        <div class="item bg-info text-white">1</div><div class="item bg-danger text-white">2</div><div class="item bg-secondary text-white">3</div><div class="item bg-light">4</div><div class="item bg-primary text-white">5</div><div class="item bg-success text-white">6</div><div class="item bg-warning">7</div><div class="item bg-info text-white">8</div><div class="item bg-danger text-white">9</div><div class="item bg-secondary text-white">10</div>
+      </div>
+      <!-- Flex-wrap-reverse: quebra de linha invertida -->
+      <h2>Flex-wrap-reverse (d-flex flex-wrap-reverse)</h2>
+      <div class="caixa d-flex flex-wrap-reverse gap-2" style="max-width: 600px;">
+        <!-- Cada item tem uma cor diferente para visualização -->
+        <div class="item bg-warning">1</div><div class="item bg-info text-white">2</div><div class="item bg-danger text-white">3</div><div class="item bg-secondary text-white">4</div><div class="item bg-light">5</div><div class="item bg-primary text-white">6</div><div class="item bg-success text-white">7</div><div class="item bg-warning">8</div><div class="item bg-info text-white">9</div><div class="item bg-danger text-white">10</div>
+      </div>
+      <!-- Utilitários de borda Bootstrap -->
+      <h2>Utilitários de borda</h2>
+      <div class="caixa d-flex flex-wrap gap-2">
+        <div class="item border">border (todas as bordas)</div>
+        <div class="item border-top border-primary">border-top + border-primary</div>
+        <div class="item border-bottom border-danger">border-bottom + border-danger</div>
+        <div class="item border-start border-success">border-start + border-success</div>
+        <div class="item border-end border-warning">border-end + border-warning</div>
+        <div class="item border-0">border-0 (sem borda)</div>
+        <div class="item border rounded">border + rounded (bordas arredondadas)</div>
+        <div class="item border rounded-pill">border + rounded-pill (totalmente arredondado)</div>
+      </div>
+      <!-- Utilitários de sombra Bootstrap -->
+      <h2>Utilitários de sombra</h2>
+      <div class="caixa d-flex flex-wrap gap-2">
+        <div class="item shadow-sm">shadow-sm (sombra leve)</div>
+        <div class="item shadow">shadow (sombra padrão)</div>
+        <div class="item shadow-lg">shadow-lg (sombra forte)</div>
+        <div class="item border shadow">border + shadow</div>
+        <div class="item border-primary shadow-lg">border-primary + shadow-lg</div>
+        <div class="item rounded shadow">rounded + shadow</div>
+      </div>
+    </div>
+    <!-- Bootstrap Bundle JS (inclui Popper) -->
+    <script src="/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

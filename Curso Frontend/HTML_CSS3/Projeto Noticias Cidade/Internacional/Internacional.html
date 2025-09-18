@@ -1,0 +1,191 @@
+<html><head>
+    <meta charset="utf-8"><base href="Internacional.html">
+    <title>Notícias Cidade - Internacional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+        }
+        header {
+            background: url(https://media.istockphoto.com/id/1206191265/de/vektor/satz-von-stadtbild-hintergrund-skyline-silhouetten-moderne-architektur-horizontales-banner.jpg?s=1024x1024&w=is&k=20&c=_nMQi52kmXKZa2JCyvLOv1sPyn903ePNmn58HLG5YRk=);
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo {
+            font-size: 4em;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 20px;
+            line-height: 1;
+        }
+        .logo .noticias {
+            display: block;
+            font-size: 0.8em;
+            color: #e50000;
+        }
+        .logo .cidade {
+            display: block;
+        }
+        .map-icon {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: url('map-icon.png') no-repeat;
+            background-size: contain;
+            opacity: 0.5;
+        }
+        nav.horizontal {
+            background: #b10333;
+            padding: 0;
+        }
+        nav.horizontal ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav.horizontal ul li {
+            margin: 0;
+        }
+        nav.horizontal ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        nav.horizontal ul li a:hover, nav.horizontal ul li a.active {
+            background-color: #e50000;
+        }
+        .content {
+            padding: 20px;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .news-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .news-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .news-item h2 {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #294c71;
+        }
+        .news-item p {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .news-item a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #b10333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        footer {
+            background: #294c71;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9em;
+        }
+        .city-silhouette {
+            background: url('city-silhouette.png') repeat-x;
+            height: 50px;
+            margin-top: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="noticias">Notícias</span>
+                <span class="cidade">Cidade</span>
+            </div>
+            <div class="map-icon"></div>
+        </header>
+        
+        <nav class="horizontal">
+            <ul>
+                <li><a href="/Index/Index.html">Home</a></li>
+                <li><a href="/Brasil/Brasil.html">Brasil</a></li>
+                <li><a href="/Internacional/Internacional.html" class="active">Internacional</a></li>
+                <li><a href="/Economia/Economia.html">Economia</a></li>
+                <li><a href="/Saúde/Saúde.html">Saúde</a></li>
+                <li><a href="/Fotos/Fotos.html">Fotos</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <h1>Notícias Internacionais</h1>
+            <div class="news-grid">
+                <div class="news-item">
+                    <img src="https://www.rondoniadinamica.com/uploads/3omwdp5ghi2mnez.jpg" alt="Líderes mundiais reunidos em uma mesa redonda durante a cúpula do G20" width="300" height="200">
+                    <h2>Cúpula do G20 Discute Mudanças Climáticas</h2>
+                    <p>Líderes das maiores economias do mundo se reúnem para debater medidas urgentes contra o aquecimento global.</p>
+                    <a href="/Internacional/Cúpula do G20 Discute Mudanças Climáticas.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://th.bing.com/th/id/OIP.Mc1bUccabeVZs-jeFvyAwwHaEd?rs=1&pid=ImgDetMain" alt="Astronauta flutuando no espaço com a Terra visível ao fundo" width="300" height="200">
+                    <h2>Nova Era na Exploração Espacial</h2>
+                    <p>Missão internacional anuncia planos ambiciosos para estabelecer a primeira colônia humana em Marte.</p>
+                    <a href="/Internacional/Nova Era na Exploração Espacial.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://f.i.uol.com.br/fotografia/2019/09/24/15693464435d8a538bb0a75_1569346443_3x2_rt.jpg" alt="Dois líderes mundiais apertando as mãos após assinatura de tratado de paz" width="300" height="200">
+                    <h2>Acordo de Paz Histórico no Oriente Médio</h2>
+                    <p>Nações rivais assinam tratado de paz, encerrando décadas de conflito e abrindo caminho para cooperação regional.</p>
+                    <a href="/Internacional/Acordo de Paz Histórico no Oriente Médio.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://th.bing.com/th/id/OIP.CKLsQEEIKozPh3rboAQ2kwHaE8?rs=1&pid=ImgDetMain" alt="Robô humanoide interagindo com cientistas em um laboratório de alta tecnologia" width="300" height="200">
+                    <h2>Avanço Revolucionário em Inteligência Artificial</h2>
+                    <p>Cientistas desenvolvem IA capaz de aprender e resolver problemas complexos de forma autônoma.</p>
+                    <a href="/Internacional/Avanço Revolucionário em Inteligência Artificial.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://th.bing.com/th/id/OIP.oH_3Z7UXHZOa5LeiGzLKsAHaFZ?rs=1&pid=ImgDetMain" alt="Campo de turbinas eólicas ao pôr do sol com painéis solares em primeiro plano" width="300" height="200">
+                    <h2>Recordes em Energia Renovável</h2>
+                    <p>País europeu atinge marco histórico: 100% de sua energia gerada por fontes renováveis durante um mês inteiro.</p>
+                    <a href="/Internacional/Recordes em Energia Renovável.html">Leia mais</a>
+                </div>
+                <div class="news-item">
+                    <img src="https://thumbs.dreamstime.com/b/o-festival-brilhantemente-colorido-embandeira-o-v-o-no-vento-contra-um-c%C3%A9u-azul-tomado-no-festival-de-glastonbury-29738631.jpg" alt="Festival internacional com bandeiras de diversos países e pessoas em trajes tradicionais" width="300" height="200">
+                    <h2>Festival Global de Cultura</h2>
+                    <p>Evento internacional reúne artistas de mais de 100 países para celebrar a diversidade cultural mundial.</p>
+                    <a href="/Internacional/Festival Global de Cultura.html">Leia mais</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="city-silhouette"></div>
+        
+        <footer>
+            <p>&copy; 2024 Notícias Cidade. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body></html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Parallax</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Página com efeito parallax para demonstração de design moderno e responsivo.">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+		
+		/* Configuração padrão da página
+		-------------------------------*/
+		body, html {
+			margin: 0;
+			font: 16px "Lato", sans-serif;
+			color: #777;
+			height: 100%;
+		}
+
+		.conteudo {
+			color: #777;
+			background-color: white;
+			text-align: justify;
+			padding: 50px 80px;
+		}
+
+		h3 {
+			text-transform: uppercase;
+			color: #111;
+			text-align: center;
+		}
+
+		p{
+			margin-bottom: 20px;
+		}
+
+		/* Efeito Parallax
+		-------------------------------*/
+		.caixa1, .caixa2, .caixa3, .caixa4 {
+			position: relative;
+			height: 100%;
+			opacity: 0.7;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed; 
+			transition: opacity 0.5s ease-in-out;
+		}
+
+		.caixa1 {
+			background-image: url(imagens/imagem1.jpg);
+		}
+
+		.caixa2 {
+			background-image: url(imagens/imagem2.jpg);
+		}
+
+		.caixa3 {
+			background-image: url(imagens/imagem3.jpg);
+		}
+
+		.caixa4 {
+			background-image: url(imagens/imagem4.jpg);
+		}
+
+		.conteudo-titulo {
+			position: absolute;
+			left: 0;
+			top: 45%;
+			width: 100%;
+			text-align: center;
+		}
+
+		.conteudo-titulo span.titulo {
+			color: #fff;
+			background-color: #111;
+			padding: 18px;
+			font-size: 25px;
+			letter-spacing: 5px;
+			text-transform: uppercase;
+		}
+
+		@media (max-width: 768px) {
+			.caixa1, .caixa2, .caixa3, .caixa4 {
+				background-attachment: scroll;
+			}
+		}
+
+	</style>
+
+</head>
+<body>
+
+    <div class="caixa1">
+        <div class="conteudo-titulo">
+            <span class="titulo">PASSEIO DE BALÕES</span>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <h3>Passeio de Balões</h3>
+        <p>Desfrute de uma experiência única ao sobrevoar paisagens deslumbrantes em um passeio de balão. Sinta a tranquilidade do céu enquanto aprecia vistas panorâmicas inesquecíveis.</p>
+        <p>Este passeio é perfeito para quem busca aventura e momentos de contemplação. Uma oportunidade de se conectar com a natureza de uma forma totalmente nova.</p>
+    </div>
+
+    <div class="caixa2">
+        <div class="conteudo-titulo">
+            <span class="titulo">Pegando a estrada</span>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <h3>Pegando a Estrada</h3>
+        <p>Viajar de carro é uma das melhores formas de explorar novos lugares. Pegue a estrada e descubra paisagens incríveis, pequenas cidades e aventuras inesperadas.</p>
+        <p>Com cada quilômetro percorrido, você encontrará histórias para contar e memórias para guardar. Prepare sua playlist favorita e aproveite a jornada.</p>
+    </div>
+
+    <div class="caixa3">
+        <div class="conteudo-titulo">
+            <span class="titulo">Pôr do sol</span>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <h3>Pôr do Sol</h3>
+        <p>O pôr do sol é um espetáculo diário que nos lembra da beleza simples da natureza. As cores vibrantes pintam o céu, criando um momento de paz e reflexão.</p>
+        <p>Reserve um tempo para apreciar este momento mágico, seja na praia, nas montanhas ou no campo. É uma oportunidade perfeita para desacelerar e se reconectar.</p>
+    </div>
+
+    <div class="caixa4">
+        <div class="conteudo-titulo">
+            <span class="titulo">Montanhas</span>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <h3>Montanhas</h3>
+        <p>As montanhas oferecem um refúgio tranquilo e uma conexão profunda com a natureza. Caminhe por trilhas, respire o ar puro e aprecie vistas de tirar o fôlego.</p>
+        <p>Seja para uma aventura desafiadora ou para momentos de contemplação, as montanhas são um destino perfeito para renovar as energias e encontrar inspiração.</p>
+    </div>
+
+</body>
+</html>

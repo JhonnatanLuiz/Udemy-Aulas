@@ -1,0 +1,23 @@
+# Este é um exemplo de código Python
+# Ele demonstra o uso de comentários, variáveis, operadores e estruturas de controle.
+# o Debbugger é uma ferramenta que permite depurar o código, ou seja, encontrar e corrigir erros.
+condicao1 = False
+condicao2 = False
+condicao3 = False
+condicao4 = False
+
+if condicao1:
+    print('Código para condição 1')
+elif condicao2:
+    print ('Código para condição 2')
+elif condicao3:
+    print('Código para condição 3')
+elif condicao4:
+    print('Código para condição 4')
+else:
+    print('Nenhuma condição foi atendida')
+
+    if 10==10:
+        print('Outro if')
+
+    print('Fora do if')

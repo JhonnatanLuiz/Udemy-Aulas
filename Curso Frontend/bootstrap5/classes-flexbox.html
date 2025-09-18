@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+
+    <title>Bootstrap - Classes flexbox</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+
+    <style type="text/css">
+      .caixa {
+        background: #f5f5f5;
+        min-height: 200px; /* altura mínima para visualizar alinhamentos verticais */
+      }
+      .item {
+        border:1px solid #000;
+        padding: 5px 10px;
+        background: #fff;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class="container py-4">
+
+      <!-- Flex container básico: direção em linha (row) e reversa -->
+      <h2>Flex container e flex itens (d-flex, flex-row, flex-row-reverse)</h2>
+      <!-- d-flex ativa o flexbox; flex-row define direção padrão da esquerda para direita -->
+      <div class="caixa d-flex flex-row gap-2 mb-3">
+        <div class="item">Flex item 1</div>
+        <div class="item">Flex item 2</div>
+        <div class="item">Flex item 3</div>
+      </div>
+      <!-- flex-row-reverse inverte a ordem visual dos itens -->
+      <div class="caixa d-flex flex-row-reverse gap-2 mb-4">
+        <div class="item">Flex item A</div>
+        <div class="item">Flex item B</div>
+        <div class="item">Flex item C</div>
+      </div>
+
+      <!-- Alinhamento horizontal dos itens no eixo principal (justify-content-*) -->
+  <h2>Alinhamento horizontal: justify-content-ALINHAMENTO (start, center, end, around, between, evenly)</h2>
+      <div class="caixa d-flex justify-content-start gap-2 mb-2">
+        <!-- start: itens encostados à esquerda -->
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+      </div>
+      <div class="caixa d-flex justify-content-center gap-2 mb-2">
+        <!-- center: itens centralizados horizontalmente -->
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+      </div>
+      <div class="caixa d-flex justify-content-end gap-2 mb-2">
+        <!-- end: itens encostados à direita -->
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+      </div>
+      <div class="caixa d-flex justify-content-around mb-2">
+        <!-- around: espaçamento igual ao redor de cada item -->
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+      </div>
+      <div class="caixa d-flex justify-content-between mb-4">
+        <!-- between: primeiro encosta à esquerda e último à direita; espaço distribuído entre os itens -->
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+      </div>
+      <div class="caixa d-flex justify-content-evenly mb-4">
+        <!-- evenly: espaços iguais entre, antes e depois dos itens -->
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+      </div>
+
+      <!-- Colunas: direção em coluna e reversa (eixo principal vertical) -->
+      <h2>Colunas (d-flex, flex-column, flex-column-reverse)</h2>
+      <div class="caixa d-flex flex-column gap-2 mb-3">
+        <!-- flex-column empilha verticalmente -->
+        <div class="item">Linha 1</div>
+        <div class="item">Linha 2</div>
+        <div class="item">Linha 3</div>
+      </div>
+      <div class="caixa d-flex flex-column-reverse gap-2 mb-4">
+        <!-- flex-column-reverse inverte a ordem vertical -->
+        <div class="item">Topo</div>
+        <div class="item">Meio</div>
+        <div class="item">Fundo</div>
+      </div>
+
+      <!-- Alinhamento vertical dos itens no eixo cruzado (align-items-*) -->
+      <h2>Alinhamento vertical: align-items-ALINHAMENTO (start, center, end, baseline, stretch)</h2>
+      <div class="caixa d-flex align-items-start gap-2 mb-2" style="height: 140px;">
+        <!-- start: itens encostados no topo do container -->
+        <div class="item">A</div><div class="item">BB</div><div class="item">CCC</div>
+      </div>
+      <div class="caixa d-flex align-items-center gap-2 mb-2" style="height: 140px;">
+        <!-- center: itens centralizados verticalmente -->
+        <div class="item">A</div><div class="item">BB</div><div class="item">CCC</div>
+      </div>
+      <div class="caixa d-flex align-items-end gap-2 mb-2" style="height: 140px;">
+        <!-- end: itens encostados na base do container -->
+        <div class="item">A</div><div class="item">BB</div><div class="item">CCC</div>
+      </div>
+      <div class="caixa d-flex align-items-baseline gap-2 mb-2" style="height: 140px;">
+        <!-- baseline: alinha pela linha de base do texto -->
+        <div class="item"><span class="fs-6">texto</span></div>
+        <div class="item"><span class="fs-4">texto</span></div>
+        <div class="item"><span class="fs-1">texto</span></div>
+      </div>
+      <div class="caixa d-flex align-items-stretch gap-2 mb-4" style="height: 140px;">
+        <!-- stretch: itens esticam para preencher o eixo vertical -->
+        <div class="item d-flex align-items-center">Item</div>
+        <div class="item d-flex align-items-center">Item</div>
+        <div class="item d-flex align-items-center">Item</div>
+      </div>
+
+      <!-- Alinhamento individual por item (align-self-*) -->
+      <h2>Alinhamento self: align-self-ALINHAMENTO (start, center, end, baseline, stretch)</h2>
+      <div class="caixa d-flex gap-2 mb-4" style="height: 160px;">
+        <!-- Cada item pode sobrescrever o align-items do container -->
+        <div class="item align-self-start">start</div>
+        <div class="item align-self-center">center</div>
+        <div class="item align-self-end">end</div>
+        <div class="item align-self-baseline"><span class="fs-1">baseline</span></div>
+        <div class="item align-self-stretch d-flex align-items-center">stretch</div>
+      </div>
+
+      <!-- Responsividade: mude direção e alinhamento conforme o breakpoint -->
+      <h2>Responsivo: flex-direction e justify-content por breakpoint</h2>
+      <!-- Em telas pequenas: coluna + alinhamento à esquerda
+           ≥ md: linha + centralizado
+           ≥ lg: linha + espaço entre (itens nas extremidades) -->
+      <div class="caixa d-flex flex-column flex-md-row justify-content-start justify-content-md-center justify-content-lg-between gap-2 mb-4">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+      </div>
+
+      <!-- Ordenação: controle da ordem visual dos itens com order-* (também responsivo) -->
+      <h2>Ordenação (order-*) e ordenação responsiva</h2>
+      <!-- Ordem padrão (mobile-first): 3, 1, 2
+           A partir de md: 1, 2, 3 -->
+      <div class="caixa d-flex gap-2 mb-5">
+        <div class="item order-3 order-md-1">Item A (3 → md:1)</div>
+        <div class="item order-1 order-md-2">Item B (1 → md:2)</div>
+        <div class="item order-2 order-md-3">Item C (2 → md:3)</div>
+      </div>
+
+    </div>
+
+    <!-- Bootstrap Bundle JS (inclui Popper). Remove jQuery/Popper antigos do Bootstrap 4 -->
+    <script src="/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+
+    <title>Bootstrap - Jumbotron e alinhamento de imagens</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+
+  </head>
+
+  <body style="margin-bottom: 200px;padding: 16px;">
+
+    <!--
+      Este arquivo demonstra o uso de jumbotron (alerta grande), alinhamento e imagens com Bootstrap 5.
+      Comentários explicativos foram adicionados para cada bloco e função.
+    -->
+
+    <!-- Jumbotron (substituído por classes utilitárias no Bootstrap 5) -->
+    <h3 class="border-bottom">Jumbotron</h3>
+    <div class="p-5 mb-4 bg-light rounded-3 text-center">
+        <h1 class="display-4">Música para todos.</h1>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sapien dui, feugiat et lorem quis, fringilla maximus nisl. Vivamus sed est pulvinar, aliquet purus ut, dictum elit.</p>
+        <hr>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <a class="btn btn-primary btn-lg" href="#">Leia mais</a>
+    </div>
+
+    <!-- Estrutura para imagens alinhadas (media object) -->
+    <h3 class="border-bottom">Estrutura para imagens</h3>
+    <div class="d-flex align-items-start mb-4">
+      <img src="https://source.unsplash.com/random/60x60" class="me-3 rounded" alt="Imagem exemplo">
+      <div>
+        <h5>Título do conteúdo</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sapien dui, feugiat et lorem quis, fringilla maximus nisl. Vivamus sed est pulvinar, aliquet purus ut, dictum elit.</p>
+      </div>
+    </div>
+
+    <!-- Exemplos de alinhamento vertical com align-self -->
+    <h3 class="border-bottom">Alinhamentos: align-self-ALINHAMENTO (start, center, end)</h3>
+    <div class="d-flex" style="height: 120px;">
+      <img src="https://source.unsplash.com/random/60x60" class="align-self-start me-3 rounded" alt="Alinhamento start">
+      <img src="https://source.unsplash.com/random/60x60" class="align-self-center me-3 rounded" alt="Alinhamento center">
+      <img src="https://source.unsplash.com/random/60x60" class="align-self-end rounded" alt="Alinhamento end">
+    </div>
+    <br>
+
+    <!-- Lista com imagens alinhadas -->
+    <h3 class="border-bottom">Listas com imagens</h3>
+    <ul class="list-unstyled">
+      <li class="d-flex align-items-center mb-3">
+        <img src="https://source.unsplash.com/random/80x80" class="me-3 rounded" alt="Imagem lista">
+        <div>
+          <h5>Título do conteúdo</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sapien dui, feugiat et lorem quis, fringilla maximus nisl.</p>
+        </div>
+      </li>
+      <li class="d-flex align-items-center mb-3">
+        <img src="https://source.unsplash.com/random/80x80?sig=1" class="me-3 rounded" alt="Imagem lista">
+        <div>
+          <h5>Outro conteúdo</h5>
+          <p>Vivamus sed est pulvinar, aliquet purus ut, dictum elit. Etiam facilisis.</p>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Bootstrap Bundle JS (já inclui Popper.js) para componentes interativos -->
+    <script src="/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

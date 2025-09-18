@@ -1,0 +1,160 @@
+<html><head><base href="">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurante - Chalé Hotel</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f1e8;
+        color: #333;
+        font-size: xx-large;
+    }
+    header {
+        background-color: #5c4f3d;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+    }
+    nav {
+        background-color: #8a7a61;
+        padding: 10px 0;
+    }
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 0 15px;
+    }
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    main {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+    .restaurant-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    .menu-section {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .menu-item {
+        margin-bottom: 15px;
+    }
+    .menu-item h3 {
+        color: #5c4f3d;
+        margin-bottom: 5px;
+    }
+    .menu-item p {
+        margin: 0;
+    }
+    .chef-section {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .chef-image {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+    footer {
+        background-color: #5c4f3d;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+        .chef-section {
+            flex-direction: column;
+            text-align: center;
+        }
+        .chef-image {
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Restaurante do Chalé Hotel</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/Index/Index.html">Home</a></li>
+            <li><a href="/Index/História.html">História</a></li>
+            <li><a href="/Index/Imprensa.html">Imprensa</a></li>
+            <li><a href="/Index/Gastrônomia.html">Gastronomia</a></li>
+            <li><a href="/Index/Contato.html">Contato</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <img src="https://example.com/restaurante-interior.jpg" alt="Interior elegante do restaurante do Chalé Hotel com mesas postas e vista panorâmica" class="restaurant-image">
+
+        <section class="menu-section">
+            <h2>Nosso Menu</h2>
+            <div class="menu-item">
+                <h3>Entrada: Carpaccio de Beterraba</h3>
+                <p>Finas fatias de beterraba orgânica, queijo de cabra, rúcula selvagem e vinagrete de mel e limão.</p>
+            </div>
+            <div class="menu-item">
+                <h3>Prato Principal: Salmão Grelhado ao Molho de Maracujá</h3>
+                <p>Salmão fresco grelhado, servido com risoto de limão siciliano e molho de maracujá.</p>
+            </div>
+            <div class="menu-item">
+                <h3>Sobremesa: Trilogia de Chocolate</h3>
+                <p>Mousse de chocolate amargo, brownie de chocolate ao leite e sorvete de chocolate branco.</p>
+            </div>
+        </section>
+
+        <section class="chef-section">
+            <img src="https://3d1.com.br/assets/imagens/userpix/12666_1294754692.jpg" alt="Retrato do Chef Executivo do restaurante do Chalé Hotel" class="chef-image">
+            <div>
+                <h2>Conheça Nosso Chef</h2>
+                <p>O Chef Executivo Lula Molusco traz mais de 20 anos de experiência culinária internacional para o Chalé Hotel. Sua paixão por ingredientes locais e técnicas inovadoras resulta em pratos que são verdadeiras obras de arte gastronômicas.</p>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <h2>Experiências Especiais</h2>
+            <div class="menu-item">
+                <h3>Jantar ao Pôr do Sol</h3>
+                <p>Um menu degustação de 5 pratos servido em nossa varanda com vista para o oceano, acompanhando o espetáculo do pôr do sol.</p>
+            </div>
+            <div class="menu-item">
+                <h3>Aula de Culinária com o Chef</h3>
+                <p>Aprenda os segredos da cozinha do Chalé Hotel em uma aula interativa com nosso Chef Executivo. Inclui degustação dos pratos preparados.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Restaurante do Chalé Hotel. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

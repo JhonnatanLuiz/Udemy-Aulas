@@ -1,0 +1,74 @@
+<!--
+  Este arquivo HTML utiliza o framework Bootstrap para estilização e layout responsivo.
+  Abaixo estão os comentários explicativos para cada função e elemento.
+-->
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <!-- Define o conjunto de caracteres como UTF-8 para suportar caracteres especiais. -->
+    <meta charset="utf-8">
+    <!-- Configura o viewport para responsividade em dispositivos móveis. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Título da página. -->
+    <title>alinhamento de textos</title>
+    <!-- Link para o arquivo CSS do Bootstrap. -->
+    <link href="/bootstrap-5.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body style="margin-bottom: 200px; padding: 16px;">
+    
+    <!-- Parágrafo justificado -->
+    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        Phasellus vestibulum elementum quam, a viverra ligula fringilla tempus. Ut tempor, 
+        dui eu semper aliquet, sem nisi pellentesque libero, suscipit porttitor risus magna vel lorem.</p>
+
+    <br>
+    <br>
+
+    <!-- Alinhamento responsivo - class-text-<tela>-<alinhamento> -->
+    <!-- Define alinhamento de texto baseado no tamanho da tela. -->
+    <p class="text-sm-end">tela &gt;= 576px</p><!-- Alinhamento à direita para telas pequenas. -->
+    <p class="text-md-end">tela &gt;=  768px</p><!-- Alinhamento à direita para telas médias. -->
+    <p class="text-lg-end">tela &gt;= 992px</p><!-- Alinhamento à direita para telas grandes. -->
+    <p class="text-xl-end">tela &gt;= 1200px</p><!-- Alinhamento à direita para telas extra grandes. -->
+
+    <br>
+    <br>
+
+    <!-- Elemento Block para inline -->
+    <!-- Define elementos como inline, mas com fundo verde. -->
+    <h1 class="bg-success d-inline">Lorem ipsum dolor</h1>
+    <p class="bg-success d-inline">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+    <br>
+    <br>
+
+    <!-- Elemento Inline-Block -->
+    <!-- Define elementos como block com fundo verde. -->
+    <span class="bg-success d-block">Lorem ipsum dolor 1</span>
+    <br>
+    <span class="bg-success d-block">Lorem ipsum dolor 2</span>
+
+    <br>
+    <br>
+
+    <!-- Elemento Inline-Block -->
+    <!-- Define elementos como inline-block com fundo verde. -->
+    <h3 class="bg-success d-inline-block">Lorem ipsum</h3>
+    <h3 class="bg-success d-inline-block">Lorem ipsum dolor</h3>
+
+    <br>
+    <br>
+    
+    <!-- Container com fundo amarelo e elementos inline-block. -->
+    <div class="bg-warning">
+      <h3 class="bg-success d-inline-block">Lorem ipsum 3</h3>
+      <h3 class="bg-success d-inline-block" style="margin-top: 50px; width: 400px;">Lorem ipsum dolor 4</h3>
+    </div>
+
+    <!-- Inclusão dos scripts do Bootstrap. -->
+    <script src="/bootstrap-5.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  </body>
+</html>
