@@ -38,6 +38,9 @@ This repository collects my exercises and projects built while taking Udemy cour
 - Modelo para novas entradas: `docs/LOG_TEMPLATE.md`.
 - Sugestão de rotina: após concluir uma aula/arquivo, adicione uma linha com data, tópico, resumo e tags (ex.: `#html`, `#css`, `#bootstrap`, `#python`, `#tests`).
 
+### Documentação Adicional
+- Dúvidas sobre renomeação de repositórios: `docs/REPOSITORY_RENAMING.md`.
+
 ### Próximos Passos
 - Consolidar projetos pequenos em portfólio navegável.
 - Adicionar screenshots/gifs curtos para destacar entregas visuais.
@@ -76,6 +79,9 @@ This repository collects my exercises and projects built while taking Udemy cour
 - Track progress in `docs/LEARNING_LOG.md`.
 - Use `docs/LOG_TEMPLATE.md` as a template for new entries.
 - Suggested routine: after finishing a lesson/file, add a row with date, topic, summary, and tags (e.g., `#html`, `#css`, `#bootstrap`, `#python`, `#tests`).
+
+### Additional Documentation
+- Questions about repository renaming: `docs/REPOSITORY_RENAMING.md`.
 
 ### Next Steps
 - Consolidate small projects into a browsable portfolio.

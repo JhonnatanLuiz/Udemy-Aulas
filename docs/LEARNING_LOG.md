@@ -9,6 +9,7 @@ This file tracks my progress throughout Udemy courses. Newest entries on top.
 
 | Data | Módulo/Arquivo | Assunto/Tópico | Resumo (2-3 linhas) | Tags |
 |------|-----------------|----------------|----------------------|------|
+| 2025-01-19 | docs/REPOSITORY_RENAMING.md | Gestão de repositórios Git | Criado guia completo sobre renomeação de repositórios: explica que pasta local não é renomeada automaticamente e fornece instruções passo-a-passo. | #git #documentation |
 | 2025-09-17 | Curso Python/ | Estrutura das aulas | Organizei e confirmei 94 arquivos de aulas (`aula1.py`…`aula94.py`) para prática incremental. | #python |
 | 2025-09-17 | Curso Python/test_aula88.py, test_aula90.py | Testes automatizados | Adicionei/validei testes com pytest para aulas 88 e 90; base para TDD e verificação de regressões. | #python #tests |
 | 2025-09-17 | Curso Frontend/bootstrap5/*.html | Bootstrap 5 — Componentes | Naveguei por exemplos de botões, navegação, grid, formulários, alerts/progress e utilitários. | #html #css #bootstrap |
