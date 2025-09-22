@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        var a = 10;
+        var b = 20;
+        var c = null; // variável auxiliar utilizada na logica
+
+        document.write('A: ' + a + '<br />');
+        document.write('B: ' + b + '<br />');
+        document.write('C: ' + c + '<br />');
+        document.write('<br />');
+
+        // lógica para trocar os valores de A e B utilizando a variável C
+        c = a; // c recebe o valor de a
+        a = b; // a recebe o valor de b
+        b = c; // b recebe o valor de c
+        c = null; // limpando a variável auxiliar
+        document.write('A: ' + a + '<br />');
+        document.write('B: ' + b + '<br />');
+        document.write('C: ' + c + '<br />');
+        document.write('<br />');
+    </script>
+</body>
+</html>
