@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript If-Else</title>
+    <script>
+        // OPERADORES DE COMPARAÇÃO (CONDICIONAIS) EM JAVASCRIPT
+
+        document.write('<h2>Exemplos de Operadores de Comparação</h2><br>');
+
+        // 1. IGUALDADE (==) - Compara valores, mas permite conversão de tipo
+        document.write('<h3>1. Operador de Igualdade (==)</h3>');
+        if (2 == 3) {
+            document.write('2 é igual a 3: VERDADEIRO<br>');
+        } else {
+            document.write('2 é igual a 3: FALSO<br>');
+        }
+
+        // Exemplo com conversão de tipo
+        if (5 == '5') {
+            document.write('5 == "5": VERDADEIRO (conversão automática de string para número)<br><br>');
+        }
+
+        // 2. IGUALDADE ESTRITA (===) - Compara valores E tipos
+        document.write('<h3>2. Operador de Igualdade Estrita (===)</h3>');
+        if (5 === '5') {
+            document.write('5 === "5": VERDADEIRO<br>');
+        } else {
+            document.write('5 === "5": FALSO (tipos diferentes: número vs string)<br>');
+        }
+
+        if (5 === 5) {
+            document.write('5 === 5: VERDADEIRO (mesmo valor e mesmo tipo)<br><br>');
+        }
+
+        // 3. DESIGUALDADE (!=) - Verifica se valores são diferentes
+        document.write('<h3>3. Operador de Desigualdade (!=)</h3>');
+        if (10 != 5) {
+            document.write('10 != 5: VERDADEIRO (valores diferentes)<br>');
+        }
+
+        if (7 != '7') {
+            document.write('7 != "7": VERDADEIRO<br>');
+        } else {
+            document.write('7 != "7": FALSO (conversão automática torna-os iguais)<br><br>');
+        }
+
+        // 4. DESIGUALDADE ESTRITA (!==) - Verifica se valores OU tipos são diferentes
+        document.write('<h3>4. Operador de Desigualdade Estrita (!==)</h3>');
+        if (7 !== '7') {
+            document.write('7 !== "7": VERDADEIRO (tipos diferentes)<br>');
+        }
+
+        if (8 !== 8) {
+            document.write('8 !== 8: VERDADEIRO<br>');
+        } else {
+            document.write('8 !== 8: FALSO (mesmo valor e mesmo tipo)<br><br>');
+        }
+
+        // 5. MAIOR QUE (>) - Verifica se o valor à esquerda é maior
+        document.write('<h3>5. Operador Maior Que (&gt;)</h3>');
+        if (15 > 10) {
+            document.write('15 > 10: VERDADEIRO<br>');
+        }
+
+        if (5 > 10) {
+            document.write('5 > 10: VERDADEIRO<br>');
+        } else {
+            document.write('5 > 10: FALSO<br><br>');
+        }
+
+        // 6. MENOR QUE (<) - Verifica se o valor à esquerda é menor
+        document.write('<h3>6. Operador Menor Que (&lt;)</h3>');
+        if (3 < 8) {
+            document.write('3 < 8: VERDADEIRO<br>');
+        }
+
+        if (12 < 5) {
+            document.write('12 < 5: VERDADEIRO<br>');
+        } else {
+            document.write('12 < 5: FALSO<br><br>');
+        }
+
+        // 7. MAIOR OU IGUAL (>=) - Verifica se é maior ou igual
+        document.write('<h3>7. Operador Maior ou Igual (&gt;=)</h3>');
+        if (20 >= 20) {
+            document.write('20 >= 20: VERDADEIRO (iguais)<br>');
+        }
+
+        if (25 >= 20) {
+            document.write('25 >= 20: VERDADEIRO (maior)<br>');
+        }
+
+        if (15 >= 20) {
+            document.write('15 >= 20: VERDADEIRO<br>');
+        } else {
+            document.write('15 >= 20: FALSO (menor)<br><br>');
+        }
+
+        // 8. MENOR OU IGUAL (<=) - Verifica se é menor ou igual
+        document.write('<h3>8. Operador Menor ou Igual (&lt;=)</h3>');
+        if (10 <= 10) {
+            document.write('10 <= 10: VERDADEIRO (iguais)<br>');
+        }
+
+        if (5 <= 10) {
+            document.write('5 <= 10: VERDADEIRO (menor)<br>');
+        }
+
+        if (15 <= 10) {
+            document.write('15 <= 10: VERDADEIRO<br>');
+        } else {
+            document.write('15 <= 10: FALSO (maior)<br><br>');
+        }
+
+        // 9. EXEMPLOS COM VARIÁVEIS
+        document.write('<h3>9. Exemplos com Variáveis</h3>');
+        let idade = 18;
+        let nome = 'João';
+        let salario = 2500.50;
+
+        // Verificação de idade para maioridade
+        if (idade >= 18) {
+            document.write('Idade: ' + idade + ' - É maior de idade<br>');
+        } else {
+            document.write('Idade: ' + idade + ' - É menor de idade<br>');
+        }
+
+        // Verificação de nome
+        if (nome === 'João') {
+            document.write('Nome confirmado: ' + nome + '<br>');
+        }
+
+        // Verificação de salário
+        if (salario > 2000) {
+            document.write('Salário: R$ ' + salario + ' - Acima de R$ 2.000<br><br>');
+        }
+
+        // 10. OPERADORES LÓGICOS COMBINADOS
+        document.write('<h3>10. Combinando Operadores (AND &&, OR ||)</h3>');
+        
+        // Operador AND (&&) - AMBAS condições devem ser verdadeiras
+        if (idade >= 18 && salario > 2000) {
+            document.write('Maior de idade E salário > R$ 2.000: APROVADO<br>');
+        }
+
+        // Operador OR (||) - PELO MENOS UMA condição deve ser verdadeira
+        if (idade < 18 || salario < 1000) {
+            document.write('Menor de idade OU salário < R$ 1.000: REPROVADO<br>');
+        } else {
+            document.write('Maior de idade OU salário >= R$ 1.000: APROVADO<br>');
+        }
+
+        // Operador NOT (!) - Inverte o resultado lógico
+        if (!(idade < 18)) {
+            document.write('NOT(idade < 18): É maior de idade<br><br>');
+        }
+
+        // 11. COMPARAÇÃO COM STRINGS
+        document.write('<h3>11. Comparação com Strings</h3>');
+        let palavra1 = 'JavaScript';
+        let palavra2 = 'javascript';
+        let palavra3 = 'JavaScript';
+
+        if (palavra1 === palavra2) {
+            document.write('JavaScript === javascript: VERDADEIRO<br>');
+        } else {
+            document.write('JavaScript === javascript: FALSO (case sensitive)<br>');
+        }
+
+        if (palavra1 === palavra3) {
+            document.write('JavaScript === JavaScript: VERDADEIRO<br><br>');
+        }
+
+        // 12. VALORES ESPECIAIS (null, undefined, NaN)
+        document.write('<h3>12. Valores Especiais</h3>');
+        let valorNulo = null;
+        let valorIndefinido;
+        let naoNumero = NaN;
+
+        if (valorNulo === null) {
+            document.write('valorNulo === null: VERDADEIRO<br>');
+        }
+
+        if (valorIndefinido === undefined) {
+            document.write('valorIndefinido === undefined: VERDADEIRO<br>');
+        }
+
+        // NaN é especial - nunca é igual a nada, nem a si mesmo
+        if (naoNumero === NaN) {
+            document.write('NaN === NaN: VERDADEIRO<br>');
+        } else {
+            document.write('NaN === NaN: FALSO (NaN nunca é igual a nada)<br>');
+        }
+
+        // Para verificar NaN, use isNaN()
+        if (isNaN(naoNumero)) {
+            document.write('isNaN(NaN): VERDADEIRO (forma correta de verificar)<br>');
+        }
+
+        document.write('<br><h3>Resumo dos Operadores:</h3>');
+        document.write('== : Igualdade (com conversão)<br>');
+        document.write('=== : Igualdade estrita (sem conversão)<br>');
+        document.write('!= : Desigualdade (com conversão)<br>');
+        document.write('!== : Desigualdade estrita (sem conversão)<br>');
+        document.write('&gt; : Maior que<br>');
+        document.write('&lt; : Menor que<br>');
+        document.write('&gt;= : Maior ou igual<br>');
+        document.write('&lt;= : Menor ou igual<br>');
+        document.write('&& : AND lógico<br>');
+        document.write('|| : OR lógico<br>');
+        document.write('! : NOT lógico<br>');
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

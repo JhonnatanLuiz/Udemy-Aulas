@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praticando Operadores Condicionais</title>
+</head>
+<body>
+    <script>
+        // Solicita ao usuário que digite a primeira nota. O valor retornado é uma string.
+        let nota1 = prompt("Digite a primeira nota: ");
+        // Solicita ao usuário que digite a segunda nota. O valor retornado é uma string.
+        let nota2 = prompt("Digite a segunda nota: ");
+        // Solicita ao usuário que digite a terceira nota. O valor retornado é uma string.
+        let nota3 = prompt("Digite a terceira nota: ");
+
+        // Converte a string recebida do prompt para número decimal (ponto flutuante).
+        nota1 = parseFloat(nota1); // Exemplo: '7.5' vira 7.5 //parseFloat converte string para número decimal
+        nota2 = parseFloat(nota2); // Exemplo: '6.0' vira 6.0
+        nota3 = parseFloat(nota3); // Exemplo: '5.5' vira 5.5
+
+        // Define a média mínima para aprovação.
+        let media = 6;
+
+        // Calcula a média das três notas e compara com a média mínima.
+        // Se a média for maior ou igual a 6, exibe mensagem de aprovação.
+        // Caso contrário, exibe mensagem de reprovação.
+        if ((nota1 + nota2 + nota3) / 3 >= media) {
+            document.write('<h2>Parabéns! Você foi aprovado!</h2>'); // Escreve mensagem de aprovado na tela
+        } else {
+            document.write('<h2>Infelizmente você foi reprovado. Tente novamente!</h2>'); // Escreve mensagem de reprovado na tela
+        }
+
+        // Exibe a média calculada na tela.
+        // O cálculo soma as três notas e divide por 3.
+        document.write('<h3>Sua média foi: ' + ( (nota1 + nota2 + nota3) / 3 ) + '</h3>');
+        // document.write escreve diretamente no corpo do HTML.
+    </script>
+</body>
+</html>
