@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casting</title>
+</head>
+<body>
+    <script>
+        // Exemplo de casting com parseInt()
+        var variavel1 = prompt("Digite um número: ");
+        var variavel2 = prompt("Digite outro número: ");
+
+        variavel1 = parseInt(variavel1); // Converte string para número inteiro
+        variavel2 = parseInt(variavel2); // Converte string para número inteiro
+
+        document.write("A soma é: " + (variavel1 +  variavel2) + "<br>"); // Soma os números e exibe o resultado
+
+        // Exemplo de casting com toString()
+        var numero = 123; // Um número inteiro
+        var texto = numero.toString(); // Converte o número para string
+        document.write("O número como string: " + texto + "<br>");
+
+        // Exemplo de casting com parseFloat()
+        var variavel3 = prompt("Digite um número decimal: ");
+        variavel3 = parseFloat(variavel3); // Converte string para número decimal
+        document.write("O número decimal é: " + variavel3 + "<br>");
+
+        // Exemplo de casting com parseInt() e toString()
+        var variavel4 = "456.78"; // Uma string que representa um número decimal
+        var inteiro = parseInt(variavel4); // Converte a string para número inteiro
+        document.write("A parte inteira de '456.78' é: " + inteiro + "<br>");
+        var textoInteiro = inteiro.toString(); // Converte o número inteiro de volta para string
+        document.write("O número inteiro como string: " + textoInteiro + "<br>");
+
+        // Exemplo de converter um número inteiro para número decimal
+        var inteiro = 10; // Um número inteiro
+        var decimal = parseFloat(inteiro); // Converte o número inteiro para decimal
+        document.write("O número decimal é: " + decimal + "<br>");
+
+    </script>
+</body>
+</html>

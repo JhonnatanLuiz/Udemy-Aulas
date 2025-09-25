@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operadores Lógicos</title>
+</head>
+<body>
+    <script>
+        // O que são operadores lógicos?
+        // Operadores lógicos são usados para combinar ou inverter expressões booleanas.
+        // Eles retornam um valor booleano (true ou false) com base nas condições avaliadas.
+        // Principais operadores lógicos em JavaScript:
+        // AND (&&): Retorna true se ambas as expressões forem verdadeiras.
+        // OR (||): Retorna true se pelo menos uma das expressões for verdadeira.
+        // NOT (!): Inverte o valor da expressão booleano.
+        // Exemplo de uso de operadores lógicos
+        var x = 5;
+        var y = 10;
+
+        // Operador lógico AND
+        if (x < 10 && y > 5) {
+            document.write("x é menor que 10 e y é maior que 5<br>");
+        }
+
+        // Operador lógico OR
+        if (x < 10 || y < 5) {
+            document.write("x é menor que 10 ou y é menor que 5<br>");
+        }
+
+        // Operador lógico NOT
+        if (!(x > 10)) {
+            document.write("x não é maior que 10<br>");
+        }
+        // Combinação de operadores lógicos
+        if ((x < 10 && y > 5) || (x === 5)) {
+            document.write("A combinação de condições é verdadeira<br>");
+        }
+        
+        // Uso de operadores lógicos em variáveis booleanas
+        var isAdult = true;
+        var hasID = false;
+
+        if (isAdult && hasID) {
+            document.write("Acesso permitido<br>");
+        } else {
+            document.write("Acesso negado<br>");
+        }
+
+        // Exemplo prático: Verificação de idade e permissão
+        var age = 20;
+        var hasPermission = true;
+        if (age >= 18 && hasPermission) {
+            document.write("Você pode entrar na festa<br>");
+        } else {
+            document.write("Você não pode entrar na festa<br>");
+        }
+
+        // Exemplo prático: operador NOT
+        var isRaining = false;
+        if (!isRaining) {
+            document.write("Não está chovendo<br>");
+        } else {
+            document.write("Está chovendo<br>");
+        }
+    </script>
+</body>
+</html>
