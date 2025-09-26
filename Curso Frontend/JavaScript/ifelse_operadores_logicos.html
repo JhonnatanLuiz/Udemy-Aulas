@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Playground: Operadores Lógicos (&&, ||, !)</title>
+        <style>
+            :root {
+                --bg: #0b1020;
+                --panel: #111827;
+                --text: #e5e7eb;
+                --muted: #9ca3af;
+                --accent: #60a5fa;
+                --ok: #22c55e;
+                --no: #ef4444;
+                --border: #1f2937;
+            }
+            * { box-sizing: border-box; }
+            body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+            .container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
+            h1 { margin: 0 0 8px; font-size: 24px; }
+            p.desc { margin: 0 0 16px; color: var(--muted); }
+            .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 16px 0; }
+            .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+            @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+            label { display: inline-flex; align-items: center; gap: 8px; margin-right: 12px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+            th { background: #0f172a; }
+            code { background: #0f172a; padding: 2px 6px; border-radius: 6px; }
+            .expr { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px dashed var(--border); }
+            .expr:last-child { border-bottom: 0; }
+            .badge { font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); }
+            .true { background: #052e16; color: var(--ok); }
+            .false { background: #3f1d1d; color: var(--no); }
+            .muted { color: var(--muted); }
+            input[type="text"] { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: #0f172a; color: var(--text); }
+            small { color: var(--muted); }
+            .steps { margin: 8px 0 0 0; padding-left: 18px; }
+            .steps li { margin: 4px 0; }
+            .error { color: var(--no); font-weight: 600; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Playground: Operadores Lógicos (&&, ||, !)</h1>
+            <p class="desc">Altere os valores e observe os resultados em tempo real. Teste precedência, negação e combinações.</p>
+
+            <div class="panel">
+                <h2>1) Valores booleanos</h2>
+                <p class="muted">Use as caixas para definir A, B e C. As expressões são reavaliadas automaticamente.</p>
+                <div>
+                    <label><input id="a" type="checkbox" checked /> A (true)</label>
+                    <label><input id="b" type="checkbox" /> B (false)</label>
+                    <label><input id="c" type="checkbox" checked /> C (true)</label>
+                </div>
+                <div id="results" class="panel" style="margin-top:12px"></div>
+            </div>
+
+            <div class="grid">
+                <div class="panel">
+                    <h2>2) Tabela verdade (A, B)</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>A && B</th>
+                                <th>A || B</th>
+                                <th>!A</th>
+                                <th>!(A && B)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="truthTable"></tbody>
+                    </table>
+                </div>
+                <div class="panel">
+                    <h2>3) Precedência</h2>
+                    <p class="muted">Em JavaScript, <code>!</code> tem maior precedência que <code>&&</code>, que tem maior que <code>||</code>. Parênteses <code>()</code> podem alterar a ordem.</p>
+                    <div id="precedence"></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>4) Teste de truthy/falsy</h2>
+                <p class="muted">Digite qualquer valor. Obs.: a string "false" ainda é <em>truthy</em> em JS.</p>
+                <label style="display:block; margin:8px 0 12px">
+                    <input id="val" type="text" placeholder="Ex.: 0, '', false, null, undefined, texto..." />
+                </label>
+                <div id="truthy"></div>
+                <small>Falsos por padrão: <code>false</code>, <code>0</code>, <code>-0</code>, <code>0n</code>, <code>''</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Todo o resto é truthy.</small>
+            </div>
+
+                    <div class="panel">
+                        <h2>5) Editor de expressões (A, B, C)</h2>
+                        <p class="muted">Digite uma expressão com <code>A</code>, <code>B</code>, <code>C</code>, <code>!</code>, <code>&&</code>, <code>||</code> e parênteses. Ex.: <code>A && (B || !C)</code></p>
+                        <label style="display:block; margin:8px 0 12px">
+                            <input id="exprInput" type="text" placeholder="Ex.: A && (B || !C)" />
+                        </label>
+                        <div id="exprResult"></div>
+                        <ol id="exprSteps" class="steps"></ol>
+                    </div>
+
+                    <div class="panel">
+                        <h2>6) Exemplo simples com if</h2>
+                <p class="muted">Mesmo exemplo original, agora exibindo em um parágrafo.</p>
+                <p id="exemplo"></p>
+            </div>
+        </div>
+
+        <script>
+            const elA = document.getElementById('a');
+            const elB = document.getElementById('b');
+            const elC = document.getElementById('c');
+            const results = document.getElementById('results');
+            const truthTable = document.getElementById('truthTable');
+            const precedence = document.getElementById('precedence');
+            const val = document.getElementById('val');
+            const truthy = document.getElementById('truthy');
+            const exemplo = document.getElementById('exemplo');
+            const exprInput = document.getElementById('exprInput');
+            const exprResult = document.getElementById('exprResult');
+            const exprSteps = document.getElementById('exprSteps');
+
+            function badge(v) {
+                return `<span class="badge ${v ? 'true' : 'false'}">${v}</span>`;
+            }
+
+            function renderExpressions() {
+                const A = elA.checked;
+                const B = elB.checked;
+                const C = elC.checked;
+
+                const exprs = [
+                    { e: 'A && B', v: A && B },
+                    { e: 'A || B', v: A || B },
+                    { e: '!A', v: !A },
+                    { e: '!(A && B)', v: !(A && B) },
+                    { e: 'A && (B || C)', v: A && (B || C) },
+                    { e: '(A && B) || C', v: (A && B) || C },
+                    { e: 'A || B && C  (sem parênteses)', v: A || B && C },
+                    { e: '(A || B) && C (com parênteses)', v: (A || B) && C },
+                    { e: '!!A (dupla negação)', v: !!A },
+                ];
+
+                results.innerHTML = exprs
+                    .map(x => `<div class="expr"><code>${x.e}</code> <div>${badge(x.v)}</div></div>`) 
+                    .join('');
+
+                // Precedência destaque
+                precedence.innerHTML = `
+                    <div class="expr"><code>A || B && C</code> <div>${badge(A || (B && C))}</div></div>
+                    <div class="expr"><code>(A || B) && C</code> <div>${badge((A || B) && C)}</div></div>
+                `;
+            }
+
+            function renderTruthTable() {
+                const combos = [
+                    { A: false, B: false },
+                    { A: false, B: true },
+                    { A: true, B: false },
+                    { A: true, B: true },
+                ];
+                truthTable.innerHTML = combos
+                    .map(r => `
+                        <tr>
+                            <td>${r.A}</td>
+                            <td>${r.B}</td>
+                            <td>${r.A && r.B}</td>
+                            <td>${r.A || r.B}</td>
+                            <td>${!r.A}</td>
+                            <td>${!(r.A && r.B)}</td>
+                        </tr>
+                    `)
+                    .join('');
+            }
+
+            function parseInput(raw) {
+                // Tenta interpretar de forma simples alguns literais comuns
+                const trimmed = raw.trim();
+                if (trimmed === '') return '';
+                if (trimmed === 'null') return null;
+                if (trimmed === 'undefined') return undefined;
+                if (trimmed === 'NaN') return NaN;
+                if (trimmed === 'true') return true;
+                if (trimmed === 'false') return false;
+                if (!Number.isNaN(Number(trimmed))) return Number(trimmed);
+                return raw; // string
+            }
+
+            function renderTruthy() {
+                const raw = val.value;
+                const value = parseInput(raw);
+                const bool = Boolean(value);
+                truthy.innerHTML = `
+                    <div class="expr"><code>valor</code> <div><span class="badge">${String(value)}</span></div></div>
+                    <div class="expr"><code>typeof valor</code> <div><span class="badge">${typeof value}</span></div></div>
+                    <div class="expr"><code>Boolean(valor)</code> <div>${badge(bool)}</div></div>
+                    <div class="expr"><code>!valor</code> <div>${badge(!value)}</div></div>
+                    <div class="expr"><code>!!valor</code> <div>${badge(!!value)}</div></div>
+                    <div class="expr"><code>valor && 'X'</code> <div><span class="badge">${String(value && 'X')}</span></div></div>
+                    <div class="expr"><code>valor || 'Y'</code> <div><span class="badge">${String(value || 'Y')}</span></div></div>
+                `;
+            }
+
+            // Exemplo simples com if
+            function renderExemploIf() {
+                const cond = (2 == 2 && 3 >= 1);
+                exemplo.textContent = cond ? 'As duas condições são verdadeiras.' : 'Pelo menos uma é falsa.';
+            }
+
+            // Eventos
+            [elA, elB, elC].forEach(el => el.addEventListener('change', () => { renderExpressions(); renderExprEditor(); }));
+            val.addEventListener('input', renderTruthy);
+            exprInput && exprInput.addEventListener('input', debounce(renderExprEditor, 200));
+
+            // Inicialização
+            renderExpressions();
+            renderTruthTable();
+            renderTruthy();
+            renderExemploIf();
+
+                    // ========== Editor de Expressões (parser/avaliador seguro) ==========
+                    function debounce(fn, ms) { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); }; }
+
+                    function renderExprEditor() {
+                        if (!exprInput) return;
+                        const text = exprInput.value.trim();
+                        exprSteps.innerHTML = '';
+                        if (!text) { exprResult.innerHTML = '<span class="muted">Digite uma expressão...</span>'; return; }
+                        const vars = { A: elA.checked, B: elB.checked, C: elC.checked };
+                        try {
+                            const tokens = tokenize(text);
+                            const parser = makeParser(tokens);
+                            const ast = parser.parseExpr();
+                            parser.expect('EOF');
+                            const steps = [];
+                            const value = evalNode(ast, vars, steps);
+                            exprResult.innerHTML = `Resultado: ${badge(value)}`;
+                            exprSteps.innerHTML = steps.map(s => `<li>${s}</li>`).join('');
+                        } catch (e) {
+                            exprResult.innerHTML = `<span class="error">Erro: ${e.message || e}</span>`;
+                        }
+                    }
+
+                    function tokenize(src) {
+                        const tokens = [];
+                        let i = 0;
+                        const isWS = c => /\s/.test(c);
+                        while (i < src.length) {
+                            const c = src[i];
+                            if (isWS(c)) { i++; continue; }
+                            if (c === '(') { tokens.push({type:'LPAREN'}); i++; continue; }
+                            if (c === ')') { tokens.push({type:'RPAREN'}); i++; continue; }
+                            if (c === '!') { tokens.push({type:'NOT'}); i++; continue; }
+                            if (src.startsWith('&&', i)) { tokens.push({type:'AND'}); i += 2; continue; }
+                            if (src.startsWith('||', i)) { tokens.push({type:'OR'}); i += 2; continue; }
+                            // Ident/boolean literals
+                            const rest = src.slice(i);
+                            const m = /^(A|B|C|true|false)/i.exec(rest);
+                            if (m) {
+                                const t = m[0];
+                                if (/^true$/i.test(t)) tokens.push({type:'BOOL', value:true});
+                                else if (/^false$/i.test(t)) tokens.push({type:'BOOL', value:false});
+                                else tokens.push({type:'IDENT', value:t.toUpperCase()});
+                                i += t.length; continue;
+                            }
+                            throw new Error(`Token inválido próximo de: '${src.slice(i, i+10)}'`);
+                        }
+                        tokens.push({type:'EOF'});
+                        return tokens;
+                    }
+
+                    function makeParser(tokens) {
+                        let p = 0;
+                        const peek = () => tokens[p] || {type:'EOF'};
+                        const eat = (t) => { if (peek().type === t) { p++; return; } throw new Error(`Esperado ${t}, encontrado ${peek().type}`); };
+                        const expect = (t) => eat(t);
+
+                        function parsePrimary() {
+                            const tok = peek();
+                            if (tok.type === 'LPAREN') { eat('LPAREN'); const e = parseExpr(); eat('RPAREN'); return {type:'Group', expr:e}; }
+                            if (tok.type === 'IDENT') { eat('IDENT'); return {type:'Var', name: tok.value}; }
+                            if (tok.type === 'BOOL') { eat('BOOL'); return {type:'Lit', value: tok.value}; }
+                            throw new Error(`Primário inválido: ${tok.type}`);
+                        }
+                        function parseNot() {
+                            if (peek().type === 'NOT') { eat('NOT'); return {type:'Not', child: parseNot()}; }
+                            return parsePrimary();
+                        }
+                        function parseAnd() {
+                            let node = parseNot();
+                            while (peek().type === 'AND') { eat('AND'); node = {type:'And', left: node, right: parseNot()}; }
+                            return node;
+                        }
+                        function parseOr() {
+                            let node = parseAnd();
+                            while (peek().type === 'OR') { eat('OR'); node = {type:'Or', left: node, right: parseAnd()}; }
+                            return node;
+                        }
+                        function parseExpr() { return parseOr(); }
+
+                        return { parseExpr, expect };
+                    }
+
+                    function evalNode(node, vars, steps) {
+                        switch (node.type) {
+                            case 'Lit':
+                                steps.push(`literal ${node.value}`);
+                                return node.value;
+                            case 'Var':
+                                if (!(node.name in vars)) throw new Error(`Variável desconhecida: ${node.name}`);
+                                steps.push(`${node.name} = ${vars[node.name]}`);
+                                return vars[node.name];
+                            case 'Group': {
+                                const v = evalNode(node.expr, vars, steps);
+                                steps.push(`(${describe(node.expr)}) = ${v}`);
+                                return v;
+                            }
+                            case 'Not': {
+                                const v = evalNode(node.child, vars, steps);
+                                const r = !v;
+                                steps.push(`!${describe(node.child)} => !${v} = ${r}`);
+                                return r;
+                            }
+                            case 'And': {
+                                const L = evalNode(node.left, vars, steps);
+                                if (!L) { steps.push(`(${describe(node.left)}) && (...) => como ${L}, curto-circuito = false`); return false; }
+                                const R = evalNode(node.right, vars, steps);
+                                const r = L && R;
+                                steps.push(`(${describe(node.left)}) && (${describe(node.right)}) = ${L} && ${R} = ${r}`);
+                                return r;
+                            }
+                            case 'Or': {
+                                const L = evalNode(node.left, vars, steps);
+                                if (L) { steps.push(`(${describe(node.left)}) || (...) => como ${L}, curto-circuito = true`); return true; }
+                                const R = evalNode(node.right, vars, steps);
+                                const r = L || R;
+                                steps.push(`(${describe(node.left)}) || (${describe(node.right)}) = ${L} || ${R} = ${r}`);
+                                return r;
+                            }
+                        }
+                        throw new Error('Nodo inválido');
+                    }
+
+                    function describe(node) {
+                        switch (node.type) {
+                            case 'Lit': return String(node.value);
+                            case 'Var': return node.name;
+                            case 'Group': return `(${describe(node.expr)})`;
+                            case 'Not': return `!${describe(node.child)}`;
+                            case 'And': return `${describe(node.left)} && ${describe(node.right)}`;
+                            case 'Or': return `${describe(node.left)} || ${describe(node.right)}`;
+                            default: return '?';
+                        }
+                    }
+
+                    // Primeira renderização do editor
+                    renderExprEditor();
+        </script>
+    </body>
+    </html>
