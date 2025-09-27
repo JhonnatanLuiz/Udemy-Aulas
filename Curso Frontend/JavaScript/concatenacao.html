@@ -1,20 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Concatenacao</title>
+    <title>Concatenação em JavaScript</title>
+    <style>
+        body {font-family: "Segoe UI", system-ui, sans-serif; margin: 2.5rem; background: #f8fafc; color: #0f172a; line-height: 1.6;}
+        h1 {margin-top: 0;}
+        .intro {max-width: 740px; margin-bottom: 2rem; color: #334155;}
+        .exemplo {background: #fff; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08); border: 1px solid rgba(148, 163, 184, 0.22);}
+        .exemplo h2 {margin-top: 0; font-size: 1.2rem; color: #1e293b;}
+        .comentario {font-size: .95rem; color: #475569; margin-bottom: .75rem;}
+        pre {background: #0f172a; color: #e2e8f0; padding: 1rem 1.25rem; border-radius: 10px; overflow-x: auto; font-family: "Fira Code", Consolas, monospace; font-size: .9rem; margin-bottom: 1rem;}
+        .resultado {background: rgba(37, 99, 235, .08); color: #1d4ed8; border: 1px dashed rgba(37, 99, 235, .35); padding: .85rem 1rem; border-radius: 8px; font-family: "Fira Code", Consolas, monospace;}
+        footer {margin-top: 2.5rem; text-align: center; color: #64748b; font-size: .85rem;}
+    </style>
 </head>
 <body>
-    <script>
-        var nome = prompt("Digite seu nome: "); // comando para exibir uma caixa de diálogo para o usuário
-        var idade = prompt("Digite sua idade: ");
-        var idade2 = 50;
+    <h1>Concatenação de strings em JavaScript</h1>
+    <p class="intro">
+        Concatenar é unir textos (strings) para formar uma nova mensagem. A seguir, explore seis abordagens
+        diferentes — do operador <code>+</code> ao uso de <code>template literals</code> e <code>Array.join()</code> — para ver
+        como a combinação de strings se adapta a cenários reais.
+    </p>
 
-        console.log(idade);
-        console.log(idade2);
-        
-        document.write('<h1>Olá ' + nome + ', tudo bem? Estou vendo aqui que você possui ' + idade + ' anos.</h1>'); // concatenação com operador +
+    <div id="blocos"></div>
+
+    <script>
+    const exemplos = [];
+
+    // Pequeno helper para registrar cada exemplo com código e resultado
+    function registrar({ titulo, comentario, codigo, resultado }) {
+        exemplos.push({ titulo, comentario, codigo, resultado });
+        console.log(`[Concatenacao] ${titulo}:`, resultado);
+    }
+
+    // =============================================================
+    // 1) Operador + básico
+    //    - Forma tradicional de juntar strings.
+    //    - Atenção a espaços manuais ("Olá" + nome => vira "OláLucas" se esquecer o espaço).
+    // =============================================================
+    (function exemploBasico() {
+        const nome = 'Lucas';
+        const saudacao = 'Olá ' + nome + '! Bem-vindo.';
+
+        registrar({
+            titulo: '1) Operador + (básico)',
+            comentario: 'Junta pedaços literais e variáveis usando o operador +.',
+            codigo: String.raw`const nome = 'Lucas';
+const saudacao = 'Olá ' + nome + '! Bem-vindo.';
+console.log(saudacao);`,
+            resultado: saudacao
+        });
+    })();
+
+    // =============================================================
+    // 2) Concatenando múltiplos valores e números
+    //    - Quando uma variável é numérica, JS converte para string automaticamente.
+    //    - Atenção: 10 + 5 + ' anos' => "15 anos" (soma antes, depois converte).
+    // =============================================================
+    (function exemploNumero() {
+        const pessoa = 'Marina';
+        const idade = 29;
+        const cidade = 'Recife';
+        const mensagem = 'Minha amiga ' + pessoa + ' tem ' + idade + ' anos e mora em ' + cidade + '.';
+
+        registrar({
+            titulo: '2) Misturando números e textos',
+            comentario: 'Numbers viram string durante a concatenação; cuide da ordem para evitar somas indesejadas.',
+            codigo: String.raw`const pessoa = 'Marina';
+const idade = 29;
+const cidade = 'Recife';
+const mensagem = 'Minha amiga ' + pessoa + ' tem ' + idade + ' anos e mora em ' + cidade + '.';`,
+            resultado: mensagem
+        });
+    })();
+
+    // =============================================================
+    // 3) Template literal (interpolação)
+    //    - Usa crase (`) e ${expressão} para inserir valores.
+    //    - Resolve problemas de espaçamento e facilita multilinhas.
+    // =============================================================
+    (function exemploTemplate() {
+        const produto = 'Notebook';
+        const preco = 3899.9;
+        const parcela = 12;
+        const mensagem = `Promoção: ${produto} por R$ ${preco.toFixed(2)} em até ${parcela}x!`;
+
+    registrar({
+        titulo: '3) Template literal (interpolação)',
+        comentario: 'Prefira crases quando combinar muitas variáveis ou expressões.',
+        codigo: String.raw`const produto = 'Notebook';
+const preco = 3899.9;
+const parcela = 12;
+const mensagem = \`Promoção: ${produto} por R$ ${preco.toFixed(2)} em até ${parcela}x!\`;`,
+        resultado: mensagem
+    });
+    })();
+
+    // =============================================================
+    // 4) Array.join() para juntar muitos itens
+    //    - Útil quando você tem uma lista dinâmica (ex.: tags, ingredientes).
+    //    - Permite escolher o separador (vírgula, " - ", quebra de linha etc.).
+    // =============================================================
+    (function exemploJoin() {
+        const ingredientes = ['Farinha', 'Ovos', 'Leite', 'Açúcar'];
+        const lista = ingredientes.join(', ');
+
+        registrar({
+            titulo: '4) Array.join() com separador',
+            comentario: 'Quando os pedaços estão em um array, join() mantém o código limpo e flexível.',
+            codigo: String.raw`const ingredientes = ['Farinha', 'Ovos', 'Leite', 'Açúcar'];
+const texto = ingredientes.join(', ');
+console.log(texto);`,
+            resultado: lista
+        });
+    })();
+
+    // =============================================================
+    // 5) String.concat() — alternativa em método
+    //    - Menos usada, mas existe em todas as strings.
+    //    - Aceita múltiplos argumentos; retorna uma nova string.
+    // =============================================================
+    (function exemploConcatMetodo() {
+        const base = 'API';
+        const versao = 'v2';
+        const url = 'https://meuservico.com/'.concat(base, '/', versao, '/status');
+
+        registrar({
+            titulo: '5) Usando String.concat()',
+            comentario: 'Método que soma argumentos; útil quando você quer encadear chamadas.',
+            codigo: String.raw`const base = 'API';
+const versao = 'v2';
+const url = 'https://meuservico.com/'.concat(base, '/', versao, '/status');`,
+            resultado: url
+        });
+    })();
+
+    // =============================================================
+    // 6) Montando blocos multilinha (quebras e indentação)
+    //    - Quando o texto é longo, é comum quebrar em partes e juntar com \n.
+    //    - Template literal deixa o resultado mais legível, mas o exemplo usa + para comparação.
+    // =============================================================
+    (function exemploMultilinha() {
+        const linha1 = 'Relatório diário';
+        const linha2 = 'Data: ' + new Date().toLocaleDateString('pt-BR');
+        const linha3 = 'Status: Tudo operando normalmente';
+        const relatorio = linha1 + '\n' + linha2 + '\n' + linha3;
+
+        registrar({
+            titulo: '6) Concatenando com quebras de linha',
+            comentario: 'Combine \\n para gerar linhas múltiplas ou use template literal para o mesmo efeito.',
+            codigo: String.raw`const linha1 = 'Relatório diário';
+const linha2 = 'Data: ' + new Date().toLocaleDateString('pt-BR');
+const linha3 = 'Status: Tudo operando normalmente';
+const relatorio = linha1 + '\n' + linha2 + '\n' + linha3;`,
+            resultado: relatorio
+        });
+    })();
+
+    // Renderização dos cartões de exemplo
+    const container = document.getElementById('blocos');
+    container.innerHTML = exemplos.map(({ titulo, comentario, codigo, resultado }) => `
+        <section class="exemplo">
+            <h2>${titulo}</h2>
+            <p class="comentario">${comentario}</p>
+            <pre>${codigo.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+            <div class="resultado">${resultado.replace(/\n/g, '<br>')}</div>
+        </section>
+    `).join('');
     </script>
+
+    <footer>💡 Dica: altere os valores das variáveis em cada bloco e recarregue a página para comparar as abordagens.</footer>
 </body>
 </html>

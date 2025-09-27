@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operador Ternário em JavaScript</title>
+    <style>
+        body {font-family: system-ui, Arial, sans-serif; margin: 2rem; line-height: 1.5;}
+        h1 {margin-top: 0;}
+        pre {background:#111; color:#eee; padding:1rem; border-radius:8px; overflow:auto;}
+        code {font-family: Consolas, "Fira Code", monospace;}
+        .ex {margin-bottom:2rem;}
+        .tag {display:inline-block; background:#2563eb; color:#fff; padding:.15rem .5rem; font-size:.7rem; letter-spacing:.05em; border-radius:4px; margin-right:.5rem; text-transform:uppercase;}
+    </style>
+</head>
+<body>
+    <h1>Operador Ternário (?:)</h1>
+    <p>O operador ternário é uma forma concisa de escrever um <code>if/else</code> que retorna um valor. Sintaxe: <code>condicao ? valorSeVerdadeiro : valorSeFalso</code>.</p>
+
+    <div id="saida"></div>
+
+    <script>
+        // O que são operadores ternários?
+        // O operador ternário é uma forma concisa de expressar uma condição que resulta em um valor.
+        // Ele é escrito na forma: condicao ? valorSeVerdadeiro : valorSeFalso
+        
+    // =============================================================
+    // 1. Exemplo básico
+    // =============================================================
+    const idade = 17;
+    // Se idade >= 18 => 'Maior de idade', senão 'Menor de idade'
+    const classificacao = idade >= 18 ? 'Maior de idade' : 'Menor de idade';
+    console.log('[1] Classificação:', classificacao);
+
+    // =============================================================
+    // 2. Usando ternário para escolher número / expressão
+    // =============================================================
+    const a = 10, b = 20;
+    const maior = a > b ? a : b; // retorna o maior valor entre a e b
+    console.log('[2] Maior valor:', maior);
+
+    // =============================================================
+    // 3. Ternário dentro de template literal (renderização simples)
+    // =============================================================
+    const logado = true;
+    const mensagemLogin = `Usuário ${logado ? 'autenticado' : 'visitante'}`;
+    console.log('[3] Mensagem login:', mensagemLogin);
+
+    // =============================================================
+    // 4. Múltiplas condições encadeadas (cuidado!)
+    //    Quando há mais de dois caminhos, pode virar "espaguete".
+    //    Dica: se ficar confuso, volte para if/else ou use função auxiliar.
+    // =============================================================
+    const nota = 72;
+    const conceito = nota >= 90 ? 'A'
+                    : nota >= 80 ? 'B'
+                    : nota >= 70 ? 'C'
+                    : nota >= 60 ? 'D'
+                    : 'F';
+    console.log('[4] Conceito:', conceito);
+
+    // =============================================================
+    // 5. Fallback para valores nulos/indefinidos
+    //    Ternário permite diferenciar entre valor vazio ('' / 0) e null/undefined.
+    // =============================================================
+    const entradaUsuario = '';
+    const nomeMostrado = (entradaUsuario !== null && entradaUsuario !== undefined)
+        ? entradaUsuario
+        : 'Sem nome';
+    console.log('[5] Nome mostrado (permite vazio):', nomeMostrado);
+
+    // Uma alternativa moderna para null/undefined: operador de coalescência nula (??)
+    const nomeComCoalescencia = entradaUsuario ?? 'Sem nome';
+    console.log('[5b] Com ?? (nullish coalescing):', nomeComCoalescencia);
+
+    // =============================================================
+    // 6. Comparação: if/else vs ternário simples
+    // =============================================================
+    // If/else tradicional
+    let statusAprovacao;
+    if (nota >= 70) {
+        statusAprovacao = 'Aprovado';
+    } else {
+        statusAprovacao = 'Reprovado';
+    }
+    // Mesma lógica em uma expressão ternária:
+    const statusAprovacaoTernario = nota >= 70 ? 'Aprovado' : 'Reprovado';
+    console.log('[6] If/else:', statusAprovacao, '| Ternário:', statusAprovacaoTernario);
+
+    // =============================================================
+    // 7. Evitando efeitos colaterais no ternário
+    //    Use ternário para PRODUZIR valores, não para executar ações múltiplas.
+    //    Evite: condicao ? func1() : (audit(); func2()); // difícil de ler
+    //    Prefira: const resultado = condicao ? valor1 : valor2; depois use o valor.
+    // =============================================================
+    const saldo = 150;
+    const podeComprar = saldo >= 100 ? true : false; // redundante, mas didático
+    // Melhor ainda: const podeComprar = saldo >= 100; (já é boolean)
+    console.log('[7] Pode comprar?', podeComprar);
+
+    // =============================================================
+    // 8. Ternário em função para retornar cedo
+    // =============================================================
+    function formatarPreco(valor) {
+        return valor >= 0 ? `R$ ${valor.toFixed(2)}` : 'Valor inválido';
+    }
+    console.log('[8] formatarPreco(12.5):', formatarPreco(12.5));
+    console.log('[8] formatarPreco(-3):', formatarPreco(-3));
+
+    // =============================================================
+    // 9. Uso com arrays (map) para rotular itens
+    // =============================================================
+    const pontuacoes = [95, 68, 82, 40];
+    const rotulos = pontuacoes.map(p => p >= 70 ? 'OK' : 'Reforço');
+    console.log('[9] Rótulos:', rotulos);
+
+    // =============================================================
+    // 10. Aninhamento (nested) — quando evitar
+    //     Exemplo ruim (difícil de ler):
+    //     const categoria = idade < 12 ? 'Criança' : idade < 18 ? 'Adolescente' : idade < 60 ? 'Adulto' : 'Sênior';
+    //     Se começar a aninhar demais, melhore a legibilidade:
+    // =============================================================
+    function categorizarIdade(idade) {
+        if (idade < 12) return 'Criança';
+        if (idade < 18) return 'Adolescente';
+        if (idade < 60) return 'Adulto';
+        return 'Sênior';
+    }
+    console.log('[10] Categoria idade 34:', categorizarIdade(34));
+
+    // =============================================================
+    // 11. Misturando com short-circuit (&& ||) — comparação
+    //     Em casos simples, às vezes usar || para fallback é suficiente.
+    // =============================================================
+    const titulo = '';
+    // Fallback COM ternário (mantém string vazia explicitamente):
+    const tituloMostrar = titulo !== undefined && titulo !== null ? titulo : 'Sem título';
+    // Fallback curto COM || (cuidado: '' é falsy e será substituído):
+    const tituloOu = titulo || 'Sem título';
+    console.log('[11] título via ternário:', JSON.stringify(tituloMostrar), '| via ||:', JSON.stringify(tituloOu));
+
+    // =============================================================
+    // 12. Ternário retornando objetos ou funções
+    // =============================================================
+    const modo = 'prod';
+    const cfg = modo === 'dev'
+        ? { debug: true, cache: false }
+        : { debug: false, cache: true };
+    console.log('[12] Config:', cfg);
+
+    const obterLogger = (verbose) => verbose
+        ? (msg) => console.log('[DEBUG]', msg)
+        : (msg) => {};
+    const logger = obterLogger(true);
+    logger('[12] Teste de logger');
+
+    // =============================================================
+    // 13. Diferença entre ? : e ?? (coalescência nula) e ||
+    // =============================================================
+    const valorZero = 0;
+    const comTernario = valorZero !== null && valorZero !== undefined ? valorZero : 100; // mantém 0
+    const comOu = valorZero || 100; // 0 é falsy => retorna 100
+    const comNullish = valorZero ?? 100; // mantém 0
+    console.log('[13] ternário:', comTernario, '| ||:', comOu, '| ??:', comNullish);
+
+    // =============================================================
+    // 14. Micro benchmark didático (não real):
+    //     Diferença de performance entre if/else e ternário é irrelevante na maioria dos casos.
+    //     Priorize legibilidade sempre.
+    // =============================================================
+    function aprovadoIf(n) { if (n >= 70) return 'OK'; return 'X'; }
+    function aprovadoTern(n) { return n >= 70 ? 'OK' : 'X'; }
+    console.log('[14] aprovadoIf(80):', aprovadoIf(80), '| aprovadoTern(65):', aprovadoTern(65));
+
+    // =============================================================
+    // 15. Gerando saída na página para visualização rápida
+    // =============================================================
+    const linhas = [];
+    linhas.push('1) ' + classificacao);
+    linhas.push('2) Maior: ' + maior);
+    linhas.push('3) ' + mensagemLogin);
+    linhas.push('4) Conceito: ' + conceito);
+    linhas.push('5) Nome mostrado: ' + nomeMostrado);
+    linhas.push('6) Status: ' + statusAprovacaoTernario);
+    linhas.push('9) Rótulos: ' + rotulos.join(', '));
+    linhas.push('11) Título (ternário vs ||): ' + tituloMostrar + ' / ' + tituloOu);
+    linhas.push('13) 0 preservado? ternário=' + comTernario + ' ||=' + comOu + ' ??=' + comNullish);
+
+    document.getElementById('saida').innerHTML = '<pre><code>' + linhas.join('\n') + '</code></pre>';
+
+    </script>
+</body>
+</html>

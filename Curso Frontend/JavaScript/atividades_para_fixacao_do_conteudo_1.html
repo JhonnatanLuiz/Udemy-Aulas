@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividades para Fixação do Conteúdo 1</title>
+</head>
+<body>
+    <script>
+        let idade = prompt("Digite sua idade: "); // Solicita ao usuário que digite sua idade
+        idade = parseInt(idade); // Converte a string recebida do prompt para número inteiro
+        if (idade >= 0 && idade < 15) {
+            document.write("<h2>Você é uma criança.</h2>"); // Escreve mensagem de criança na tela
+        } else if (idade >= 15 && idade < 30) {
+            document.write("<h2>Você é um jovem.</h2>"); // Escreve mensagem de jovem na tela
+        } else if (idade >= 30 && idade < 60) {
+            document.write("<h2>Você é um adulto.</h2>"); // Escreve mensagem de adulto na tela
+        } else if (idade >= 60) {
+            document.write("<h2>Você é um idoso.</h2>"); // Escreve mensagem de idoso na tela
+        } else {
+            document.write("<h2>Idade inválida. Por favor, insira um número válido.</h2>"); // Escreve mensagem de idade inválida na tela
+        }
+    </script>
+
+    <!--
+    FILE: Página HTML com função de validação de idade
+
+    DESCRIÇÃO:
+    Função destinada a validar a entrada do usuário (idade) e apresentar uma mensagem
+    no DOM em vez de usar document.write. Foca em robustez contra entradas inválidas.
+
+    COMPORTAMENTO E REGRAS DE VALIDAÇÃO:
+    - Rejeita entradas vazias e exibe mensagem solicitando preenchimento.
+    - Detecta valores não numéricos (NaN) e informa formato inválido.
+    - Rejeita números negativos e avisa que somente idades não-negativas são aceitas.
+    - Permite lidar com inteiros e, quando necessário, com decimais (usar parseFloat).
+
+    CONVERSÃO NUMÉRICA:
+    - Para conversão inteira use parseInt(valor, 10) para garantir base decimal.
+    - Para preservar parte fracionária use parseFloat(valor).
+
+    SAÍDA:
+    - Atualiza o conteúdo de um elemento HTML (ex.: via innerHTML) com mensagens
+        de sucesso ou erro, evitando o uso de document.write.
+
+    BOAS PRÁTICAS:
+    - Centralizar mensagens de erro para localização/alteração fácil.
+    - Sanitizar e validar entradas antes de qualquer uso adicional.
+    - Adaptar textos ao público alvo (idioma, tom) e tratar casos-limite explicitamente.
+    -->
+
+    <h1>Classificador de Faixa Etária-versão melhorada</h1>
+    <div id="resultado"></div>
+
+    <script>
+        // solicita a idade do usuário
+        let idadeUsuario = prompt("Por favor, insira sua idade:");
+        // remove espaços e tenta converter para número
+        let idadeNum = idadeUsuario !== null ? idadeUsuario.trim() : "";
+        // Converte para número inteiro (poderia ser parseFloat se aceitasse decimais)
+        idadeNum = parseInt(idadeNum, 10);
+
+        const saida = document.getElementById("resultado");
+
+        // Validação básica
+        if (Number.isNaN(idadeNum) || idadeNum < 0) {
+            saida.innerHTML = "<h2>Entrada inválida. Por favor, insira uma idade válida (número não-negativo).</h2>";
+        } else if (idadeNum < 15) {
+            saida.innerHTML = "<h2>Você é uma criança.</h2>";
+        } else if (idadeNum < 30) {
+            saida.innerHTML = "<h2>Você é um jovem.</h2>";
+        } else if (idadeNum < 60) {
+            saida.innerHTML = "<h2>Você é um adulto.</h2>";
+        } else {
+            saida.innerHTML = "<h2>Você é um idoso.</h2>";
+        }
+    </script>
+    
+    <!-- Versão compacta com função no console -->
+    <h1>Função Classificadora de Faixa Etária compacta com função no console</h1>
+    <script>
+         // Versão compacta usando retornos antecipados
+         let idadeInput = prompt("Digite sua idade: ");
+        function faixaEtaria(i) {
+          if (i < 0 || Number.isNaN(i)) return "Idade inválida. Por favor, insira um número válido.";
+          if (i < 15) return "Criança";
+          if (i < 30) return "Jovem";
+          if (i < 60) return "Adulto";
+          return "Idoso";
+        }
+        console.log("Sua faixa etária é:", faixaEtaria(parseInt(idadeInput, 10)));
+    </script>
+</body>
+</html>

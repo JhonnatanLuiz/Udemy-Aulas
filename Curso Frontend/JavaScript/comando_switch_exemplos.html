@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comando switch em JavaScript</title>
+    <style>
+        body {font-family: "Segoe UI", system-ui, sans-serif; margin: 2rem; line-height: 1.6; color: #1f2933; background: #f6f9fc;}
+        h1 {margin-top: 0;}
+        .exemplo {background: #fff; border-radius: 10px; padding: 1.5rem; box-shadow: 0 12px 30px rgba(15,23,42,.08); margin-bottom: 1.5rem; border: 1px solid rgba(148,163,184,.25);}
+        .exemplo h2 {margin-top: 0; font-size: 1.15rem; color: #0f172a;}
+        .comentario {color: #475569; font-size: .95rem; margin-bottom: .75rem;}
+        .resultado {background: #0f172a; color: #e2e8f0; font-family: "Fira Code", Consolas, monospace; padding: .75rem 1rem; border-radius: 8px; white-space: pre-wrap; word-break: break-word;}
+        code {font-family: "Fira Code", Consolas, monospace; background: rgba(15,23,42,.08); padding: 0 .25rem; border-radius: 4px;}
+        footer {margin-top: 2rem; font-size: .85rem; color: #64748b; text-align: center;}
+    </style>
+</head>
+<body>
+    <h1>Explorando o <code>switch</code> em JavaScript</h1>
+    <p>Abaixo estão vários cenários práticos comentados demonstrando como o <code>switch</code> pode ser utilizado.</p>
+
+    <div id="saida"></div>
+
+    <script>
+    const blocos = [];
+
+    // =============================================================
+    // 1) Mapeamento direto de números para strings (dia da semana)
+    //    - Exemplo clássico: converte número (0-6) para o nome do dia.
+    //    - Cada case representa um dia; usamos break para evitar "fallthrough".
+    // =============================================================
+    (function exemploDiaSemana() {
+        const diaSemana = new Date().getDay(); // 0 = domingo, 6 = sábado
+        let nomeDia;
+
+        switch (diaSemana) {
+            case 0: nomeDia = "Domingo"; break;
+            case 1: nomeDia = "Segunda-feira"; break;
+            case 2: nomeDia = "Terça-feira"; break;
+            case 3: nomeDia = "Quarta-feira"; break;
+            case 4: nomeDia = "Quinta-feira"; break;
+            case 5: nomeDia = "Sexta-feira"; break;
+            case 6: nomeDia = "Sábado"; break;
+            default: nomeDia = "Dia inválido"; // fallback para valores fora de 0-6
+        }
+
+        console.log('[1] Dia da semana =>', { diaSemana, nomeDia });
+        blocos.push({
+            titulo: '1) Dia da semana (0-6)',
+            comentario: 'Cada número do método getDay() vira um nome; break impede cair no próximo case.',
+            resultado: `Número: ${diaSemana} \nNome: ${nomeDia}`
+        });
+    })();
+
+    // =============================================================
+    // 2) Agrupando múltiplos cases (vogal x consoante)
+    //    - Podemos empilhar cases sem break para reutilizar o mesmo bloco.
+    //    - Útil quando diferentes valores levam ao mesmo resultado.
+    // =============================================================
+    (function exemploVogalConsoante() {
+        const letra = 'G';
+        let tipo;
+
+        switch (letra.toLowerCase()) {
+            case 'a':
+            case 'e':
+            case 'i':
+            case 'o':
+            case 'u':
+                tipo = 'Vogal';
+                break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                tipo = 'Número';
+                break;
+            default:
+                tipo = 'Consoante';
+        }
+
+        console.log('[2] Tipo de caractere =>', { letra, tipo });
+        blocos.push({
+            titulo: '2) Classificação de caractere',
+            comentario: 'Múltiplos valores compartilhando o mesmo tratamento antes do break.',
+            resultado: `Entrada: "${letra}" \nClassificação: ${tipo}`
+        });
+    })();
+
+    // =============================================================
+    // 3) switch com expressão booleana (switch(true))
+    //    - Permite lidar com faixas numéricas sem muitos if/else.
+    //    - Em cada case, comparamos uma condição que resulta em true/false.
+    // =============================================================
+    (function exemploNota() {
+        const media = 8.4;
+        let conceito;
+
+        switch (true) {
+            case media >= 9 && media <= 10: conceito = 'Excelente'; break;
+            case media >= 7: conceito = 'Bom'; break;
+            case media >= 5: conceito = 'Regular'; break;
+            case media >= 0: conceito = 'Precisa melhorar'; break;
+            default: conceito = 'Nota inválida';
+        }
+
+        console.log('[3] Conceito por média =>', { media, conceito });
+        blocos.push({
+            titulo: '3) switch(true) para faixas',
+            comentario: 'Cada case traz uma condição; o primeiro que for true é executado.',
+            resultado: `Média: ${media} \nConceito: ${conceito}`
+        });
+    })();
+
+    // =============================================================
+    // 4) switch para comandos de menu (normalizando input)
+    //    - Útil quando queremos executar funções diferentes para comandos.
+    //    - Comentário mostra como tratar espaços/letras maiúsculas.
+    // =============================================================
+    (function exemploMenuComandos() {
+        const comando = '  listar  ';
+        let mensagem;
+
+        switch (comando.trim().toLowerCase()) {
+            case 'listar':
+                mensagem = 'Exibindo todos os registros...';
+                break;
+            case 'criar':
+                mensagem = 'Abrindo formulário de criação...';
+                break;
+            case 'remover':
+            case 'apagar':
+                mensagem = 'Solicitando confirmação para remover item.';
+                break;
+            case 'sair':
+                mensagem = 'Encerrando sessão.';
+                break;
+            default:
+                mensagem = 'Comando não reconhecido.';
+        }
+
+        console.log('[4] Comando de menu =>', { comando, mensagem });
+        blocos.push({
+            titulo: '4) Menu de comandos',
+            comentario: 'Normalizamos o texto com trim().toLowerCase() antes do switch.',
+            resultado: `Comando: "${comando}" \nAção: ${mensagem}`
+        });
+    })();
+
+    // =============================================================
+    // 5) switch em cima de Math.floor para criar "faixas" por hora do dia
+    //    - Demonstra uso de valores calculados antes do switch.
+    //    - Cada case representa um intervalo de 6 horas.
+    // =============================================================
+    (function exemploPeriodoDia() {
+        const hora = new Date().getHours();
+        const faixa = Math.floor(hora / 6); // 0=0-5, 1=6-11, 2=12-17, 3=18-23
+        let periodo;
+
+        switch (faixa) {
+            case 0: periodo = 'Madrugada'; break;
+            case 1: periodo = 'Manhã'; break;
+            case 2: periodo = 'Tarde'; break;
+            case 3: periodo = 'Noite'; break;
+            default: periodo = 'Hora inválida';
+        }
+
+        console.log('[5] Período do dia =>', { hora, faixa, periodo });
+        blocos.push({
+            titulo: '5) Período do dia',
+            comentario: 'Usamos Math.floor para mapear horários em blocos de 6 horas.',
+            resultado: `Hora atual: ${hora}h \nPeríodo: ${periodo}`
+        });
+    })();
+
+    // =============================================================
+    // 6) switch com objetos retornados (configurações por papel de usuário)
+    //    - Mostra que podemos retornar dados complexos, não só strings.
+    //    - Útil para habilitar/desabilitar recursos por perfil.
+    // =============================================================
+    (function exemploRoles() {
+        const role = 'editor'; // admin, editor, viewer, guest
+        let configuracao;
+
+        switch (role) {
+            case 'admin':
+                configuracao = { podeEditar: true, podeExcluir: true, dashboard: 'completo' };
+                break;
+            case 'editor':
+                configuracao = { podeEditar: true, podeExcluir: false, dashboard: 'conteúdo' };
+                break;
+            case 'viewer':
+                configuracao = { podeEditar: false, podeExcluir: false, dashboard: 'read-only' };
+                break;
+            default:
+                configuracao = { podeEditar: false, podeExcluir: false, dashboard: 'básico' };
+        }
+
+        console.log('[6] Configuração por papel =>', { role, configuracao });
+        blocos.push({
+            titulo: '6) Configuração por perfil de usuário',
+            comentario: 'Cada perfil recebe um objeto de configuração diferente.',
+            resultado: `Role: ${role} \nConfiguração: ${JSON.stringify(configuracao, null, 2)}`
+        });
+    })();
+
+    // -------------------------------------------------------------
+    // Renderiza os blocos na página
+    // -------------------------------------------------------------
+    const container = document.getElementById('saida');
+    container.innerHTML = blocos.map(({ titulo, comentario, resultado }) => `
+        <article class="exemplo">
+            <h2>${titulo}</h2>
+            <p class="comentario">${comentario}</p>
+            <pre class="resultado">${resultado}</pre>
+        </article>
+    `).join('');
+    </script>
+
+    <footer>💡 Dica: experimente alterar os valores de entrada e recarregue a página para observar os diferentes fluxos do <code>switch</code>.</footer>
+</body>
+</html>

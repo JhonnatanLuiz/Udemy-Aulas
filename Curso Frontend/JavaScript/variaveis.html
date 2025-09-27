@@ -3,26 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript</title>
-    <script>
-        // string
-        var texto = "Curso de JavaScript";
-
-        // number
-        var numeroInteiro = 10;
-        var numeroFracionado = 10.5;
-
-        // boolean
-        var teste = true; // true - verdadeiro | false - falso
-
-       // alert(numeroFracionado); // comando para exibir uma mensagem na tela do usuário
-       // document.write(texto); // comando para escrever na tela do navegador
-        console.log(numeroInteiro); // comando para exibir no console do navegador
-
-    </script>
+    <title>Variáveis em JavaScript</title>
+    <style>
+        body {font-family: "Segoe UI", system-ui, sans-serif; margin: 2.5rem; background: #fafcff; color: #0f172a; line-height: 1.6;}
+        h1 {margin-top: 0; font-size: 2.2rem;}
+        .intro {color: #475569; max-width: 760px; margin-bottom: 2rem;}
+        .card {background: #fff; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.6rem; box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08); border: 1px solid rgba(148, 163, 184, 0.25);}
+        .card h2 {margin-top: 0; font-size: 1.2rem; color: #0f172a;}
+        .card p {margin-bottom: .9rem;}
+        pre {background: #0f172a; color: #e2e8f0; padding: 1rem 1.25rem; border-radius: 10px; overflow-x: auto; font-family: "Fira Code", Consolas, monospace; font-size: .92rem; margin-bottom: 1rem;}
+        .resultado {background: rgba(16, 185, 129, .12); color: #047857; border: 1px dashed rgba(16, 185, 129, .35); padding: .85rem 1rem; border-radius: 8px; font-family: "Fira Code", Consolas, monospace;}
+        footer {margin-top: 2.5rem; text-align: center; color: #64748b; font-size: .85rem;}
+    </style>
 </head>
 <body>
-    <h1>variáveis</h1>
-    
+    <h1>Variáveis em JavaScript</h1>
+    <p class="intro">
+        Variáveis guardam dados que podem ser usados e alterados ao longo do código. Veja abaixo sete situações
+        típicas com <code>var</code>, <code>let</code> e <code>const</code>, escopos, hoisting e boas práticas.
+    </p>
+
+    <div id="exemplos"></div>
+
+    <script>
+    const blocos = [];
+
+    function registrar({ titulo, comentario, codigo, resultado }) {
+        blocos.push({ titulo, comentario, codigo, resultado });
+        console.log(`[Variaveis] ${titulo}:`, resultado);
+    }
+
+    // =============================================================
+    // 1) Declaração básica com var (escopo de função)
+    // =============================================================
+    (function exemploVarBasico() {
+        var curso = 'JavaScript Essencial';
+        var cargaHoraria = 40;
+        var mensagem = 'Curso: ' + curso + ' | Carga horária: ' + cargaHoraria + 'h';
+
+        registrar({
+            titulo: '1) var — declaração básica',
+            comentario: 'var possui escopo de função. Antes do ES6 era a forma mais comum de declarar variáveis.',
+            codigo: String.raw`var curso = 'JavaScript Essencial';
+var cargaHoraria = 40;
+var mensagem = 'Curso: ' + curso + ' | Carga horária: ' + cargaHoraria + 'h';`,
+            resultado: mensagem
+        });
+    })();
+
+    // =============================================================
+    // 2) let — escopo de bloco (curto alcance)
+    //    - let não "vaza" para fora de blocos if/for.
+    // =============================================================
+    (function exemploLet() {
+        let status = 'rascunho';
+        {
+            let status = 'publicado'; // variável diferente dentro do bloco
+        }
+        const resumo = `Status fora do bloco: ${status}`;
+
+        registrar({
+            titulo: '2) let — escopo de bloco',
+            comentario: 'let cria variáveis limitadas ao bloco, evitando efeitos colaterais inesperados.',
+            codigo: String.raw`let status = 'rascunho';
+{
+    let status = 'publicado'; // escopo restrito a este bloco
+}
+console.log(status); // 'rascunho'`,
+            resultado: resumo
+        });
+    })();
+
+    // =============================================================
+    // 3) const — valores que não devem ser reatribuídos
+    //    - const exige inicialização imediata.
+    //    - Objetos/arrays continuam mutáveis, mas o identificador não pode apontar para outro valor.
+    // =============================================================
+    (function exemploConst() {
+        const taxa = 0.18;
+        const nota = { aluno: 'Carla', pontuacao: 87 };
+        // nota = {} => erro (não permitido)
+        nota.pontuacao = 91; // permitido
+
+        registrar({
+            titulo: '3) const — identificador fixo',
+            comentario: 'Use const para valores que não serão reatribuídos. Objetos podem ser modificados internamente.',
+            codigo: String.raw`const taxa = 0.18;
+const nota = { aluno: 'Carla', pontuacao: 87 };
+nota.pontuacao = 91; // ok`,
+            resultado: `taxa = ${taxa} | nota.pontuacao = ${nota.pontuacao}`
+        });
+    })();
+
+    // =============================================================
+    // 4) Hoisting com var vs let/const
+    //    - var é içado (hoisted) como undefined; let/const não podem ser usados antes da declaração.
+    // =============================================================
+    (function exemploHoisting() {
+        var antes = valorVar; // undefined (var é hoisted)
+        var valorVar = 'Disponível';
+
+        let mensagem;
+        try {
+            // Acessar let antes de declarar lança ReferenceError (TDZ - Temporal Dead Zone)
+            const teste = valorLet;
+            mensagem = teste;
+        } catch (erro) {
+            mensagem = erro.name + ': ' + erro.message;
+        }
+        let valorLet = 'Disponível após declaração';
+
+        registrar({
+            titulo: '4) Hoisting',
+            comentario: 'var é içado como undefined; let/const ficam na “temporal dead zone” até a linha de declaração.',
+            codigo: String.raw`var antes = valorVar; // undefined
+var valorVar = 'Disponível';
+let valorLet = 'Disponível após declarar';`,
+            resultado: `var antes = ${antes} | acesso precoce a let => ${mensagem}`
+        });
+    })();
+
+    // =============================================================
+    // 5) Redeclaração: var permite, let/const não
+    // =============================================================
+    (function exemploRedeclaracao() {
+        var linguagem = 'JavaScript';
+        var linguagem = 'TypeScript'; // redeclarar com var é permitido (mas pode causar bugs)
+
+        let ambiente = 'frontend';
+        try {
+            let ambiente = 'backend';
+            // funciona pois é um novo let dentro do try (escopo diferente)
+        } catch (_) {}
+
+        const mensagem = `linguagem (var) => ${linguagem} | ambiente (let) => ${ambiente}`;
+
+        registrar({
+            titulo: '5) Redeclaração',
+            comentario: 'var aceita redeclaração no mesmo escopo; use com cuidado. let/const bloqueiam redeclarações no mesmo bloco.',
+            codigo: String.raw`var linguagem = 'JavaScript';
+var linguagem = 'TypeScript'; // permitido com var
+let ambiente = 'frontend';
+// let ambiente = 'backend'; // erro se estiver no mesmo escopo`,
+            resultado: mensagem
+        });
+    })();
+
+    // =============================================================
+    // 6) Variáveis globais acidentais (evite!)
+    //    - Esquecer var/let/const cria uma variável global.
+    // =============================================================
+    (function exemploGlobalAcidental() {
+        function criarGlobal() {
+            semDeclaracao = 'Ops! vazei para o escopo global';
+        }
+        criarGlobal();
+
+        const existeNoWindow = typeof window !== 'undefined' && 'semDeclaracao' in window;
+
+        registrar({
+            titulo: '6) Global acidental',
+            comentario: 'Sempre declare com var/let/const. Sem isso, o JavaScript cria uma variável global (mau hábito).',
+            codigo: String.raw`function criarGlobal() {
+    semDeclaracao = 'global sem querer';
+}
+criarGlobal();`,
+            resultado: `window.temGlobal? ${existeNoWindow}`
+        });
+
+        // Limpa para não poluir o ambiente
+        if (typeof window !== 'undefined') delete window.semDeclaracao;
+    })();
+
+    // =============================================================
+    // 7) Dicas de nomenclatura e convenções
+    //    - snake_case, camelCase, PascalCase — camelCase é padrão para variáveis/funções.
+    //    - Use nomes descritivos.
+    // =============================================================
+    (function exemploNomes() {
+        const qtdUsuariosOnline = 128; // padrão camelCase
+        const PRICE_LIMIT = 499.99;    // constantes imutáveis podem usar maiúsculas + underscore
+        const nomeCompleto = 'Ana Silva';
+        const resumo = `Usuarios: ${qtdUsuariosOnline} | Limite: ${PRICE_LIMIT} | Nome: ${nomeCompleto}`;
+
+        registrar({
+            titulo: '7) Boas práticas de nomes',
+            comentario: 'camelCase para variáveis/funções, UPPER_CASE para constantes que não mudam, nomes claros.',
+            codigo: String.raw`const qtdUsuariosOnline = 128;
+const PRICE_LIMIT = 499.99;
+const nomeCompleto = 'Ana Silva';`,
+            resultado: resumo
+        });
+    })();
+
+    // Renderiza os cards na página
+    const container = document.getElementById('exemplos');
+    container.innerHTML = blocos.map(({ titulo, comentario, codigo, resultado }) => `
+        <section class="card">
+            <h2>${titulo}</h2>
+            <p>${comentario}</p>
+            <pre>${codigo.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+            <div class="resultado">${resultado.replace(/\n/g, '<br>')}</div>
+        </section>
+    `).join('');
+    </script>
+
+    <footer>Experimente alterar valores e recarregar a página para observar como o escopo e a mutabilidade afetam o comportamento.</footer>
 </body>
 </html>

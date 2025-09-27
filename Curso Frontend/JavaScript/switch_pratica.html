@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch Practice</title>
+</head>
+<body>
+    <h1>Praticando o comando switch em JavaScript</h1>
+    <script>
+        // O que é o comando switch?
+        // O comando switch é uma estrutura de controle que permite executar diferentes blocos de código com base no valor de uma expressão.
+        // É uma alternativa ao uso de múltiplos if-else quando se tem várias condições a verificar.
+        // Cada case representa uma condição específica, e o bloco de código associado a esse case é executado se a condição for atendida.
+        // O comando break é usado para sair do switch após a execução de um case, evitando a execução dos cases subsequentes.
+        // O case default é opcional e é executado se nenhum dos cases anteriores corresponder ao valor da expressão.
+
+        // Praticando o comando switch em JavaScript
+
+        var parametro = prompt("Digite um número");
+        switch (parseInt(parametro)) {
+            case 1:
+                document.write('Parametro 1<br>')
+                break;
+            case 2:
+                document.write('Parametro 2<br>')
+                break;
+            default:
+                document.write('Default<br>') // executado se nenhum parâmetro corresponder, é opcional
+        }
+
+        // outro exemplo
+        let fruta = prompt("Digite o nome de uma fruta (maçã, banana, laranja):");
+        switch (fruta.toLowerCase()) { // converte a entrada para minúsculas
+            case 'maçã':
+                document.write('<br>Você escolheu maçã.');
+                break;
+            case 'banana':
+                document.write('<br>Você escolheu banana.');
+                break;
+            case 'laranja':
+                document.write('<br>Você escolheu laranja.');
+                break;
+            default:
+                document.write('<br>Fruta desconhecida.'); // executado se nenhum case corresponder
+        }
+    </script>
+</body>
+</html>
