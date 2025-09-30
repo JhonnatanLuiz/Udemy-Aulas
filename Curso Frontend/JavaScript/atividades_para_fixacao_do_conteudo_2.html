@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicação de cálculo do índice de massa corporal (IMC)</title>
+</head>
+<body>
+    <script>
+        // Cálculo do Índice de Massa Corporal (IMC)
+        // O IMC é uma medida que relaciona o peso e a altura de uma pessoa para avaliar se ela está dentro do peso ideal, abaixo ou acima do peso.
+
+        // Fórmula do IMC: IMC = peso / (altura * altura)
+
+        // Solicita ao usuário que insira seu peso em quilogramas
+        let nome = prompt("Digite seu nome:");
+        let alturaCm = parseFloat(prompt("Digite sua altura em centímetros: "));
+        let altura = alturaCm / 100; // agora em metros, sem dividir outra vez
+        let peso = parseFloat(prompt("Digite seu peso em quilogramas: "));
+
+        // Calcula o IMC usando a fórmula M = peso (quilos) ÷ altura²
+        const imc = peso / (altura * altura);
+        const imcFormatado = imc.toFixed(2);
+        // classifica o IMC em categorias
+        let classificacao = "";
+        if (imc < 18.5) {
+            classificacao = "Abaixo do peso";
+        } else if (imc >= 18.5 && imc < 24.9) {
+            classificacao = "Peso normal";
+        } else if (imc >= 25 && imc < 29.9) {
+            classificacao = "Sobrepeso";
+        } else if (imc >= 30 && imc < 34.9) {
+            classificacao = "Obesidade grau I";
+        } else if (imc >= 35 && imc < 39.9) {
+            classificacao = "Obesidade grau II";
+        } else {
+            classificacao = "Obesidade grau III ou mórbida";
+        }
+        // saida deve ser nome da pessoa, valor do imc e a classificação
+        document.write("<h2>Olá, " + nome + "!</h2>");
+        document.write(`<p>Seu IMC é: ${imcFormatado}</p>`);
+        document.write("<p>Classificação: " + classificacao + "</p>");
+
+    </script>
+</body>
+</html>
