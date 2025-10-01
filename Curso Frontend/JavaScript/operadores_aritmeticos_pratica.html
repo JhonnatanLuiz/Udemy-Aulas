@@ -1,27 +1,204 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Operadores Aritméticos</title>
+    <style>
+        body {font-family: "Segoe UI", system-ui, sans-serif; margin: 2.5rem; background: #f8fafc; color: #0f172a; line-height: 1.6;}
+        h1 {margin-top: 0; font-size: 2.2rem;}
+        .intro {max-width: 760px; color: #475569; margin-bottom: 2rem;}
+        .card {background: #fff; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08); border: 1px solid rgba(148, 163, 184, 0.25);}
+        .card h2 {margin-top: 0; font-size: 1.2rem; color: #0f172a;}
+        .comentario {font-size: .95rem; color: #475569; margin-bottom: .9rem;}
+        pre {background: #0f172a; color: #e2e8f0; padding: 1rem 1.25rem; border-radius: 10px; overflow-x: auto; font-family: "Fira Code", Consolas, monospace; font-size: .92rem; margin-bottom: 1rem;}
+        .resultado {background: rgba(37, 99, 235, .1); color: #1d4ed8; border: 1px dashed rgba(37, 99, 235, .35); padding: .9rem 1rem; border-radius: 8px; font-family: "Fira Code", Consolas, monospace;}
+        footer {margin-top: 2.5rem; text-align: center; color: #64748b; font-size: .85rem;}
+    </style>
 </head>
 <body>
     <h1>Praticando Operadores Aritméticos em JavaScript</h1>
-    <script>
-// O que são operadores aritméticos?
-// Operadores aritméticos são símbolos que representam operações matemáticas básicas.
-// Eles são usados para realizar cálculos em números e variáveis.
-// Exemplos comuns incluem:
-// + (adição)
-// - (subtração)
-// * (multiplicação)
-// / (divisão)
-// % (módulo, que retorna o resto da divisão)- sempre retorna o valor inteiro
-// ++ (incremento, que aumenta o valor em 1) ex: var a = 5; a++ resulta em 6
-// -- (decremento, que diminui o valor em 1) ex: var a = 5; a-- resulta em 4
-// Esses operadores são fundamentais para manipular valores numéricos em programas de computador.
-// Vamos praticar com alguns exemplos:
+    <p class="intro">
+        Operadores aritméticos permitem somar, subtrair, multiplicar, dividir e manipular números de várias formas.
+        A seguir, explore exemplos comentados com resultados reais tanto na página quanto no console do navegador.
+    </p>
 
+    <div id="exemplos"></div>
+
+    <script>
+    const blocos = [];
+
+    function registrar({ titulo, comentario, codigo, resultado }) {
+        blocos.push({ titulo, comentario, codigo, resultado });
+        console.log(`[Aritmetica] ${titulo}:`, resultado);
+    }
+
+    // =============================================================
+    // 1) Operações básicas ( +  -  *  /  % )
+    //    - % retorna o resto da divisão inteira.
+    // =============================================================
+    (function exemploBasico() {
+        const num1 = 9;
+        const num2 = 2;
+        const dados = {
+            soma: num1 + num2,
+            subtracao: num1 - num2,
+            multiplicacao: num1 * num2,
+            divisao: num1 / num2,
+            modulo: num1 % num2
+        };
+
+        registrar({
+            titulo: '1) Operações básicas',
+            comentario: 'Adição, subtração, multiplicação, divisão e módulo usando os operadores aritméticos padrão.',
+            codigo: String.raw`const num1 = 9;
+const num2 = 2;
+const soma = num1 + num2;    // 11
+const modulo = num1 % num2;  // 1`,
+            resultado: JSON.stringify(dados, null, 2)
+        });
+    })();
+
+    // =============================================================
+    // 2) Exponenciação e raízes
+    //    - ** é exponenciação; Math.pow é alternativa.
+    //    - Math.sqrt calcula raiz quadrada.
+    // =============================================================
+    (function exemploPotencia() {
+        const base = 3;
+        const expoente = 4;
+        const potencia = base ** expoente;
+        const viaMathPow = Math.pow(base, expoente);
+        const raizQuadrada = Math.sqrt(144);
+
+        registrar({
+            titulo: '2) Exponenciação e raiz',
+            comentario: '** eleva a potência; Math.sqrt retorna a raiz quadrada.',
+            codigo: String.raw`const potencia = 3 ** 4;    // 81
+const viaMathPow = Math.pow(3, 4);
+const raizQuadrada = Math.sqrt(144);`,
+            resultado: `3 ** 4 = ${potencia}\nMath.pow(3,4) = ${viaMathPow}\n√144 = ${raizQuadrada}`
+        });
+    })();
+
+    // =============================================================
+    // 3) Incremento e decremento (pré e pós)
+    //    - ++x incrementa antes de usar; x++ usa o valor antigo e incrementa depois.
+    // =============================================================
+    (function exemploIncremento() {
+        let a = 5;
+        let resultadoPre = ++a; // a vira 6 antes de retornar
+        let b = 5;
+        let resultadoPos = b++; // retorna 5, depois b vira 6
+
+        registrar({
+            titulo: '3) Pré vs Pós incremento',
+            comentario: 'Use com cuidado: pré-incremento altera o valor antes da expressão, pós usa o valor atual e incrementa depois.',
+            codigo: String.raw`let a = 5;
+const pre = ++a; // a=6, pre=6
+let b = 5;
+const pos = b++; // pos=5, b=6`,
+            resultado: `++a => ${resultadoPre} (a = ${a})\nb++ => ${resultadoPos} (b = ${b})`
+        });
+    })();
+
+    // =============================================================
+    // 4) Atribuição composta (+=, -=, *=, /=, %=)
+    //    - Ideia: combinar operação com atribuição, deixando o código enxuto.
+    // =============================================================
+    (function exemploComposta() {
+        let total = 100;
+        total += 25; // 125
+        total -= 40; // 85
+        total *= 2;  // 170
+        total /= 5;  // 34
+        total %= 6;  // 4 (resto de 34 / 6)
+
+        registrar({
+            titulo: '4) Operadores de atribuição composta',
+            comentario: 'total += 10 equivale a total = total + 10. Útil para acumular valores.',
+            codigo: String.raw`let total = 100;
+total += 25; // 125
+// ...
+total %= 6;  // resto = 4`,
+            resultado: `Resultado final: ${total}`
+        });
+    })();
+
+    // =============================================================
+    // 5) Precedência e parênteses
+    //    - Multiplicação e divisão vêm antes da soma/subtração.
+    //    - Parênteses podem alterar a ordem.
+    // =============================================================
+    (function exemploPrecedencia() {
+        const expressao1 = 10 + 20 * 3;      // 10 + 60 => 70
+        const expressao2 = (10 + 20) * 3;    // 30 * 3 => 90
+        const expressao3 = 100 / 5 * 2;      // 20 * 2 => 40
+
+        registrar({
+            titulo: '5) Precedência de operadores',
+            comentario: 'Multiplicação/divisão têm precedência sobre adição/subtração; use parênteses para deixar claro.',
+            codigo: String.raw`10 + 20 * 3        // 70
+(10 + 20) * 3      // 90
+100 / 5 * 2        // 40`,
+            resultado: `Sem parênteses: ${expressao1}\nCom parênteses: ${expressao2}\n100 / 5 * 2 = ${expressao3}`
+        });
+    })();
+
+    // =============================================================
+    // 6) Conversão de string para número com + (unário)
+    //    - "5" + 3 concatena; +"5" + 3 soma.
+    // =============================================================
+    (function exemploConversao() {
+        const precoTexto = '19.90';
+        const precoNumero = +precoTexto; // converte string para number
+        const quantidade = 3;
+        const total = precoNumero * quantidade;
+
+        registrar({
+            titulo: '6) Conversão com operador unário +',
+            comentario: 'O operador + sozinho converte strings numéricas para Number. Útil antes de operar.',
+            codigo: String.raw`const precoTexto = '19.90';
+const precoNumero = +precoTexto; // 19.9`,
+            resultado: `preço (texto) = "${precoTexto}"\npreço (número) = ${precoNumero}\nTotal = ${total.toFixed(2)}`
+        });
+    })();
+
+    // =============================================================
+    // 7) Aplicação prática: orçamento de compra
+    //    - Calcula subtotal, desconto e total com operadores.
+    // =============================================================
+    (function exemploOrcamento() {
+        const precoUnitario = 58.5;
+        const quantidade = 4;
+        const descontoPercentual = 12;
+
+        const subtotal = precoUnitario * quantidade;
+        const desconto = subtotal * (descontoPercentual / 100);
+        const totalComDesconto = subtotal - desconto;
+
+        registrar({
+            titulo: '7) Cenário prático: desconto de compra',
+            comentario: 'Combina multiplicação, divisão e subtração para valorar um carrinho com desconto percentual.',
+            codigo: String.raw`const subtotal = precoUnitario * quantidade;
+const desconto = subtotal * (descontoPercentual / 100);
+const total = subtotal - desconto;`,
+            resultado: `Subtotal = R$ ${subtotal.toFixed(2)}\nDesconto (${descontoPercentual}%) = R$ ${desconto.toFixed(2)}\nTotal = R$ ${totalComDesconto.toFixed(2)}`
+        });
+    })();
+
+    // Renderiza os cards na página
+    const container = document.getElementById('exemplos');
+    container.innerHTML = blocos.map(({ titulo, comentario, codigo, resultado }) => `
+        <section class="card">
+            <h2>${titulo}</h2>
+            <p class="comentario">${comentario}</p>
+            <pre>${codigo.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+            <div class="resultado">${resultado.replace(/\n/g, '<br>')}</div>
+        </section>
+    `).join('');
     </script>
+
+    <footer>💡 Dica: altere os valores de entrada em cada exemplo, recarregue e observe como os operadores afetam o resultado.</footer>
 </body>
 </html>

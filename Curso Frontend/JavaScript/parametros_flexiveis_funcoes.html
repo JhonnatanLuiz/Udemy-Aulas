@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parâmetros flexíveis em funções</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 2rem auto;
+            max-width: 960px;
+            line-height: 1.6;
+            padding: 0 1rem;
+            color: #1f2933;
+            background-color: #f8fafc;
+        }
+
+        h1, h2 {
+            color: #1b4b91;
+        }
+
+        section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 18px -12px rgba(15, 23, 42, 0.45);
+            margin-bottom: 1.5rem;
+        }
+
+        button {
+            background-color: #1b4b91;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-top: 0.75rem;
+        }
+
+        button:hover {
+            background-color: #143569;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        .output {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: #e0f2fe;
+            border-left: 4px solid #1b4b91;
+            border-radius: 6px;
+            font-family: "Fira Code", Consolas, "Courier New", monospace;
+        }
+
+        .output code {
+            background: transparent;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Parâmetros flexíveis em funções JavaScript</h1>
+    <p>
+        JavaScript permite construir funções com parâmetros versáteis, capazes de lidar com diferentes quantidades e tipos de entradas.
+        A seguir, veja três abordagens comuns: parâmetros padrão, parâmetros rest e parâmetros baseados em objetos.
+    </p>
+
+    <section>
+        <h2>1. Parâmetros padrão</h2>
+        <p>
+            Defina um valor inicial para um parâmetro quando ele não for informado. Assim, a função continua funcionando
+            mesmo com argumentos faltantes.
+        </p>
+        <pre><code>function calcularFrete(peso, tipoEntrega = 'normal') {
+    const tabela = { normal: 12, expresso: 20 };
+    const fator = tabela[tipoEntrega] ?? tabela.normal;
+    return peso * fator;
+}
+
+calcularFrete(3);               // usa o padrão "normal"
+calcularFrete(3, 'expresso');    // usa o valor informado
+        </code></pre>
+        <button onclick="executarExemploPadrao()">Executar exemplo</button>
+        <div id="saida-padrao" class="output" aria-live="polite"></div>
+    </section>
+
+    <section>
+        <h2>2. Parâmetros rest</h2>
+        <p>
+            Use <code>...nome</code> para aceitar uma lista variável de argumentos. Dentro da função, o rest vira um array para ser manipulado.
+        </p>
+        <pre><code>function somarTudo(...numeros) {
+    return numeros.reduce((total, numeroAtual) => total + numeroAtual, 0);
+}
+
+somarTudo(2, 4, 6);
+somarTudo(10, 5);
+        </code></pre>
+        <button onclick="executarExemploRest()">Executar exemplo</button>
+        <div id="saida-rest" class="output" aria-live="polite"></div>
+    </section>
+
+    <section>
+        <h2>3. Parâmetros como objeto</h2>
+        <p>
+            Receber um objeto (e opcionalmente desestruturá-lo) deixa a função mais legível e tolerante à ordem dos argumentos.
+            Também podemos definir valores padrão dentro da desestruturação.
+        </p>
+        <pre><code>function cadastrarUsuario({ nome, email, ativo = true }) {
+    return `${nome} (${email}) está ${ativo ? 'ATIVO' : 'INATIVO'}.`;
+}
+
+cadastrarUsuario({ nome: 'Ana', email: 'ana@exemplo.com' });
+cadastrarUsuario({ nome: 'Bruno', email: 'bruno@exemplo.com', ativo: false });
+        </code></pre>
+        <button onclick="executarExemploObjeto()">Executar exemplo</button>
+        <div id="saida-objeto" class="output" aria-live="polite"></div>
+    </section>
+
+    <script>
+        function calcularFrete(peso, tipoEntrega = 'normal') {
+            const tabela = { normal: 12, expresso: 20 };
+            const fator = tabela[tipoEntrega] ?? tabela.normal;
+            return peso * fator;
+        }
+
+        function executarExemploPadrao() {
+            const freteNormal = calcularFrete(3);
+            const freteExpresso = calcularFrete(3, 'expresso');
+
+            const mensagem = [
+                `calcularFrete(3) → ${freteNormal}`,
+                `calcularFrete(3, 'expresso') → ${freteExpresso}`
+            ].join('\n');
+
+            document.getElementById('saida-padrao').textContent = mensagem;
+        }
+
+        function somarTudo(...numeros) {
+            return numeros.reduce((total, numeroAtual) => total + numeroAtual, 0);
+        }
+
+        function executarExemploRest() {
+            const resultado1 = somarTudo(2, 4, 6);
+            const resultado2 = somarTudo(10, 5);
+
+            const mensagem = [
+                'somarTudo(2, 4, 6) → ' + resultado1,
+                'somarTudo(10, 5) → ' + resultado2,
+                'somarTudo() → ' + somarTudo()
+            ].join('\n');
+
+            document.getElementById('saida-rest').textContent = mensagem;
+        }
+
+        function cadastrarUsuario({ nome, email, ativo = true }) {
+            return `${nome} (${email}) está ${ativo ? 'ATIVO' : 'INATIVO'}.`;
+        }
+
+        function executarExemploObjeto() {
+            const usuario1 = cadastrarUsuario({ nome: 'Ana', email: 'ana@exemplo.com' });
+            const usuario2 = cadastrarUsuario({ nome: 'Bruno', email: 'bruno@exemplo.com', ativo: false });
+
+            document.getElementById('saida-objeto').textContent = `${usuario1}\n${usuario2}`;
+        }
+
+        // Executa uma vez para popular os resultados iniciais
+        executarExemploPadrao();
+        executarExemploRest();
+        executarExemploObjeto();
+    </script>
+</body>
+</html>

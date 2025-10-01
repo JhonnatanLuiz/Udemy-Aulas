@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funções em JavaScript - Exemplos Comentados</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+            margin: 0;
+            padding: 0 16px 80px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        header {
+            max-width: 980px;
+            margin: 40px auto 24px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        p.descricao {
+            max-width: 780px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            color: #475569;
+        }
+
+        .exemplos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
+            padding: 24px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 35px rgba(15, 23, 42, 0.12);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin: 0;
+            color: #1d4ed8;
+        }
+
+        .comentario {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 12px 14px;
+            border-radius: 10px;
+            color: #1e40af;
+            font-size: 0.98rem;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .resultado {
+            background: #ecfdf5;
+            color: #047857;
+            border-left: 4px solid #10b981;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-family: 'Fira Code', 'Source Code Pro', monospace;
+        }
+
+        footer {
+            max-width: 980px;
+            margin: 48px auto;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0 12px 60px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Funções em JavaScript: 8 Exemplos Comentados</h1>
+        <p class="descricao">
+            Funções são blocos reutilizáveis que recebem entradas (parâmetros), executam ações e podem devolver um resultado.
+            Explore os exemplos abaixo para ver diferentes formas de construir e utilizar funções no dia a dia.
+        </p>
+    </header>
+
+    <main class="exemplos" id="exemplos"></main>
+
+    <script>
+    const blocos = [];
+    const formatCode = (lines) => lines.join('\n');
+    const escapeHtml = (code) =>
+        code
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+    function registrar({ titulo, comentario, codigo, resultado }) {
+        blocos.push({ titulo, comentario, codigo, resultado });
+        console.log(`[Função] ${titulo}:`, resultado);
+    }
+
+    // =============================================================
+    // 1) Função declarada (tradicional)
+    // =============================================================
+    function saudacao(nome) {
+        return `Olá, ${nome}!`;
+    }
+    const codigoSaudacao = formatCode([
+        'function saudacao(nome) {',
+        "    return `Olá, ${nome}!`;", // Corrigido aqui
+        '}',
+        "saudacao('Maria');"
+    ]);
+
+    registrar({
+        titulo: '1) Função declarada',
+        comentario: 'Função tradicional, pode ser chamada antes da declaração por causa do hoisting.',
+        codigo: codigoSaudacao,
+        resultado: saudacao('Maria')
+    });
+
+    // =============================================================
+    // 2) Função expressão (atribuída a variável)
+    // =============================================================
+    const dobro = function(x) {
+        return x * 2;
+    };
+    const codigoDobro = formatCode([
+        'const dobro = function(x) {',
+        '    return x * 2;',
+        '};',
+        'dobro(7);'
+    ]);
+
+    registrar({
+        titulo: '2) Função expressão',
+        comentario: 'Função atribuída a uma variável; não sofre hoisting.',
+        codigo: codigoDobro,
+        resultado: dobro(7)
+    });
+
+    // =============================================================
+    // 3) Arrow function (função de seta)
+    // =============================================================
+    const soma = (a, b) => a + b;
+    const codigoSoma = formatCode([
+        'const soma = (a, b) => a + b;',
+        'soma(3, 5);'
+    ]);
+
+    registrar({
+        titulo: '3) Arrow function',
+        comentario: 'Sintaxe curta, não tem seu próprio this. Ótima para funções simples.',
+        codigo: codigoSoma,
+        resultado: soma(3, 5)
+    });
+
+    // =============================================================
+    // 4) Função sem parâmetros
+    // =============================================================
+    function mostrarDataAtual() {
+        return new Date().toLocaleDateString('pt-BR');
+    }
+    const codigoData = formatCode([
+        'function mostrarDataAtual() {',
+        "    return new Date().toLocaleDateString('pt-BR');",
+        '}',
+        'mostrarDataAtual();'
+    ]);
+
+    registrar({
+        titulo: '4) Sem parâmetros',
+        comentario: 'Função que não recebe argumentos, apenas executa uma ação.',
+        codigo: codigoData,
+        resultado: mostrarDataAtual()
+    });
+
+    // =============================================================
+    // 5) Função com valor padrão
+    // =============================================================
+    function multiplicar(a, b = 2) {
+        return a * b;
+    }
+    const codigoMultiplicar = formatCode([
+        'function multiplicar(a, b = 2) {',
+        '    return a * b;',
+        '}',
+        'multiplicar(4); // 8',
+        'multiplicar(4, 3); // 12'
+    ]);
+
+    registrar({
+        titulo: '5) Parâmetro com valor padrão',
+        comentario: 'Se b não for informado, assume 2. Evita undefined em cálculos.',
+        codigo: codigoMultiplicar,
+        resultado: `multiplicar(4) = ${multiplicar(4)} | multiplicar(4,3) = ${multiplicar(4,3)}`
+    });
+
+    // =============================================================
+    // 6) Função como callback
+    // =============================================================
+    const nomes = ['Ana', 'Bia', 'Carlos'];
+    const nomesMaiusculos = nomes.map(function(nome) {
+        return nome.toUpperCase();
+    });
+    const codigoCallback = formatCode([
+        "const nomes = ['Ana', 'Bia', 'Carlos'];",
+        'const nomesMaiusculos = nomes.map(function(nome) {',
+        '    return nome.toUpperCase();',
+        '});'
+    ]);
+
+    registrar({
+        titulo: '6) Função como callback',
+        comentario: 'Função passada como argumento para outra função (ex: map, filter, forEach).',
+        codigo: codigoCallback,
+        resultado: nomesMaiusculos.join(', ')
+    });
+
+    // =============================================================
+    // 7) Função recursiva
+    // =============================================================
+    function fatorial(n) {
+        if (n <= 1) return 1;
+        return n * fatorial(n - 1);
+    }
+    const codigoFatorial = formatCode([
+        'function fatorial(n) {',
+        '    if (n <= 1) return 1;',
+        '    return n * fatorial(n - 1);',
+        '}',
+        'fatorial(5);'
+    ]);
+
+    registrar({
+        titulo: '7) Função recursiva',
+        comentario: 'Função que chama a si mesma para resolver problemas que podem ser divididos em partes menores.',
+        codigo: codigoFatorial,
+        resultado: fatorial(5)
+    });
+
+    // =============================================================
+    // 8) Função anônima imediatamente invocada (IIFE)
+    // =============================================================
+    const resultadoIIFE = (function() {
+        let x = 10;
+        let y = 20;
+        return x + y;
+    })();
+    const codigoIIFE = formatCode([
+        '(function() {',
+        '    let x = 10;',
+        '    let y = 20;',
+        '    return x + y;',
+        '})();'
+    ]);
+
+    registrar({
+        titulo: '8) IIFE (Immediately Invoked Function Expression)',
+        comentario: 'Função sem nome, executada assim que definida. Útil para criar escopos isolados.',
+        codigo: codigoIIFE,
+        resultado: resultadoIIFE
+    });
+
+    const container = document.getElementById('exemplos');
+    container.innerHTML = blocos.map(({ titulo, comentario, codigo, resultado }) => `
+        <section class="card">
+            <h2>${titulo}</h2>
+            <p class="comentario">${comentario}</p>
+            <pre>${escapeHtml(codigo)}</pre>
+            <div class="resultado">${resultado}</div>
+        </section>
+    `).join('');
+    </script>
+
+    <footer>💡 Dica: altere os valores nos exemplos e recarregue para ver diferentes resultados. Funções são a base da lógica em JavaScript!</footer>
+</body>
+</html>

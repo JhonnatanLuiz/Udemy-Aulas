@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escopo de variáveis no JavaScript</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 2rem auto;
+            max-width: 960px;
+            padding: 0 1.5rem;
+            line-height: 1.7;
+            color: #111827;
+            background: #f8fafc;
+        }
+
+        h1, h2 {
+            color: #1d4ed8;
+        }
+
+        section {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 12px 30px -20px rgba(15, 23, 42, 0.4);
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: "Fira Code", Consolas, "Courier New", monospace;
+        }
+
+        #saida {
+            white-space: pre-wrap;
+            background: #e0f2fe;
+            border-left: 4px solid #1d4ed8;
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: "Fira Code", Consolas, "Courier New", monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Explorando escopos de variáveis</h1>
+    <p>
+        Em JavaScript, o escopo determina onde uma variável é visível. Abaixo você encontra exemplos comentados que cobrem o escopo global,
+        de função, de bloco, além do escopo léxico (closures) e um caso clássico envolvendo loops assíncronos.
+    </p>
+
+    <section>
+        <h2>Exemplo 1 — Escopo global vs. escopo de função</h2>
+        <p>
+            Variáveis declaradas fora de funções ficam no escopo global. Uma função pode ler essas variáveis, mas o inverso não é verdadeiro:
+            variáveis criadas dentro da função permanecem isoladas.
+        </p>
+        <pre><code>var globalVar = 'Eu sou global';
+
+function exemploEscopo() {
+    var localVar = 'Eu sou local';
+    // Dentro da função é possível acessar tanto a global quando a local
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>Exemplo 2 — Escopo de bloco com <code>let</code> e <code>const</code></h2>
+        <p>
+            A palavra-chave <code>var</code> ignora blocos (<code>if</code>, <code>for</code>, etc.). Já <code>let</code> e <code>const</code> respeitam o limite do bloco em que foram declaradas.
+        </p>
+        <pre><code>if (true) {
+    var usandoVar = 'var dentro do bloco';
+    let usandoLet = 'let dentro do bloco';
+    const usandoConst = 'const dentro do bloco';
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>Exemplo 3 — Escopo léxico e closures</h2>
+        <p>
+            Funções internas lembram o ambiente em que foram criadas. Esse "pacote" de variáveis que acompanha a função é a closure.
+            Assim, mesmos após a função externa terminar, a interna ainda acessa seus dados.
+        </p>
+        <pre><code>function criarContador(passo = 1) {
+    let total = 0;
+    return function incrementar() {
+        total += passo;
+        return total;
+    };
+}</code></pre>
+    </section>
+
+    <section>
+        <h2>Exemplo 4 — Escopo em loops assíncronos</h2>
+        <p>
+            Antes do ES2015, era comum ver <code>var</code> causando resultados inesperados em callbacks dentro de loops. Com <code>let</code>, cada
+            iteração possui o próprio escopo, preservando o valor correto.
+        </p>
+        <pre><code>for (var i = 0; i < 3; i++) {
+    setTimeout(() => console.log('var i', i));
+}
+
+for (let j = 0; j < 3; j++) {
+    setTimeout(() => console.log('let j', j));
+}</code></pre>
+    </section>
+
+    <h2>Saída das demonstrações</h2>
+    <div id="saida" aria-live="polite"></div>
+
+    <script>
+        const linhas = [];
+
+        function registrar(mensagem) {
+            linhas.push(mensagem);
+            console.log(mensagem);
+            document.getElementById('saida').textContent = linhas.join('\n');
+        }
+
+        registrar('--- Exemplo 1: global vs. local ---');
+        var globalVar = 'Eu sou global';
+
+        function exemploEscopo() {
+            var localVar = 'Eu sou local';
+            registrar(`Dentro da função: ${globalVar}`);
+            registrar(`Dentro da função: ${localVar}`);
+        }
+
+        exemploEscopo();
+        registrar(`Fora da função: ${globalVar}`);
+        try {
+            registrar(`Fora da função: ${localVar}`);
+        } catch (erro) {
+            registrar(`Fora da função: localVar não está acessível (${erro.message})`);
+        }
+
+        registrar('\n--- Exemplo 2: escopo de bloco (let/const) ---');
+        if (true) {
+            var usandoVar = 'var visível fora do bloco';
+            let usandoLet = 'let restrito ao bloco';
+            const usandoConst = 'const restrito ao bloco';
+            registrar(`Dentro do bloco: ${usandoVar}`);
+            registrar(`Dentro do bloco: ${usandoLet}`);
+            registrar(`Dentro do bloco: ${usandoConst}`);
+        }
+        registrar(`Fora do bloco, usandoVar: ${usandoVar}`);
+        try {
+            registrar(`Fora do bloco, usandoLet: ${usandoLet}`);
+        } catch (erro) {
+            registrar(`Fora do bloco, usandoLet não existe (${erro.message})`);
+        }
+        try {
+            registrar(`Fora do bloco, usandoConst: ${usandoConst}`);
+        } catch (erro) {
+            registrar(`Fora do bloco, usandoConst não existe (${erro.message})`);
+        }
+
+        registrar('\n--- Exemplo 3: escopo léxico (closure) ---');
+        function criarContador(passo = 1) {
+            let total = 0;
+            return function incrementar() {
+                total += passo;
+                registrar(`Incrementou +${passo}: total agora é ${total}`);
+                return total;
+            };
+        }
+
+        const contadorDeDois = criarContador(2);
+        contadorDeDois();
+        contadorDeDois();
+        try {
+            registrar(`Acessando total diretamente: ${total}`);
+        } catch (erro) {
+            registrar(`Não é possível acessar "total" fora da closure (${erro.message})`);
+        }
+
+        registrar('\n--- Exemplo 4: loops assíncronos ---');
+        registrar('Usando var:');
+        for (var i = 0; i < 3; i++) {
+            setTimeout(() => registrar(`setTimeout com var → i = ${i}`), 0);
+        }
+        registrar('Usando let:');
+        for (let j = 0; j < 3; j++) {
+            setTimeout(() => registrar(`setTimeout com let → j = ${j}`), 0);
+        }
+
+        registrar('\n--- Bônus: hoisting ---');
+        registrar(`Resultado antes da declaração (var) → ${hoistedVar}`);
+        var hoistedVar = 'Eu fui elevado, mas só ganho valor agora';
+        registrar(`Resultado depois da declaração (var) → ${hoistedVar}`);
+
+        // Atualiza a saída novamente após os callbacks assíncronos
+        setTimeout(() => {
+            document.getElementById('saida').textContent = linhas.join('\n');
+        }, 20);
+    </script>
+</body>
+</html>
