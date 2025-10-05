@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funções de Callback</title>
+</head>
+<body>
+    <script>
+        /*
+         * Exemplo 1 — Callbacks para lidar com sucesso e erro
+         * ---------------------------------------------------
+         * Uma função de callback é simplesmente uma função passada como argumento para outra função.
+         * Aqui simulamos uma operação assíncrona (como uma requisição HTTP) que, ao terminar,
+         * chama o callback adequado: sucesso ou erro.
+         */
+        function operacaoAssincrona(sucesso, callbackSucesso, callbackErro) {
+            // Normaliza o valor recebido (aceita true/false booleanos ou strings "true"/"false")
+            const deuCerto = sucesso === true || sucesso === "true";
+
+            setTimeout(() => {
+                if (deuCerto) {
+                    callbackSucesso("Operação realizada com sucesso!");
+                } else {
+                    callbackErro("Ocorreu um erro na operação.");
+                }
+            }, 1000);
+        }
+
+        function exibirMensagemSucesso(mensagem) {
+            console.log("[SUCESSO]", mensagem);
+        }
+
+        function exibirMensagemErro(mensagem) {
+            console.error("[ERRO]", mensagem);
+        }
+
+    // Passe true para simular sucesso e false para simular falha
+    operacaoAssincrona(false, exibirMensagemSucesso, exibirMensagemErro);
+
+        /*
+         * Exemplo 2 — Callbacks síncronos com métodos de array (map)
+         * ----------------------------------------------------------
+         * Métodos como map, filter e forEach recebem funções que serão executadas para cada item.
+         * Isso também é um uso clássico de callbacks, só que no contexto síncrono (sem esperar algo assíncrono terminar).
+         */
+        const numeros = [1, 2, 3, 4];
+        const dobrados = numeros.map(function (numeroAtual) {
+            return numeroAtual * 2;
+        });
+        console.log("Dobro de cada número:", dobrados);
+
+        /*
+         * Exemplo 3 — Função que aceita um callback para personalizar o comportamento
+         * ---------------------------------------------------------------------------
+         * Criamos uma função utilitária `processarLista` que recebe uma lista e um callback.
+         * A utilidade da função dependerá do que o callback fizer com cada item.
+         */
+        function processarLista(lista, callback) {
+            for (let i = 0; i < lista.length; i++) {
+                callback(lista[i], i);
+            }
+        }
+
+        const nomes = ["Ana", "Bruno", "Carla"];
+        processarLista(nomes, function (nome, indice) {
+            console.log(`Pessoa ${indice}: ${nome}`);
+        });
+
+        /*
+         * Exemplo 4 — Wrappers que recebem callbacks (simulando um "before/after")
+         * -------------------------------------------------------------------------
+         * O callback recebido permite ao usuário definir o que será executado dentro do wrapper.
+         */
+        function executarComLog(callback) {
+            console.log("Iniciando execução...");
+            callback(); // executa o comportamento personalizado
+            console.log("Execução finalizada!");
+        }
+
+        executarComLog(() => {
+            console.log("Rodando meu código dentro do wrapper.");
+        });
+
+        /*
+         * Exemplo 5 — Encadeando callbacks para simular fluxo assíncrono
+         * --------------------------------------------------------------
+         * Cada etapa recebe uma função para chamar quando terminar.
+         * Observe que esse padrão pode ficar verboso ("callback hell"), por isso Promises e async/await são populares.
+         */
+        function buscarUsuario(id, callback) {
+            setTimeout(() => {
+                callback({ id, nome: "Usuário " + id });
+            }, 500);
+        }
+
+        function buscarPedidos(idUsuario, callback) {
+            setTimeout(() => {
+                callback([
+                    { id: 1, total: 35.9 },
+                    { id: 2, total: 52.3 }
+                ]);
+            }, 700);
+        }
+
+        buscarUsuario(7, function (usuario) {
+            console.log("Usuário carregado:", usuario);
+            buscarPedidos(usuario.id, function (pedidos) {
+                console.log("Pedidos do usuário:", pedidos);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funções e Strings</title>
+</head>
+<body>
+    <script>
+        // propriedade length
+        // retorna o tamanho da string
+        const nome = 'Jhonnatan';
+        console.log('nome.length =', nome.length); // 9
+
+        // método charAt
+        // retorna o caractere na posição especificada
+        const primeiraLetra = nome.charAt(0);
+        console.log('primeiraLetra =', primeiraLetra); // 'J'
+
+        // método indexOf
+        // retorna a posição da primeira ocorrência de um caractere
+        const posicaoDaLetraN = nome.indexOf('n');
+        console.log('posicaoDaLetraN =', posicaoDaLetraN); // 2
+
+        // método replace
+        // substitui parte da string por outra
+        const nomeModificado = nome.replace('n', 'x');
+        console.log('nomeModificado =', nomeModificado); // 'Jhoxnatan'
+
+        // método substring
+        // extrai uma parte da string entre duas posições
+        const nomeSubstr = nome.substring(2, 5);
+        console.log('nomeSubstr =', nomeSubstr); // 'onn'
+
+        // método toLowerCase
+        // converte a string para minúsculas
+        const nomeMinusculo = nome.toLowerCase();
+        console.log('nomeMinusculo =', nomeMinusculo); // 'jhonnatan'
+
+        // método toUpperCase
+        // converte a string para maiúsculas
+        const nomeMaiusculo = nome.toUpperCase();
+        console.log('nomeMaiusculo =', nomeMaiusculo); // 'JHONNATAN'
+
+        // método trim
+        // remove espaços em branco do início e fim da string
+        const nomeComEspacos = '   Jhonnatan   ';
+        const nomeTrim = nomeComEspacos.trim();
+        console.log('nomeTrim =', nomeTrim); // 'Jhonnatan'
+
+        // método split
+        // divide a string em um array com base em um separador
+        const nomeArray = nome.split('');
+        console.log('nomeArray =', nomeArray); // ['J', 'h', 'o', 'n', 'n', 'a', 't', 'a', 'n']
+
+        // método includes
+        // verifica se a string contém uma substring
+        const temLetraA = nome.includes('a');
+        console.log('temLetraA =', temLetraA); // true
+
+        // método startsWith
+        // verifica se a string começa com uma substring
+        const comecaComJ = nome.startsWith('J');
+        console.log('comecaComJ =', comecaComJ); // true
+    </script>
+</body>
+</html>

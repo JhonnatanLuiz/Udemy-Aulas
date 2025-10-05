@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funções Anônimas</title>
+</head>
+<body>
+    <script>
+        /*
+         * EXEMPLO 1 — Função anônima atribuída a uma constante
+         * ----------------------------------------------------
+         * Em vez de nomearmos a função diretamente, guardamos a referência em uma variável.
+         * O nome percebido pela engine vira o identificador da constante (`somar`).
+         */
+        const somar = function (a, b) {
+            return a + b;
+        };
+
+        console.log('somar(2, 3) =', somar(2, 3));
+
+        /*
+         * EXEMPLO 2 — Função anônima dentro de um callback
+         * -------------------------------------------------
+         * Como o método `map` só precisa de comportamento (e não do nome) usamos uma função
+         * inline. Ela recebe cada item da lista, calcula e devolve o novo valor.
+         */
+        const numeros = [1, 2, 3];
+        const dobrados = numeros.map(function (numero) {
+            return numero * 2;
+        });
+
+        console.log('numeros.map(...) =', dobrados);
+
+        /*
+         * EXEMPLO 3 — IIFE (Immediately Invoked Function Expression)
+         * ---------------------------------------------------------
+         * Uma função anônima embrulhada entre parênteses cria um escopo isolado imediatamente.
+         * Ótimo para proteger variáveis temporárias.
+         */
+        (function () {
+            const mensagemPrivada = 'Executado assim que carregamos o script';
+            console.log('IIFE →', mensagemPrivada);
+        })();
+
+        /*
+         * EXEMPLO 4 — Técnica de wrapper (decorator simples)
+         * --------------------------------------------------
+         * Funções anônimas são perfeitas para construir funções de ordem superior que "embrulham"
+         * outras funções com comportamentos extras. Abaixo criamos um wrapper de logging.
+         */
+        function comLogger(funcaoOriginal) {
+            return function (...args) {
+                console.log(`[wrapper] Chamando ${funcaoOriginal.name || 'função anônima'} com`, args);
+                const resultado = funcaoOriginal(...args);
+                console.log('[wrapper] Resultado →', resultado);
+                return resultado;
+            };
+        }
+
+        const multiplicar = (a, b) => a * b;
+        const multiplicarComLogger = comLogger(multiplicar);
+
+        multiplicarComLogger(4, 5);
+
+        /*
+         * EXEMPLO 5 — Wrapper para controlar frequência de chamadas (throttle simplificado)
+         * ---------------------------------------------------------------------------------
+         * Retornamos uma função anônima que lembra a hora da última execução e bloqueia novas
+         * chamadas até que o intervalo mínimo seja respeitado.
+         */
+        function throttle(funcao, intervaloMs) {
+            let ultimaExecucao = 0;
+
+            return function (...args) {
+                const agora = Date.now();
+
+                if (agora - ultimaExecucao >= intervaloMs) {
+                    ultimaExecucao = agora;
+                    return funcao(...args);
+                }
+
+                console.log('[throttle] Ignorado: chamado cedo demais.');
+            };
+        }
+
+        const salvarDados = throttle(function (payload) {
+            console.log('Salvando dados →', payload);
+        }, 2000);
+
+        salvarDados({ usuario: 'Ana' }); // executa
+        salvarDados({ usuario: 'Ana', tentativa: 2 }); // provavelmente bloqueado (intervalo curto)
+        setTimeout(() => salvarDados({ usuario: 'Ana', tentativa: 3 }), 2200); // executa após o intervalo
+
+    </script>
+</body>
+</html>
