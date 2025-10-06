@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funções de Data</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width:900px; margin:20px auto; padding:10px; }
+    h1 { color:#2c3e50 }
+    section { border:1px solid #ddd; padding:12px; border-radius:6px; margin-bottom:16px; background:#fafafa }
+    .resultado { background:#eee; padding:10px; border-radius:4px; margin-top:8px }
+    .clocks { display:flex; gap:12px; flex-wrap:wrap }
+    .clock-card { border:1px solid #ddd; padding:10px; border-radius:6px; min-width:220px; background:#fff }
+    button { margin-top:6px }
+    code { background:#f3f3f3; padding:2px 6px; border-radius:4px }
+    .clock-display-large { font-size:1.4rem }
+    .clock-display-raf { font-size:1.2rem }
+  </style>
+</head>
+<body>
+  <h1>Funções de Data - Aula</h1>
+
+  <section id="sec-datas">
+    <h2>Operações com objetos Date</h2>
+    <p>Exemplos de adicionar/remover dias, meses, anos e calcular diferenças.</p>
+
+    <div class="clock-card">
+      <strong>Data base (agora):</strong>
+      <div id="data-agora" class="resultado"></div>
+
+      <strong>Exemplos (operações):</strong>
+      <div id="resultado-operacoes" class="resultado"></div>
+
+      <strong>Comparação entre datas:</strong>
+      <div id="resultado-comparacao" class="resultado"></div>
+
+      <strong>Diferença entre datas:</strong>
+      <div id="resultado-diferenca" class="resultado"></div>
+    </div>
+  </section>
+
+  <section id="sec-relogios">
+    <h2>Relógios (comparativo)</h2>
+    <p>Três abordagens para atualizar horas no navegador sem recarregar:</p>
+    <div class="clocks">
+      <!-- setInterval -->
+      <div class="clock-card">
+        <h3>setInterval (simples)</h3>
+        <div id="clock-interval" class="clock-display-large">--:--:--</div>
+        <div>
+          <button id="btn-start-interval">Iniciar</button>
+          <button id="btn-stop-interval">Parar</button>
+        </div>
+        <small>Atualiza a cada 1000ms; pode acumular pequeno drift dependendo do event loop.</small>
+      </div>
+
+      <!-- setTimeout preciso -->
+      <div class="clock-card">
+        <h3>setTimeout ajustado (mais preciso)</h3>
+        <div id="clock-accurate" class="clock-display-large">--:--:--</div>
+        <div>
+          <button id="btn-start-accurate">Iniciar</button>
+          <button id="btn-stop-accurate">Parar</button>
+        </div>
+        <small>Reagenda para o próximo segundo exato (corrige drift acumulado).</small>
+      </div>
+
+      <!-- requestAnimationFrame -->
+      <div class="clock-card">
+        <h3>requestAnimationFrame (alta frequência)</h3>
+        <div id="clock-raf" class="clock-display-raf">--:--:--.000</div>
+        <div>
+          <button id="btn-start-raf">Iniciar</button>
+          <button id="btn-stop-raf">Parar</button>
+        </div>
+        <small>Atualiza com a taxa de frames; útil para animações e mostrar milissegundos.</small>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-notas">
+    <h2>Notas rápidas</h2>
+    <ul>
+      <li><code>setInterval</code> é simples e suficiente para a maioria dos relógios.</li>
+      <li>Para evitar drift use um <code>setTimeout</code> recursivo que calcula o tempo até o próximo segundo.</li>
+      <li><code>requestAnimationFrame</code> é indicado para atualizações de alta frequência (vídeos/anim).</li>
+    </ul>
+  </section>
+
+  <script>
+    // ---------- SEÇÃO: datas e operações ----------
+    (function() {
+      const now = new Date();
+      document.getElementById('data-agora').textContent = now.toString();
+
+      // Clone da data para manipular sem alterar 'now'
+      function cloneDate(d) { return new Date(d.getTime()); }
+
+      // Operações exemplares
+      const d1 = cloneDate(now);
+      d1.setDate(d1.getDate() + 5); // adiciona 5 dias
+
+      const d2 = cloneDate(d1);
+      d2.setDate(d2.getDate() - 10); // remove 10 dias (do d1)
+
+      const d3 = cloneDate(now);
+      d3.setMonth(d3.getMonth() + 2); // adiciona 2 meses
+
+      const d4 = cloneDate(d3);
+      d4.setMonth(d4.getMonth() - 4); // remove 4 meses
+
+      const d5 = cloneDate(now);
+      d5.setFullYear(d5.getFullYear() + 3); // adiciona 3 anos
+
+      const d6 = cloneDate(d5);
+      d6.setFullYear(d6.getFullYear() - 10); // remove 10 anos
+
+      const elOps = document.getElementById('resultado-operacoes');
+      elOps.innerHTML = '';
+      elOps.innerHTML += `<div>Agora: ${now.toLocaleString()}</div>`;
+      elOps.innerHTML += `<div>+5 dias: ${d1.toLocaleDateString()}</div>`;
+      elOps.innerHTML += `<div>-10 dias (do resultado anterior): ${d2.toLocaleDateString()}</div>`;
+      elOps.innerHTML += `<div>+2 meses: ${d3.toLocaleDateString()}</div>`;
+      elOps.innerHTML += `<div>-4 meses (do resultado anterior): ${d4.toLocaleDateString()}</div>`;
+      elOps.innerHTML += `<div>+3 anos: ${d5.toLocaleDateString()}</div>`;
+      elOps.innerHTML += `<div>-10 anos (do resultado anterior): ${d6.toLocaleDateString()}</div>`;
+
+      // Comparação de datas (exemplo fixo, usando as datas do anexo)
+      const data1 = new Date(2025, 10, 6); // atenção: mês 0-index
+      const data2 = new Date(2023, 10, 25);
+      const elComp = document.getElementById('resultado-comparacao');
+      if (data1.getTime() > data2.getTime()) {
+        elComp.textContent = `${data1.toDateString()} > ${data2.toDateString()}`;
+      } else if (data1.getTime() < data2.getTime()) {
+        elComp.textContent = `${data1.toDateString()} < ${data2.toDateString()}`;
+      } else {
+        elComp.textContent = `${data1.toDateString()} == ${data2.toDateString()}`;
+      }
+
+      // Diferença entre datas (dias, meses aproximados, anos aproximados)
+      const diffMs = Math.abs(data1.getTime() - data2.getTime());
+      const dias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+      const meses = Math.ceil(dias / 30);
+      const anos = Math.ceil(dias / 365);
+      const elDiff = document.getElementById('resultado-diferenca');
+      elDiff.innerHTML = '';
+      elDiff.innerHTML += `<div>Diferença em ms: ${diffMs}</div>`;
+      elDiff.innerHTML += `<div>Diferença em dias: ${dias}</div>`;
+      elDiff.innerHTML += `<div>Diferença em meses (aprox): ${meses}</div>`;
+      elDiff.innerHTML += `<div>Diferença em anos (aprox): ${anos}</div>`;
+    })();
+
+    // ---------- SEÇÃO: relógios ----------
+    (function(){
+      // Utilitário formatação hh:mm:ss
+      function formatTime(date) {
+        const h = String(date.getHours()).padStart(2,'0');
+        const m = String(date.getMinutes()).padStart(2,'0');
+        const s = String(date.getSeconds()).padStart(2,'0');
+        return `${h}:${m}:${s}`;
+      }
+
+      // ---------- setInterval (simples) ----------
+      let intervalId = null;
+      const elInterval = document.getElementById('clock-interval');
+      function updateIntervalClock(){
+        elInterval.textContent = formatTime(new Date());
+      }
+      document.getElementById('btn-start-interval').addEventListener('click', function(){
+        if (intervalId) return;
+        updateIntervalClock();
+        intervalId = setInterval(updateIntervalClock, 1000);
+      });
+      document.getElementById('btn-stop-interval').addEventListener('click', function(){
+        if (!intervalId) return;
+        clearInterval(intervalId);
+        intervalId = null;
+      });
+
+      // Start automatically (opcional)
+      // document.getElementById('btn-start-interval').click();
+
+      // ---------- setTimeout preciso (ajusta para o próximo segundo) ----------
+      let accurateTimeoutId = null;
+      let accurateRunning = false;
+      const elAccurate = document.getElementById('clock-accurate');
+
+      function tickAccurate(){
+        if (!accurateRunning) return;
+        const now = new Date();
+        elAccurate.textContent = formatTime(now);
+        // recalcula para o próximo segundo exato
+        const msToNext = 1000 - now.getMilliseconds();
+        accurateTimeoutId = setTimeout(tickAccurate, msToNext);
+      }
+      document.getElementById('btn-start-accurate').addEventListener('click', function(){
+        if (accurateRunning) return;
+        accurateRunning = true;
+        tickAccurate();
+      });
+      document.getElementById('btn-stop-accurate').addEventListener('click', function(){
+        accurateRunning = false;
+        if (accurateTimeoutId) { clearTimeout(accurateTimeoutId); accurateTimeoutId = null; }
+      });
+
+      // ---------- requestAnimationFrame (mostra ms) ----------
+      let rafId = null;
+      const elRaf = document.getElementById('clock-raf');
+      function rafLoop(){
+        const now = new Date();
+        // mostra com ms para comparação visual
+        const hh = String(now.getHours()).padStart(2,'0');
+        const mm = String(now.getMinutes()).padStart(2,'0');
+        const ss = String(now.getSeconds()).padStart(2,'0');
+        const ms = String(now.getMilliseconds()).padStart(3,'0');
+        elRaf.textContent = `${hh}:${mm}:${ss}.${ms}`;
+        rafId = requestAnimationFrame(rafLoop);
+      }
+      document.getElementById('btn-start-raf').addEventListener('click', function(){
+        if (rafId) return;
+        rafLoop();
+      });
+      document.getElementById('btn-stop-raf').addEventListener('click', function(){
+        if (!rafId) return;
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      });
+
+      // Optionally start all clocks so the user sees them immediately
+      // Start setInterval and accurate by default for convenience
+      updateIntervalClock(); intervalId = setInterval(updateIntervalClock, 1000);
+      accurateRunning = true; tickAccurate();
+      // leave RAF stopped by default so user can start/stop manually
+    })();
+  </script>
+
+  <section id="como-testar">
+    <h2>Como testar</h2>
+    <ol>
+      <li>Abra o arquivo <code>funcoes_data.html</code> no seu navegador (clique duas vezes ou arraste para a janela do navegador).</li>
+      <li>Na seção "Relógios (comparativo)", use os botões "Iniciar" e "Parar" para comparar os três métodos.</li>
+      <li>Observe que o relógio <strong>setInterval</strong> atualiza a cada segundo; o <strong>setTimeout ajustado</strong> tenta corrigir drift; o <strong>requestAnimationFrame</strong> mostra milissegundos com alta taxa de atualização.</li>
+      <li>Abra o console do navegador (F12) se quiser inspecionar variáveis ou registrar tempos adicionais.</li>
+    </ol>
+  </section>
+
+</body>
+</html>
