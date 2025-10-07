@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cálculo aritmético: soma e subtração</title>
+</head>
+<body>
+<script>
+  // Função de cálculo que recebe os mesmos parâmetros pedidos no enunciado
+  function calculo(num1, num2, operacao) {
+    const op = String(operacao).trim().toLowerCase();
+    if (op === 'soma') return num1 + num2;
+    if (op === 'subtração' || op === 'subtracao') return num1 - num2; // aceita com ou sem acento
+    return null; // operação inválida
+  }
+
+  // Fluxo simples e claro de entrada/validação:
+  const entrada1 = prompt('Digite o primeiro número:');
+  if (entrada1 === null) { alert('Operação cancelada.'); }
+  else {
+    const n1 = parseFloat(entrada1.replace(',', '.'));
+    if (Number.isNaN(n1)) { alert('Primeiro número inválido.'); }
+    else {
+      // Aqui pedimos a operação textual conforme o enunciado ('soma' ou 'subtração')
+      const oper = prompt("Digite a operação ('soma' ou 'subtração'):");
+      if (oper === null) { alert('Operação cancelada.'); }
+      else {
+        const entrada2 = prompt('Digite o segundo número:');
+        if (entrada2 === null) { alert('Operação cancelada.'); }
+        else {
+          const n2 = parseFloat(entrada2.replace(',', '.'));
+          if (Number.isNaN(n2)) { alert('Segundo número inválido.'); }
+          else {
+            // Chama a função passando exatamente (num1, num2, operacao)
+            const resultado = calculo(n1, n2, oper);
+            if (resultado === null) {
+              alert("Operação inválida. Use 'soma' ou 'subtração'.");
+            } else {
+              alert(`O resultado é: ${resultado}.`);
+              console.log(`O resultado é: ${resultado}.`);
+            }
+          }
+        }
+      }
+    }
+  }
+</script>
+</body>
+</html>
