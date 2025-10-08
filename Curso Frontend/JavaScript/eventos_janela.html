@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos de Janela em JavaScript</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 20px auto; padding: 20px; background: #f6fbff; color: #123; }
+        .exemplo { background:#fff; border:1px solid #e1eef9; border-radius:8px; padding:16px; margin:16px 0; box-shadow:0 2px 10px rgba(12,38,63,0.04); }
+        h1 { color:#0b6fb0; }
+        .resultado { background:linear-gradient(90deg,#f0f9ff,#ffffff); padding:10px; border-radius:6px; margin-top:10px; font-weight:600; }
+        .area-scroll { height:160px; overflow:auto; border:1px dashed #cbd7e6; padding:8px; border-radius:6px; background:#fbfeff; }
+        .label { font-weight:700; color:#0b6fb0; }
+        .aviso { background:#fff3cd; border:1px solid #ffe69c; padding:8px; border-radius:6px; margin-top:8px; }
+        code { background:#f7f9fb; padding:2px 6px; border-radius:4px; }
+    </style>
+</head>
+<body>
+    <h1>Eventos de Janela em JavaScript — Exemplos Comentados</h1>
+    <p>Exemplos práticos de eventos atrelados à <em>window</em> e ao documento: <code>load</code>, <code>resize</code>, <code>scroll</code>, <code>visibilitychange</code>, <code>beforeunload</code>, <code>online/offline</code> e <code>message</code>.</p>
+
+    <!-- EXEMPLO 1: load -->
+    <div class="exemplo">
+        <h3>1) <code>load</code> — quando a página termina de carregar</h3>
+        <p>O evento <code>load</code> no objeto <code>window</code> é disparado quando todos os recursos (imagens, scripts, etc.) foram carregados. Use-o para inicializar componentes que dependem de recursos externos.</p>
+        <div class="resultado" id="resultado-load">Aguardando carregamento...</div>
+
+        <script>
+            window.addEventListener('load', function() {
+                const el = document.getElementById('resultado-load');
+                el.textContent = 'Página carregada completamente às ' + new Date().toLocaleTimeString();
+                console.log('load event fired');
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 2: resize -->
+    <div class="exemplo">
+        <h3>2) <code>resize</code> — quando a janela é redimensionada</h3>
+        <p>O evento <code>resize</code> é acionado quando as dimensões da janela mudam. Debounce é recomendado para evitar chamadas excessivas.</p>
+        <div class="label">Tamanho atual da janela:</div>
+        <div class="resultado" id="resultado-resize"></div>
+
+        <script>
+            const resEl = document.getElementById('resultado-resize');
+
+            function atualizarDimensoes() {
+                resEl.textContent = `${window.innerWidth} x ${window.innerHeight} px`;
+            }
+
+            // Chamada inicial
+            atualizarDimensoes();
+
+            // Debounce simples: espera 200ms após o último resize
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(atualizarDimensoes, 200);
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 3: scroll -->
+    <div class="exemplo">
+        <h3>3) <code>scroll</code> — monitorando rolagem</h3>
+        <p>O evento <code>scroll</code> pode disparar frequentemente. Use throttling para performance. Também é útil para lazy-loading e mostrar 'back to top'.</p>
+
+        <div class="area-scroll" id="box-scroll">
+            <!-- Conteúdo longo para rolar -->
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+            <p>Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</p>
+            <p>Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.</p>
+            <p>Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent.</p>
+            <p>Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.</p>
+            <p>Curabitur tortor. Pellentesque nibh. Aenean quam.</p>
+            <p>In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem.</p>
+        </div>
+        <div class="resultado" id="resultado-scroll">Posição: 0 px</div>
+
+        <script>
+            const boxScroll = document.getElementById('box-scroll');
+            const resScroll = document.getElementById('resultado-scroll');
+
+            // Throttle simples para limitar atualizações (ex.: 100ms)
+            let lastScroll = 0;
+            boxScroll.addEventListener('scroll', function(e) {
+                const now = Date.now();
+                if (now - lastScroll < 100) return; // ignora se muito próximo
+                lastScroll = now;
+
+                resScroll.textContent = 'Posição: ' + this.scrollTop + ' px';
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 4: visibilitychange -->
+    <div class="exemplo">
+        <h3>4) <code>visibilitychange</code> — quando a aba fica visível/oculta</h3>
+        <p>Útil para pausar timers, parar animações ou reduzir consumo quando o usuário alterna de aba.</p>
+        <div class="resultado" id="resultado-visibility">Visível</div>
+
+        <script>
+            const visEl = document.getElementById('resultado-visibility');
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'hidden') {
+                    visEl.textContent = 'Página oculta — pausa atividades.';
+                    console.log('document hidden');
+                } else {
+                    visEl.textContent = 'Página visível — retome atividades.';
+                    console.log('document visible');
+                }
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 5: beforeunload (avisar ao usuário antes de sair) -->
+    <div class="exemplo">
+        <h3>5) <code>beforeunload</code> — avisar antes de fechar/recargar</h3>
+        <p>Use com parcimônia: navegadores modernos limitam a personalização da mensagem. Retorne uma string para exibir o diálogo padrão.</p>
+        <label><input type="checkbox" id="checkbox-unsaved"> Simule alterações não salvas</label>
+        <div class="aviso">Marque o checkbox para testar o diálogo de saída ao fechar/atualizar a página.</div>
+
+        <script>
+            const checkboxUnsaved = document.getElementById('checkbox-unsaved');
+            window.addEventListener('beforeunload', function(e) {
+                if (checkboxUnsaved.checked) {
+                    // Alguns navegadores ignoram a mensagem personalizada
+                    const mensagem = 'Você tem alterações não salvas. Tem certeza que deseja sair?';
+                    e.returnValue = mensagem; // Chrome
+                    return mensagem; // Firefox
+                }
+                // Se não houver alterações, nada é retornado e o evento não mostra diálogo
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 6: online / offline -->
+    <div class="exemplo">
+        <h3>6) Eventos <code>online</code> / <code>offline</code></h3>
+        <p>Detecte quando a rede é perdida/restaurada para enfileirar ações offline ou alertar o usuário.</p>
+        <div class="resultado" id="status-rede">Status: desconhecido</div>
+
+        <script>
+            const statusRede = document.getElementById('status-rede');
+            function atualizarRede() {
+                statusRede.textContent = navigator.onLine ? 'Status: ONLINE' : 'Status: OFFLINE';
+            }
+            window.addEventListener('online', atualizarRede);
+            window.addEventListener('offline', atualizarRede);
+            atualizarRede();
+        </script>
+    </div>
+
+    <!-- EXEMPLO 7: message (postMessage) -->
+    <div class="exemplo">
+        <h3>7) <code>message</code> — comunicar entre janelas/iframes</h3>
+        <p>Use <code>window.postMessage()</code> para comunicação segura entre janelas/iframes de origem diferente. Valide a origem antes de processar.</p>
+
+        <div class="resultado" id="resultado-message">Nenhuma mensagem recebida.</div>
+
+        <script>
+            const resMsg = document.getElementById('resultado-message');
+            window.addEventListener('message', (e) => {
+                // IMPORTANTE: sempre validar e.origin antes de confiar na mensagem
+                console.log('Mensagem recebida:', e);
+                resMsg.textContent = `Mensagem de ${e.origin}: ${JSON.stringify(e.data)}`;
+            });
+
+            // Exemplo: enviar mensagem para si mesmo (útil em demos)
+            setTimeout(() => {
+                window.postMessage({ tipo: 'demo', texto: 'Olá self!' }, window.location.origin);
+            }, 1000);
+        </script>
+    </div>
+
+    <footer class="exemplo">
+        <strong>Dicas rápidas:</strong>
+        <ul>
+            <li>Use debounce/throttle em <code>resize</code> e <code>scroll</code>.</li>
+            <li>Pauses com <code>visibilitychange</code> economizam recursos.</li>
+            <li>Evite mensagens <code>beforeunload</code> desnecessárias; prejudica UX.</li>
+            <li>Valide origem em <code>message</code> antes de confiar nos dados.</li>
+        </ul>
+    </footer>
+
+</body>
+</html>

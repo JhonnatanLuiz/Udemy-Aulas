@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos de Teclado em JavaScript</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; background: #f7f9fc; color: #222; }
+        .exemplo { background: #fff; border: 1px solid #e3e8ef; border-radius: 8px; padding: 18px; margin: 18px 0; box-shadow: 0 2px 8px rgba(15,23,42,0.04); }
+        .exemplo h3 { margin-top: 0; color: #0b63a7; }
+        .area-teste { padding: 12px; border: 1px dashed #cbd5e1; border-radius: 6px; background: #fbfdff; min-height: 48px; display:flex; align-items:center; gap:8px; }
+        .resultado { background: linear-gradient(90deg,#e6f7ff,#fff); padding:10px; border-radius:6px; margin-top:10px; font-weight:600; }
+        input[type="text"], textarea { padding:8px 10px; border-radius:6px; border:1px solid #cbd5e1; }
+        .tecla { display:inline-block; padding:6px 10px; background:#eef6ff; border:1px solid #cfe8ff; border-radius:6px; margin-right:6px; font-weight:700; }
+        .nota { font-size:0.9rem; color:#445; background:#fff8e1; padding:8px; border-radius:6px; border:1px solid #fde7a9; margin-top:10px; }
+        code { background:#f5f7fa; padding:2px 6px; border-radius:4px; }
+    </style>
+</head>
+<body>
+    <h1>Eventos de Teclado em JavaScript — Exemplos Comentados</h1>
+    <p>Esta página mostra exemplos práticos e comentados de eventos de teclado: <code>keydown</code>, <code>keyup</code>, <code>keypress</code> (legado), atalhos (Ctrl/Cmd), composição (IME) e detecção de sequências.</p>
+
+    <!-- EXEMPLO 1: keydown e keyup -->
+    <div class="exemplo">
+        <h3>1) <code>keydown</code> e <code>keyup</code></h3>
+        <p>O evento <code>keydown</code> é disparado quando a tecla é pressionada; <code>keyup</code> quando é solta. Use <code>event.key</code> e <code>event.code</code> para identificar a tecla.</p>
+
+        <div class="area-teste" id="area-teclas">Toque aqui e pressione algumas teclas...</div>
+        <div class="resultado" id="resultado-teclas">Nenhuma tecla detectada ainda.</div>
+
+        <script>
+            // Seleciona os elementos uma vez
+            const areaTeclas = document.getElementById('area-teclas');
+            const resultadoTeclas = document.getElementById('resultado-teclas');
+
+            // Coloca o foco programaticamente para capturar teclas (útil para demo)
+            areaTeclas.tabIndex = 0; // torna o elemento focável
+            areaTeclas.addEventListener('focus', () => areaTeclas.style.outline = '2px solid #bde4ff');
+            areaTeclas.addEventListener('blur', () => areaTeclas.style.outline = 'none');
+
+            // keydown: ocorre repetidamente enquanto a tecla fica pressionada
+            areaTeclas.addEventListener('keydown', function(event) {
+                // event.key => valor legível ("a", "Enter", "ArrowUp")
+                // event.code => código físico da tecla ("KeyA", "Enter", "ArrowUp")
+                // event.repeat => true se a tecla está sendo mantida (auto-repeat)
+                resultadoTeclas.textContent = `keydown → key: "${event.key}", code: ${event.code}, repeat: ${event.repeat}`;
+                console.log('keydown event:', event);
+            });
+
+            // keyup: ocorreu quando a tecla foi solta
+            areaTeclas.addEventListener('keyup', function(event) {
+                resultadoTeclas.textContent = `keyup → key: "${event.key}", code: ${event.code}`;
+                console.log('keyup event:', event);
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 2: keypress (obsoleto) e compatibilidade -->
+    <div class="exemplo">
+        <h3>2) <code>keypress</code> (legado) e por que evitá-lo</h3>
+        <p><code>keypress</code> era usado para detectar caracteres imprimíveis. Hoje prefira <code>keydown</code>/<code>input</code> por compatibilidade e previsibilidade.</p>
+
+        <div class="area-teste" id="area-keypress" tabindex="0">Coloque o foco aqui e tente digitar caracteres.</div>
+        <div class="resultado" id="resultado-keypress">Aguardando...</div>
+
+        <script>
+            const areaKeypress = document.getElementById('area-keypress');
+            const resultadoKeypress = document.getElementById('resultado-keypress');
+
+            // Ainda funciona em muitos navegadores, mas não é recomendado para novo código
+            areaKeypress.addEventListener('keypress', function(e) {
+                resultadoKeypress.textContent = `keypress → key: "${e.key}", charCode: ${e.charCode}`;
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 3: Atalhos (Ctrl / Meta) e preventDefault -->
+    <div class="exemplo">
+        <h3>3) Atalhos — Detectando combinações (Ctrl/Cmd + tecla)</h3>
+        <p>Use as propriedades <code>ctrlKey</code>, <code>shiftKey</code>, <code>altKey</code>, <code>metaKey</code>. Chame <code>event.preventDefault()</code> para evitar ações padrão (ex.: Ctrl+S salvar).</p>
+
+        <label for="input-atalho">Foco aqui e pressione <code>Ctrl/Cmd + S</code>:</label>
+        <input id="input-atalho" type="text" placeholder="Foco e tente Ctrl+S" />
+        <div class="resultado" id="resultado-atalho">Nenhum atalho detectado.</div>
+
+        <script>
+            const inputAtalho = document.getElementById('input-atalho');
+            const resultadoAtalho = document.getElementById('resultado-atalho');
+
+            // Escutamos keydown porque é disparado quando a combinação começa
+            inputAtalho.addEventListener('keydown', function(e) {
+                // Detecta Ctrl/Cmd + S
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                    e.preventDefault(); // Bloqueia o 'Salvar página' do navegador
+                    resultadoAtalho.textContent = 'Atalho interceptado: Salvar (Ctrl/Cmd + S) — ação bloqueada.';
+                    resultadoAtalho.style.background = '#fff4e5';
+                    console.log('Ctrl/Cmd+S interceptado');
+                }
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 4: Composição (IME) para entrada de idiomas complexos -->
+    <div class="exemplo">
+        <h3>4) Eventos de composição (IME) — <code>compositionstart</code>, <code>compositionupdate</code>, <code>compositionend</code></h3>
+        <p>Essenciais para suportar entrada de idiomas com IME (ex.: japonês, chinês). Evite tratar cada <code>keydown</code> como caractere final durante composição.</p>
+
+    <textarea id="input-ime" rows="3" placeholder="Tente digitar usando um IME (ex.: japonês)" class="input-full"></textarea>
+        <div class="resultado" id="resultado-ime">Sem composição ativa.</div>
+
+        <script>
+            const inputIme = document.getElementById('input-ime');
+            const resultadoIme = document.getElementById('resultado-ime');
+
+            inputIme.addEventListener('compositionstart', (e) => {
+                resultadoIme.textContent = 'Composição iniciada — usuário usando IME.';
+            });
+
+            inputIme.addEventListener('compositionupdate', (e) => {
+                resultadoIme.textContent = `Compondo: ${e.data}`;
+            });
+
+            inputIme.addEventListener('compositionend', (e) => {
+                resultadoIme.textContent = `Composição finalizada → valor final: ${inputIme.value}`;
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 5: Detectar sequência de teclas (ex.: 'help' ou Konami) -->
+    <div class="exemplo">
+        <h3>5) Detectando sequência de teclas</h3>
+        <p>Exemplo simples que detecta uma sequência de teclas e dispara uma ação. Útil para shortcuts escondidos ou easter eggs.</p>
+
+        <div class="nota">Sequência detectada: <span class="tecla">h</span><span class="tecla">e</span><span class="tecla">l</span><span class="tecla">p</span></div>
+        <div class="resultado" id="resultado-sequencia">Sequência não detectada.</div>
+
+        <script>
+            const seqTarget = ['h','e','l','p'];
+            let seqBuffer = [];
+            const resultadoSequencia = document.getElementById('resultado-sequencia');
+
+            // Escutamos no document para pegar teclas globalmente
+            document.addEventListener('keydown', (e) => {
+                const key = e.key.toLowerCase();
+
+                // Adiciona ao buffer e corta para o tamanho da sequência alvo
+                seqBuffer.push(key);
+                if (seqBuffer.length > seqTarget.length) seqBuffer.shift();
+
+                // Compara arrays
+                if (seqBuffer.join('') === seqTarget.join('')) {
+                    resultadoSequencia.textContent = '🎉 Sequência "help" detectada!';
+                    resultadoSequencia.style.background = '#e6ffed';
+
+                    // Aqui poderíamos disparar qualquer ação: abrir ajuda, mostrar modal, etc.
+                    // Reset opcional do buffer
+                    seqBuffer = [];
+                }
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 6: Usando input event para capturar caracteres finais -->
+    <div class="exemplo">
+        <h3>6) <code>input</code> — detectar texto final no campo</h3>
+        <p>Enquanto <code>keydown</code> é ótimo para detectar teclas físicas, o evento <code>input</code> é o caminho correto para reagir a mudanças de valor em campos de texto.</p>
+
+        <label for="campo-texto">Digite algo:</label>
+        <input id="campo-texto" type="text" placeholder="Digite aqui" />
+        <div class="resultado" id="resultado-input">Valor atual: (vazio)</div>
+
+        <script>
+            const campoTexto = document.getElementById('campo-texto');
+            const resultadoInput = document.getElementById('resultado-input');
+
+            campoTexto.addEventListener('input', (e) => {
+                resultadoInput.textContent = `Valor atual: ${e.target.value}`;
+            });
+        </script>
+    </div>
+
+    <footer class="exemplo footer-center">
+        <strong>Resumo rápido:</strong>
+    <ul class="resumo-lista">
+            <li><code>keydown</code>/<code>keyup</code> — detectar teclas físicas</li>
+            <li><code>input</code> — reagir a mudanças de valor (recomendado para texto)</li>
+            <li><code>composition*</code> — necessário para IME (idiomas complexos)</li>
+            <li>Use <code>preventDefault()</code> para evitar ações padrão do navegador</li>
+        </ul>
+    </footer>
+
+</body>
+</html>

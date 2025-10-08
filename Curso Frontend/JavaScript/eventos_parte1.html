@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de Eventos em JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .exemplo {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .exemplo h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        button, input, textarea {
+            padding: 8px 12px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .resultado {
+            background-color: #e8f4fd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Estilos específicos para os exemplos */
+        .area-mouse {
+            width: 200px;
+            height: 100px;
+            background-color: lightblue;
+            padding: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .area-scroll {
+            height: 200px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .area-context {
+            width: 200px;
+            height: 100px;
+            background-color: lightcoral;
+            padding: 20px;
+            text-align: center;
+            cursor: context-menu;
+        }
+
+        .footer-exemplos {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+
+        .footer-lista {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exemplos Comentados de Eventos em JavaScript</h1>
+    <p>Esta página demonstra diferentes tipos de eventos em JavaScript com exemplos práticos e comentários explicativos.</p>
+
+    <!-- ===========================================
+         EXEMPLO 1: EVENTO CLICK
+         =========================================== -->
+    <div class="exemplo">
+        <h3>1. Evento Click</h3>
+        <p>O evento <code>click</code> é disparado quando o usuário clica em um elemento.</p>
+
+        <button id="botao-click">Clique aqui!</button>
+        <div id="resultado-click" class="resultado">Resultado aparecerá aqui</div>
+
+        <script>
+            // Selecionando o elemento botão
+            const botaoClick = document.getElementById('botao-click');
+
+            // Adicionando um event listener para o evento 'click'
+            // O primeiro parâmetro é o tipo do evento
+            // O segundo parâmetro é a função que será executada quando o evento ocorrer
+            botaoClick.addEventListener('click', function(evento) {
+                // 'evento' é o objeto do evento que contém informações sobre o que aconteceu
+                console.log('Botão foi clicado!', evento);
+
+                // Alterando o texto do elemento resultado
+                document.getElementById('resultado-click').textContent =
+                    'Botão clicado às ' + new Date().toLocaleTimeString();
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 2: EVENTO MOUSEOVER/MOUSEOUT
+         =========================================== -->
+    <div class="exemplo">
+        <h3>2. Eventos Mouseover e Mouseout</h3>
+        <p>Estes eventos são disparados quando o mouse entra (<code>mouseover</code>) ou sai (<code>mouseout</code>) de um elemento.</p>
+
+        <div id="area-mouse" class="area-mouse">
+            Passe o mouse aqui
+        </div>
+        <div id="resultado-mouse" class="resultado">Resultado aparecerá aqui</div>
+
+        <script>
+            // Selecionando a área do mouse
+            const areaMouse = document.getElementById('area-mouse');
+
+            // Evento mouseover - quando o mouse entra na área
+            areaMouse.addEventListener('mouseover', function() {
+                // Mudando a cor de fundo quando o mouse entra
+                this.style.backgroundColor = 'lightgreen';
+                document.getElementById('resultado-mouse').textContent = 'Mouse entrou na área';
+            });
+
+            // Evento mouseout - quando o mouse sai da área
+            areaMouse.addEventListener('mouseout', function() {
+                // Voltando à cor original quando o mouse sai
+                this.style.backgroundColor = 'lightblue';
+                document.getElementById('resultado-mouse').textContent = 'Mouse saiu da área';
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 3: EVENTO KEYDOWN
+         =========================================== -->
+    <div class="exemplo">
+        <h3>3. Evento Keydown</h3>
+        <p>O evento <code>keydown</code> é disparado quando uma tecla é pressionada.</p>
+
+        <input type="text" id="campo-tecla" placeholder="Digite algo aqui">
+        <div id="resultado-tecla" class="resultado">Pressione qualquer tecla</div>
+
+        <script>
+            // Selecionando o campo de input
+            const campoTecla = document.getElementById('campo-tecla');
+
+            // Adicionando listener para keydown
+            campoTecla.addEventListener('keydown', function(evento) {
+                // evento.key contém o valor da tecla pressionada
+                const tecla = evento.key;
+
+                // Mostrando qual tecla foi pressionada
+                document.getElementById('resultado-tecla').textContent =
+                    `Tecla pressionada: "${tecla}" (código: ${evento.keyCode})`;
+
+                // Exemplo: prevenir a digitação de números
+                if (tecla >= '0' && tecla <= '9') {
+                    // evento.preventDefault() cancela o comportamento padrão
+                    evento.preventDefault();
+                    document.getElementById('resultado-tecla').textContent +=
+                        ' - Números não são permitidos!';
+                }
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 4: EVENTO SUBMIT (FORMULÁRIO)
+         =========================================== -->
+    <div class="exemplo">
+        <h3>4. Evento Submit</h3>
+        <p>O evento <code>submit</code> é disparado quando um formulário é enviado.</p>
+
+        <form id="formulario-exemplo">
+            <input type="text" id="nome" placeholder="Digite seu nome" required>
+            <input type="email" id="email" placeholder="Digite seu email" required>
+            <button type="submit">Enviar</button>
+        </form>
+        <div id="resultado-form" class="resultado">Preencha e envie o formulário</div>
+
+        <script>
+            // Selecionando o formulário
+            const formulario = document.getElementById('formulario-exemplo');
+
+            // Adicionando listener para submit
+            formulario.addEventListener('submit', function(evento) {
+                // Prevenindo o envio padrão do formulário (que recarregaria a página)
+                evento.preventDefault();
+
+                // Pegando os valores dos campos
+                const nome = document.getElementById('nome').value;
+                const email = document.getElementById('email').value;
+
+                // Validando se os campos foram preenchidos
+                if (nome && email) {
+                    document.getElementById('resultado-form').textContent =
+                        `Formulário enviado! Nome: ${nome}, Email: ${email}`;
+
+                    // Limpando o formulário após o envio
+                    formulario.reset();
+                } else {
+                    document.getElementById('resultado-form').textContent =
+                        'Por favor, preencha todos os campos!';
+                }
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 5: EVENTO CHANGE
+         =========================================== -->
+    <div class="exemplo">
+        <h3>5. Evento Change</h3>
+        <p>O evento <code>change</code> é disparado quando o valor de um elemento de formulário muda e perde o foco.</p>
+
+        <label for="selecao-cor">Escolha uma cor:</label>
+        <select id="selecao-cor">
+            <option value="">Escolha uma cor</option>
+            <option value="red">Vermelho</option>
+            <option value="blue">Azul</option>
+            <option value="green">Verde</option>
+            <option value="yellow">Amarelo</option>
+        </select>
+        <div id="resultado-select" class="resultado">Selecione uma cor</div>
+
+        <script>
+            // Selecionando o select
+            const selecaoCor = document.getElementById('selecao-cor');
+
+            // Adicionando listener para change
+            selecaoCor.addEventListener('change', function() {
+                // this.value contém o valor selecionado
+                const corSelecionada = this.value;
+
+                if (corSelecionada) {
+                    // Mudando a cor de fundo do resultado
+                    document.getElementById('resultado-select').style.backgroundColor = corSelecionada;
+                    document.getElementById('resultado-select').textContent =
+                        `Cor selecionada: ${this.options[this.selectedIndex].text}`;
+                } else {
+                    document.getElementById('resultado-select').style.backgroundColor = 'transparent';
+                    document.getElementById('resultado-select').textContent = 'Selecione uma cor';
+                }
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 6: EVENTO FOCUS/BLUR
+         =========================================== -->
+    <div class="exemplo">
+        <h3>6. Eventos Focus e Blur</h3>
+        <p><code>focus</code> é disparado quando um elemento ganha foco, <code>blur</code> quando perde.</p>
+
+        <input type="text" id="campo-foco" placeholder="Clique aqui para focar">
+        <div id="resultado-foco" class="resultado">Status do foco</div>
+
+        <script>
+            // Selecionando o campo
+            const campoFoco = document.getElementById('campo-foco');
+
+            // Evento focus - quando o campo ganha foco
+            campoFoco.addEventListener('focus', function() {
+                this.style.borderColor = 'blue';
+                this.style.boxShadow = '0 0 5px rgba(0, 0, 255, 0.5)';
+                document.getElementById('resultado-foco').textContent = 'Campo está em foco';
+            });
+
+            // Evento blur - quando o campo perde foco
+            campoFoco.addEventListener('blur', function() {
+                this.style.borderColor = '#ccc';
+                this.style.boxShadow = 'none';
+                document.getElementById('resultado-foco').textContent = 'Campo perdeu o foco';
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 7: EVENTO LOAD (JANELA)
+         =========================================== -->
+    <div class="exemplo">
+        <h3>7. Evento Load da Janela</h3>
+        <p>O evento <code>load</code> é disparado quando a página termina de carregar.</p>
+
+        <div id="resultado-load" class="resultado">Aguardando carregamento da página...</div>
+
+        <script>
+            // Adicionando listener para o evento load da janela
+            // Este código será executado quando toda a página (incluindo imagens, etc.) terminar de carregar
+            window.addEventListener('load', function() {
+                document.getElementById('resultado-load').textContent =
+                    'Página carregada completamente às ' + new Date().toLocaleTimeString();
+
+                // Podemos fazer inicializações aqui, como:
+                console.log('Página carregada! Podemos inicializar componentes agora.');
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 8: EVENTO SCROLL
+         =========================================== -->
+    <div class="exemplo">
+        <h3>8. Evento Scroll</h3>
+        <p>O evento <code>scroll</code> é disparado quando a página é rolada.</p>
+
+        <div class="area-scroll">
+            <p>Conteúdo rolável...</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div id="resultado-scroll" class="resultado">Role a página para ver o evento</div>
+
+        <script>
+            // Selecionando o elemento rolável (neste caso, window para toda a página)
+            window.addEventListener('scroll', function() {
+                // window.scrollY retorna quantos pixels a página foi rolada verticalmente
+                const scrollPos = Math.round(window.scrollY);
+
+                document.getElementById('resultado-scroll').textContent =
+                    `Posição do scroll: ${scrollPos}px`;
+
+                // Exemplo: mostrar/esconder um botão baseado no scroll
+                if (scrollPos > 100) {
+                    document.getElementById('resultado-scroll').style.backgroundColor = 'lightyellow';
+                } else {
+                    document.getElementById('resultado-scroll').style.backgroundColor = '#e8f4fd';
+                }
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 9: EVENTO CONTEXTMENU
+         =========================================== -->
+    <div class="exemplo">
+        <h3>9. Evento Contextmenu</h3>
+        <p>O evento <code>contextmenu</code> é disparado quando o usuário clica com o botão direito.</p>
+
+        <div id="area-context" class="area-context">
+            Clique com o botão direito aqui
+        </div>
+        <div id="resultado-context" class="resultado">Clique com o botão direito na área acima</div>
+
+        <script>
+            // Selecionando a área
+            const areaContext = document.getElementById('area-context');
+
+            // Adicionando listener para contextmenu
+            areaContext.addEventListener('contextmenu', function(evento) {
+                // Prevenindo o menu de contexto padrão
+                evento.preventDefault();
+
+                // Mostrando as coordenadas onde o clique ocorreu
+                const x = evento.clientX;
+                const y = evento.clientY;
+
+                document.getElementById('resultado-context').textContent =
+                    `Menu de contexto bloqueado! Posição: (${x}, ${y})`;
+
+                // Podemos mostrar um menu personalizado aqui
+                console.log('Menu de contexto personalizado poderia aparecer aqui');
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 10: EVENTO RESIZE
+         =========================================== -->
+    <div class="exemplo">
+        <h3>10. Evento Resize</h3>
+        <p>O evento <code>resize</code> é disparado quando a janela do navegador é redimensionada.</p>
+
+        <div id="resultado-resize" class="resultado">Redimensione a janela do navegador</div>
+
+        <script>
+            // Função para atualizar as dimensões
+            function atualizarDimensoes() {
+                const largura = window.innerWidth;
+                const altura = window.innerHeight;
+
+                document.getElementById('resultado-resize').textContent =
+                    `Dimensões da janela: ${largura}x${altura}px`;
+            }
+
+            // Chamando a função inicialmente
+            atualizarDimensoes();
+
+            // Adicionando listener para resize
+            window.addEventListener('resize', function() {
+                // Usando setTimeout para evitar muitas chamadas durante o redimensionamento
+                clearTimeout(window.resizeTimer);
+                window.resizeTimer = setTimeout(atualizarDimensoes, 250);
+            });
+        </script>
+    </div>
+
+    <footer class="footer-exemplos">
+        <h3>Resumo dos Conceitos Aprendidos</h3>
+        <ul class="footer-lista">
+            <li><strong>addEventListener():</strong> Método moderno para adicionar eventos</li>
+            <li><strong>Objeto Event:</strong> Contém informações sobre o evento ocorrido</li>
+            <li><strong>preventDefault():</strong> Cancela o comportamento padrão do evento</li>
+            <li><strong>Event Bubbling:</strong> Eventos se propagam do elemento filho para o pai</li>
+            <li><strong>Event Capturing:</strong> Eventos se propagam do elemento pai para o filho</li>
+            <li><strong>Tipos de Eventos:</strong> Mouse, teclado, formulário, janela, etc.</li>
+        </ul>
+    </footer>
+</body>
+</html>

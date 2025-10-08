@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos de Mouse em JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+
+        .exemplo {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .exemplo h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .exemplo p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Estilos para os elementos interativos */
+        .area-interacao {
+            padding: 20px;
+            border: 2px dashed #bdc3c7;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .area-interacao:hover {
+            border-color: #3498db;
+            background-color: #ecf0f1;
+        }
+
+        .botao-exemplo {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .botao-exemplo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .botao-exemplo:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .campo-texto {
+            padding: 10px;
+            border: 2px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 200px;
+            transition: border-color 0.3s ease;
+        }
+
+        .campo-texto:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .resultado {
+            background: linear-gradient(135deg, #470dce, #27ae60);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(46, 204, 113, 0.3);
+        }
+
+        .coordenadas {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .contador {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px;
+            font-weight: bold;
+        }
+
+        .trilha-mouse {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .trilha-mouse::before {
+            content: "Mova o mouse aqui para ver a trilha!";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+
+        .ponto-trilha {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+            animation: fadeOut 1s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
+        .info-tecnico {
+            background: #ecf0f1;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .elemento-filho {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.8);
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .area-context {
+            cursor: context-menu;
+        }
+
+        .area-combinada {
+            min-height: 120px;
+        }
+
+        .footer-mouse {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-lista {
+            text-align: left;
+        }
+
+        .footer-italico {
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Eventos de Mouse em JavaScript</h1>
+    <p>Esta página demonstra todos os principais eventos de mouse disponíveis em JavaScript, com exemplos práticos e comentários explicativos detalhados.</p>
+
+    <!-- ===========================================
+         EXEMPLO 1: EVENTO CLICK
+         =========================================== -->
+    <div class="exemplo">
+        <h3>1. Evento <code>click</code></h3>
+        <p>O evento <strong>click</strong> é disparado quando o usuário pressiona e solta o botão esquerdo do mouse sobre um elemento.</p>
+
+        <button class="botao-exemplo" id="botao-click">
+            Clique Aqui! (Contador: <span id="contador-click">0</span>)
+        </button>
+
+        <div class="resultado" id="resultado-click">
+            Resultado aparecerá aqui após o clique
+        </div>
+
+        <div class="info-tecnico">
+            <strong>Propriedades do evento:</strong><br>
+            • <code>event.target</code> - Elemento que foi clicado<br>
+            • <code>event.clientX/clientY</code> - Coordenadas do clique<br>
+            • <code>event.button</code> - Qual botão foi pressionado (0=esquerdo, 1=meio, 2=direito)
+        </div>
+
+        <script>
+            // Selecionando os elementos que serão manipulados
+            const botaoClick = document.getElementById('botao-click');
+            const contadorClick = document.getElementById('contador-click');
+            const resultadoClick = document.getElementById('resultado-click');
+
+            // Inicializando contador
+            let numeroCliques = 0;
+
+            // Adicionando event listener para o evento 'click'
+            // Sintaxe: elemento.addEventListener('evento', funçãoCallback)
+            botaoClick.addEventListener('click', function(evento) {
+                // Incrementando o contador a cada clique
+                numeroCliques++;
+
+                // Atualizando o texto do contador no botão
+                contadorClick.textContent = numeroCliques;
+
+                // Mostrando informações detalhadas sobre o clique
+                const infoClique = `
+                    <strong>Clique #${numeroCliques}</strong><br>
+                    • Elemento clicado: ${evento.target.tagName}<br>
+                    • Coordenadas: (${evento.clientX}, ${evento.clientY})<br>
+                    • Botão pressionado: ${evento.button === 0 ? 'Esquerdo' : 'Outro'}<br>
+                    • Hora: ${new Date().toLocaleTimeString()}
+                `;
+
+                resultadoClick.innerHTML = infoClique;
+
+                // Adicionando efeito visual temporário
+                evento.target.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    evento.target.style.transform = 'scale(1)';
+                }, 150);
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 2: EVENTO DBLCLICK
+         =========================================== -->
+    <div class="exemplo">
+        <h3>2. Evento <code>dblclick</code></h3>
+        <p>O evento <strong>dblclick</strong> é disparado quando o usuário clica duas vezes rapidamente no elemento.</p>
+
+        <div class="area-interacao" id="area-dblclick">
+            <strong>CLIQUE DUAS VEZES AQUI</strong><br>
+            <small>Duplo clique para ver o efeito</small>
+        </div>
+
+        <div class="resultado" id="resultado-dblclick">
+            Resultado do duplo clique aparecerá aqui
+        </div>
+
+        <div class="dica">
+            💡 <strong>Dica:</strong> O dblclick é útil para ações que precisam de confirmação, como editar um item ou abrir detalhes.
+        </div>
+
+        <script>
+            const areaDblclick = document.getElementById('area-dblclick');
+            const resultadoDblclick = document.getElementById('resultado-dblclick');
+
+            // Event listener para duplo clique
+            areaDblclick.addEventListener('dblclick', function(evento) {
+                // Criando efeito de "explosão" visual
+                this.style.background = 'radial-gradient(circle, #e74c3c, #c0392b)';
+                this.innerHTML = '<strong>💥 DUPLAMENTE CLICADO!</strong>';
+
+                // Mostrando informações técnicas
+                resultadoDblclick.innerHTML = `
+                    <strong>Duplo clique detectado!</strong><br>
+                    • Elemento: ${evento.target.tagName}<br>
+                    • Coordenadas: (${evento.clientX}, ${evento.clientY})<br>
+                    • Timestamp: ${evento.timeStamp}ms
+                `;
+
+                // Voltando ao estado normal após 2 segundos
+                setTimeout(() => {
+                    this.style.background = '';
+                    this.innerHTML = '<strong>CLIQUE DUAS VEZES AQUI</strong><br><small>Duplo clique para ver o efeito</small>';
+                }, 2000);
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 3: MOUSEDOWN e MOUSEUP
+         =========================================== -->
+    <div class="exemplo">
+        <h3>3. Eventos <code>mousedown</code> e <code>mouseup</code></h3>
+        <p>Estes eventos são disparados quando o botão do mouse é pressionado (<strong>mousedown</strong>) e solto (<strong>mouseup</strong>), independentemente do movimento.</p>
+
+        <button class="botao-exemplo" id="botao-mousedown">
+            PRESSIONE e SOLTE este botão
+        </button>
+
+        <div class="resultado" id="resultado-mouse-states">
+            Estado do botão aparecerá aqui
+        </div>
+
+        <div class="info-tecnico">
+            <strong>Diferença do click:</strong><br>
+            • <code>mousedown/mouseup</code> - Disparados imediatamente na pressão/soltura<br>
+            • <code>click</code> - Disparado apenas após soltar o botão (se não houve movimento)
+        </div>
+
+        <script>
+            const botaoMousedown = document.getElementById('botao-mousedown');
+            const resultadoMouseStates = document.getElementById('resultado-mouse-states');
+
+            // Evento disparado quando o botão do mouse é PRESSIONADO
+            botaoMousedown.addEventListener('mousedown', function(evento) {
+                this.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                this.style.transform = 'scale(0.9)';
+
+                resultadoMouseStates.innerHTML = `
+                    <strong>🖱️ BOTÃO PRESSIONADO</strong><br>
+                    • Estado: PRESSIONADO<br>
+                    • Botão: ${evento.button === 0 ? 'Esquerdo' : 'Outro'}<br>
+                    • Coordenadas: (${evento.clientX}, ${evento.clientY})
+                `;
+            });
+
+            // Evento disparado quando o botão do mouse é SOLTO
+            botaoMousedown.addEventListener('mouseup', function(evento) {
+                this.style.background = 'linear-gradient(135deg, #3498db, #2980b9)';
+                this.style.transform = 'scale(1)';
+
+                resultadoMouseStates.innerHTML = `
+                    <strong>🖱️ BOTÃO SOLTO</strong><br>
+                    • Estado: SOLTO<br>
+                    • Botão: ${evento.button === 0 ? 'Esquerdo' : 'Outro'}<br>
+                    • Coordenadas: (${evento.clientX}, ${evento.clientY})
+                `;
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 4: MOUSEOVER e MOUSEOUT
+         =========================================== -->
+    <div class="exemplo">
+        <h3>4. Eventos <code>mouseover</code> e <code>mouseout</code></h3>
+        <p>Estes eventos são disparados quando o mouse entra (<strong>mouseover</strong>) ou sai (<strong>mouseout</strong>) da área do elemento.</p>
+
+        <div class="area-interacao" id="area-mouseover">
+            <strong>PASSE O MOUSE AQUI</strong><br>
+            <small>Entre e saia da área para ver os eventos</small>
+        </div>
+
+        <div class="resultado" id="resultado-mouseover">
+            Eventos de mouse aparecerão aqui
+        </div>
+
+        <div class="dica">
+            💡 <strong>Dica:</strong> Estes eventos são úteis para criar menus dropdown, tooltips e efeitos hover.
+        </div>
+
+        <script>
+            const areaMouseover = document.getElementById('area-mouseover');
+            const resultadoMouseover = document.getElementById('resultado-mouseover');
+
+            let contadorEntradas = 0;
+            let contadorSaidas = 0;
+
+            // Evento disparado quando o mouse ENTRA na área do elemento
+            areaMouseover.addEventListener('mouseover', function(evento) {
+                contadorEntradas++;
+
+                this.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+                this.style.borderColor = '#27ae60';
+
+                resultadoMouseover.innerHTML = `
+                    <strong>🐭 MOUSE ENTROU</strong><br>
+                    • Entradas: ${contadorEntradas}<br>
+                    • Saídas: ${contadorSaidas}<br>
+                    • Elemento: ${evento.target.tagName}<br>
+                    • Related Target: ${evento.relatedTarget ? evento.relatedTarget.tagName : 'Nenhum'}
+                `;
+            });
+
+            // Evento disparado quando o mouse SAI da área do elemento
+            areaMouseover.addEventListener('mouseout', function(evento) {
+                contadorSaidas++;
+
+                this.style.background = '';
+                this.style.borderColor = '#bdc3c7';
+
+                resultadoMouseover.innerHTML = `
+                    <strong>🐭 MOUSE SAIU</strong><br>
+                    • Entradas: ${contadorEntradas}<br>
+                    • Saídas: ${contadorSaidas}<br>
+                    • Elemento: ${evento.target.tagName}<br>
+                    • Related Target: ${evento.relatedTarget ? evento.relatedTarget.tagName : 'Nenhum'}
+                `;
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 5: MOUSEENTER e MOUSELEAVE
+         =========================================== -->
+    <div class="exemplo">
+        <h3>5. Eventos <code>mouseenter</code> e <code>mouseleave</code></h3>
+        <p>Semelhantes ao mouseover/mouseout, mas <strong>NÃO se propagam</strong> para elementos filhos (não fazem bubbling).</p>
+
+        <div class="area-interacao" id="area-mouseenter">
+            <strong>ÁREA PRINCIPAL</strong>
+            <div class="elemento-filho">
+                ELEMENTO FILHO
+            </div>
+        </div>
+
+        <div class="resultado" id="resultado-mouseenter">
+            Teste passando o mouse sobre a área principal e o elemento filho
+        </div>
+
+        <div class="info-tecnico">
+            <strong>Diferença de mouseover/mouseout:</strong><br>
+            • <code>mouseenter/mouseleave</code> - Não fazem bubbling (não se propagam)<br>
+            • <code>mouseover/mouseout</code> - Fazem bubbling para elementos pai
+        </div>
+
+        <script>
+            const areaMouseenter = document.getElementById('area-mouseenter');
+            const resultadoMouseenter = document.getElementById('resultado-mouseenter');
+
+            // mouseenter - Não faz bubbling
+            areaMouseenter.addEventListener('mouseenter', function() {
+                this.style.background = 'linear-gradient(135deg, #9b59b6, #8e44ad)';
+                this.style.borderColor = '#8e44ad';
+
+                resultadoMouseenter.innerHTML = `
+                    <strong>🎯 MOUSEENTER (sem bubbling)</strong><br>
+                    • Evento não se propaga para elementos pai<br>
+                    • Ideal para efeitos em elementos específicos
+                `;
+            });
+
+            // mouseleave - Não faz bubbling
+            areaMouseenter.addEventListener('mouseleave', function() {
+                this.style.background = '';
+                this.style.borderColor = '#bdc3c7';
+
+                resultadoMouseenter.innerHTML = `
+                    <strong>🎯 MOUSELEAVE (sem bubbling)</strong><br>
+                    • Evento não se propaga para elementos pai<br>
+                    • Efeito consistente independente de elementos filhos
+                `;
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 6: MOUSEMOVE
+         =========================================== -->
+    <div class="exemplo">
+        <h3>6. Evento <code>mousemove</code></h3>
+        <p>O evento <strong>mousemove</strong> é disparado continuamente enquanto o mouse se move dentro do elemento.</p>
+
+        <div class="trilha-mouse" id="area-mousemove"></div>
+
+        <div class="coordenadas" id="coordenadas-mouse">
+            Coordenadas do mouse aparecerão aqui
+        </div>
+
+        <div class="resultado" id="resultado-mousemove">
+            Estatísticas de movimento aparecerão aqui
+        </div>
+
+        <script>
+            const areaMousemove = document.getElementById('area-mousemove');
+            const coordenadasMouse = document.getElementById('coordenadas-mouse');
+            const resultadoMousemove = document.getElementById('resultado-mousemove');
+
+            let movimentos = 0;
+            let ultimoX = 0;
+            let ultimoY = 0;
+            let distanciaTotal = 0;
+
+            // Evento disparado a cada movimento do mouse dentro da área
+            areaMousemove.addEventListener('mousemove', function(evento) {
+                movimentos++;
+
+                // Calculando coordenadas relativas ao elemento
+                const rect = this.getBoundingClientRect();
+                const x = evento.clientX - rect.left;
+                const y = evento.clientY - rect.top;
+
+                // Calculando distância percorrida
+                if (ultimoX !== 0 && ultimoY !== 0) {
+                    const distancia = Math.sqrt(Math.pow(x - ultimoX, 2) + Math.pow(y - ultimoY, 2));
+                    distanciaTotal += distancia;
+                }
+
+                ultimoX = x;
+                ultimoY = y;
+
+                // Atualizando coordenadas
+                coordenadasMouse.textContent = `X: ${Math.round(x)} | Y: ${Math.round(y)}`;
+
+                // Atualizando estatísticas
+                resultadoMousemove.innerHTML = `
+                    <strong>📊 Estatísticas do Movimento</strong><br>
+                    • Movimentos detectados: ${movimentos}<br>
+                    • Distância total: ${Math.round(distanciaTotal)}px<br>
+                    • Velocidade média: ${movimentos > 10 ? Math.round(distanciaTotal / movimentos * 10) / 10 : 0}px/ movimento
+                `;
+
+                // Criando efeito visual de trilha (pontos que desaparecem)
+                if (movimentos % 3 === 0) { // A cada 3 movimentos para não sobrecarregar
+                    const ponto = document.createElement('div');
+                    ponto.className = 'ponto-trilha';
+                    ponto.style.left = (x - 3) + 'px';
+                    ponto.style.top = (y - 3) + 'px';
+                    this.appendChild(ponto);
+
+                    // Removendo pontos antigos para não acumular
+                    setTimeout(() => {
+                        if (ponto.parentNode) {
+                            ponto.parentNode.removeChild(ponto);
+                        }
+                    }, 1000);
+                }
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 7: CONTEXTMENU
+         =========================================== -->
+    <div class="exemplo">
+        <h3>7. Evento <code>contextmenu</code></h3>
+        <p>O evento <strong>contextmenu</strong> é disparado quando o usuário clica com o botão direito, antes do menu de contexto aparecer.</p>
+
+        <div class="area-interacao area-context" id="area-contextmenu">
+            <strong>CLIQUE COM O BOTÃO DIREITO AQUI</strong><br>
+            <small>Botão direito do mouse</small>
+        </div>
+
+        <div class="resultado" id="resultado-contextmenu">
+            Menu de contexto aparecerá aqui
+        </div>
+
+        <div class="dica">
+            💡 <strong>Dica:</strong> Use <code>preventDefault()</code> para bloquear o menu padrão e criar menus personalizados.
+        </div>
+
+        <script>
+            const areaContextmenu = document.getElementById('area-contextmenu');
+            const resultadoContextmenu = document.getElementById('resultado-contextmenu');
+
+            // Evento disparado no clique com botão direito
+            areaContextmenu.addEventListener('contextmenu', function(evento) {
+                // Prevenindo o menu de contexto padrão
+                evento.preventDefault();
+
+                // Criando menu personalizado
+                const menuPersonalizado = `
+                    <div style="background: white; border: 1px solid #ccc; border-radius: 5px; padding: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                        <strong>🎯 Menu Personalizado</strong><br>
+                        • Copiar<br>
+                        • Colar<br>
+                        • Propriedades<br>
+                        <small>Posição: (${evento.clientX}, ${evento.clientY})</small>
+                    </div>
+                `;
+
+                this.innerHTML = menuPersonalizado;
+                this.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+
+                resultadoContextmenu.innerHTML = `
+                    <strong>📱 MENU DE CONTEXTO BLOQUEADO</strong><br>
+                    • Menu padrão impedido<br>
+                    • Coordenadas: (${evento.clientX}, ${evento.clientY})<br>
+                    • Botão: Direito (${evento.button})
+                `;
+
+                // Voltando ao normal após 3 segundos
+                setTimeout(() => {
+                    this.innerHTML = '<strong>CLIQUE COM O BOTÃO DIREITO AQUI</strong><br><small>Botão direito do mouse</small>';
+                    this.style.background = '';
+                }, 3000);
+            });
+        </script>
+    </div>
+
+    <!-- ===========================================
+         EXEMPLO 8: COMBINAÇÃO DE EVENTOS
+         =========================================== -->
+    <div class="exemplo">
+        <h3>8. Combinação de Múltiplos Eventos de Mouse</h3>
+        <p>Exemplo prático combinando vários eventos de mouse para criar uma experiência interativa completa.</p>
+
+        <div class="area-interacao area-combinada" id="area-combinada">
+            <strong>TESTE TODOS OS EVENTOS!</strong><br>
+            <small>Clique, duplo clique, passe o mouse, etc.</small>
+        </div>
+
+        <div class="resultado" id="resultado-combinado">
+            Histórico de eventos aparecerá aqui
+        </div>
+
+        <div class="contador" id="estatisticas-eventos">
+            Eventos: 0
+        </div>
+
+        <script>
+            const areaCombinada = document.getElementById('area-combinada');
+            const resultadoCombinado = document.getElementById('resultado-combinado');
+            const estatisticasEventos = document.getElementById('estatisticas-eventos');
+
+            let historicoEventos = [];
+            let contadorEventos = 0;
+
+            // Função para adicionar evento ao histórico
+            function adicionarAoHistorico(tipo, detalhes = '') {
+                contadorEventos++;
+                const timestamp = new Date().toLocaleTimeString();
+                historicoEventos.unshift(`${timestamp} - ${tipo} ${detalhes}`);
+
+                // Mantendo apenas os últimos 5 eventos
+                if (historicoEventos.length > 5) {
+                    historicoEventos = historicoEventos.slice(0, 5);
+                }
+
+                // Atualizando display
+                estatisticasEventos.textContent = `Eventos: ${contadorEventos}`;
+                resultadoCombinado.innerHTML = `
+                    <strong>📝 Histórico de Eventos (últimos 5)</strong><br>
+                    ${historicoEventos.join('<br>')}
+                `;
+            }
+
+            // Combinando múltiplos eventos
+            areaCombinada.addEventListener('click', () => {
+                adicionarAoHistorico('🖱️ CLICK', '- Botão esquerdo');
+                this.style.borderColor = '#3498db';
+                setTimeout(() => this.style.borderColor = '#bdc3c7', 300);
+            });
+
+            areaCombinada.addEventListener('dblclick', () => {
+                adicionarAoHistorico('⚡ DBLCLICK', '- Duplo clique');
+                this.style.background = '#f1c40f';
+                setTimeout(() => this.style.background = '', 500);
+            });
+
+            areaCombinada.addEventListener('mousedown', (e) => {
+                adicionarAoHistorico('⬇️ MOUSEDOWN', `- Botão ${e.button}`);
+                this.style.transform = 'scale(0.95)';
+            });
+
+            areaCombinada.addEventListener('mouseup', (e) => {
+                adicionarAoHistorico('⬆️ MOUSEUP', `- Botão ${e.button}`);
+                this.style.transform = 'scale(1)';
+            });
+
+            areaCombinada.addEventListener('mouseover', () => {
+                adicionarAoHistorico('🐭 MOUSEOVER', '- Mouse entrou');
+                this.style.boxShadow = '0 0 20px rgba(52, 152, 219, 0.5)';
+            });
+
+            areaCombinada.addEventListener('mouseout', () => {
+                adicionarAoHistorico('🐭 MOUSEOUT', '- Mouse saiu');
+                this.style.boxShadow = 'none';
+            });
+
+            areaCombinada.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                adicionarAoHistorico('📱 CONTEXTMENU', '- Botão direito bloqueado');
+                this.style.borderColor = '#e74c3c';
+                setTimeout(() => this.style.borderColor = '#bdc3c7', 1000);
+            });
+        </script>
+    </div>
+
+    <footer class="footer-mouse">
+        <h3>🎯 Resumo dos Eventos de Mouse</h3>
+        <div class="footer-grid">
+            <div>
+                <h4>Eventos Básicos</h4>
+                <ul class="footer-lista">
+                    <li><code>click</code> - Clique simples</li>
+                    <li><code>dblclick</code> - Duplo clique</li>
+                    <li><code>contextmenu</code> - Botão direito</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Estados do Botão</h4>
+                <ul class="footer-lista">
+                    <li><code>mousedown</code> - Botão pressionado</li>
+                    <li><code>mouseup</code> - Botão solto</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Movimento do Mouse</h4>
+                <ul class="footer-lista">
+                    <li><code>mousemove</code> - Mouse se movendo</li>
+                    <li><code>mouseover</code> - Mouse entra</li>
+                    <li><code>mouseout</code> - Mouse sai</li>
+                    <li><code>mouseenter</code> - Mouse entra (sem bubbling)</li>
+                    <li><code>mouseleave</code> - Mouse sai (sem bubbling)</li>
+                </ul>
+            </div>
+        </div>
+        <p class="footer-italico">
+            💡 <strong>Prática leva à perfeição!</strong> Experimente todos os exemplos para entender melhor como cada evento funciona.
+        </p>
+    </footer>
+</body>
+</html>
