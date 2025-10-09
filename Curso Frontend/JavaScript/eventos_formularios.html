@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos de Formulário em JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f0f4f8;
+            color: #1a202c;
+        }
+        .exemplo {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+        .exemplo h3 {
+            margin-top: 0;
+            color: #2d3748;
+            border-bottom: 2px solid #4299e1;
+            padding-bottom: 8px;
+        }
+        form {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+        input.invalido {
+            border-color: #f56565;
+        }
+        input.valido {
+            border-color: #48bb78;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .resultado {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        .info {
+            background: #edf2f7;
+            border-left: 4px solid #4299e1;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .erro {
+            background: #fff5f5;
+            border-left: 4px solid #f56565;
+            color: #c53030;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .sucesso {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            color: #22543d;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .contador {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Eventos de Formulário em JavaScript — Exemplos Comentados</h1>
+    <p>Exemplos práticos de eventos de formulários: <code>submit</code>, <code>input</code>, <code>change</code>, <code>focus/blur</code>, <code>reset</code> e validação em tempo real.</p>
+
+    <!-- EXEMPLO 1: submit - Prevenir envio e validar -->
+    <div class="exemplo">
+        <h3>1) Evento <code>submit</code> — Validar e prevenir envio do formulário</h3>
+        <p>O evento <code>submit</code> é disparado quando o formulário é enviado. Use <code>preventDefault()</code> para interceptar e validar antes do envio.</p>
+
+        <form id="form-login">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <div id="resultado-login"></div>
+
+        <script>
+            const formLogin = document.getElementById('form-login');
+            const resultadoLogin = document.getElementById('resultado-login');
+
+            // Escuta o evento submit do formulário
+            formLogin.addEventListener('submit', function(evento) {
+                // Previne o comportamento padrão (recarregar a página)
+                evento.preventDefault();
+
+                // Pega os valores dos campos
+                const usuario = document.getElementById('username').value.trim();
+                const senha = document.getElementById('password').value;
+
+                // Validação customizada
+                if (usuario.length < 3) {
+                    resultadoLogin.className = 'erro';
+                    resultadoLogin.textContent = '❌ Usuário deve ter pelo menos 3 caracteres.';
+                    return;
+                }
+
+                if (senha.length < 6) {
+                    resultadoLogin.className = 'erro';
+                    resultadoLogin.textContent = '❌ Senha deve ter pelo menos 6 caracteres.';
+                    return;
+                }
+
+                // Se passou nas validações
+                resultadoLogin.className = 'sucesso';
+                resultadoLogin.textContent = `✅ Login validado! Usuário: ${usuario}`;
+                
+                // Aqui você normalmente enviaria para o servidor via AJAX/fetch
+                console.log('Dados do formulário:', { usuario, senha });
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 2: input - Validação em tempo real -->
+    <div class="exemplo">
+        <h3>2) Evento <code>input</code> — Validação em tempo real enquanto digita</h3>
+        <p>O evento <code>input</code> dispara a cada caractere digitado. Ideal para feedback instantâneo.</p>
+
+        <form>
+            <label for="email-real-time">Email:</label>
+            <input type="email" id="email-real-time" placeholder="seu@email.com">
+            <div id="feedback-email" class="info">Digite um email...</div>
+        </form>
+
+        <script>
+            const emailInput = document.getElementById('email-real-time');
+            const feedbackEmail = document.getElementById('feedback-email');
+
+            // Evento input: dispara a cada mudança no valor
+            emailInput.addEventListener('input', function(e) {
+                const valor = e.target.value;
+
+                // Regex simples para validar email
+                const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (valor === '') {
+                    feedbackEmail.className = 'info';
+                    feedbackEmail.textContent = 'Digite um email...';
+                    emailInput.className = '';
+                } else if (regexEmail.test(valor)) {
+                    feedbackEmail.className = 'sucesso';
+                    feedbackEmail.textContent = '✅ Email válido!';
+                    emailInput.className = 'valido';
+                } else {
+                    feedbackEmail.className = 'erro';
+                    feedbackEmail.textContent = '❌ Email inválido.';
+                    emailInput.className = 'invalido';
+                }
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 3: change - Detectar mudanças em select, checkbox, radio -->
+    <div class="exemplo">
+        <h3>3) Evento <code>change</code> — Detectar mudanças após perder foco</h3>
+        <p>O evento <code>change</code> dispara quando o valor muda E o elemento perde o foco. Útil para selects, checkboxes e radios.</p>
+
+        <form>
+            <label for="pais">Escolha um país:</label>
+            <select id="pais">
+                <option value="">Selecione...</option>
+                <option value="brasil">Brasil</option>
+                <option value="portugal">Portugal</option>
+                <option value="eua">Estados Unidos</option>
+                <option value="japao">Japão</option>
+            </select>
+
+            <div id="resultado-pais" class="info">Nenhum país selecionado.</div>
+
+            <label>
+                <input type="checkbox" id="aceitar-termos"> Aceito os termos e condições
+            </label>
+            <div id="resultado-termos" class="info">Você ainda não aceitou os termos.</div>
+        </form>
+
+        <script>
+            const selectPais = document.getElementById('pais');
+            const resultadoPais = document.getElementById('resultado-pais');
+            const checkboxTermos = document.getElementById('aceitar-termos');
+            const resultadoTermos = document.getElementById('resultado-termos');
+
+            // Evento change em select
+            selectPais.addEventListener('change', function(e) {
+                const paisSelecionado = e.target.value;
+                
+                if (paisSelecionado) {
+                    const texto = e.target.options[e.target.selectedIndex].text;
+                    resultadoPais.className = 'sucesso';
+                    resultadoPais.textContent = `✅ País selecionado: ${texto}`;
+                } else {
+                    resultadoPais.className = 'info';
+                    resultadoPais.textContent = 'Nenhum país selecionado.';
+                }
+            });
+
+            // Evento change em checkbox
+            checkboxTermos.addEventListener('change', function(e) {
+                if (e.target.checked) {
+                    resultadoTermos.className = 'sucesso';
+                    resultadoTermos.textContent = '✅ Termos aceitos!';
+                } else {
+                    resultadoTermos.className = 'erro';
+                    resultadoTermos.textContent = '❌ Você deve aceitar os termos.';
+                }
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 4: focus e blur - Detectar foco e perda de foco -->
+    <div class="exemplo">
+        <h3>4) Eventos <code>focus</code> e <code>blur</code> — Detectar quando campo ganha/perde foco</h3>
+        <p>Use <code>focus</code> para quando o usuário clica no campo e <code>blur</code> para quando sai dele.</p>
+
+        <form>
+            <label for="nome-completo">Nome Completo:</label>
+            <input type="text" id="nome-completo" placeholder="Digite seu nome">
+            <div id="dica-nome" class="info">Clique no campo para ver a dica.</div>
+        </form>
+
+        <script>
+            const nomeInput = document.getElementById('nome-completo');
+            const dicaNome = document.getElementById('dica-nome');
+
+            // Evento focus: quando o campo ganha foco
+            nomeInput.addEventListener('focus', function() {
+                dicaNome.className = 'info';
+                dicaNome.textContent = '💡 Digite seu nome completo (primeiro e último nome).';
+                this.style.backgroundColor = '#edf2f7';
+            });
+
+            // Evento blur: quando o campo perde foco
+            nomeInput.addEventListener('blur', function() {
+                const valor = this.value.trim();
+                this.style.backgroundColor = '';
+
+                if (valor === '') {
+                    dicaNome.className = 'erro';
+                    dicaNome.textContent = '❌ Campo obrigatório!';
+                } else if (valor.split(' ').length < 2) {
+                    dicaNome.className = 'erro';
+                    dicaNome.textContent = '❌ Digite o nome completo (primeiro e último nome).';
+                } else {
+                    dicaNome.className = 'sucesso';
+                    dicaNome.textContent = '✅ Nome válido!';
+                }
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 5: reset - Resetar formulário -->
+    <div class="exemplo">
+        <h3>5) Evento <code>reset</code> — Limpar formulário</h3>
+        <p>O evento <code>reset</code> é disparado quando o botão reset é clicado. Você pode interceptar e customizar o comportamento.</p>
+
+        <form id="form-cadastro">
+            <label for="nome-cadastro">Nome:</label>
+            <input type="text" id="nome-cadastro">
+
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade">
+
+            <button type="submit">Enviar</button>
+            <button type="reset">Limpar</button>
+        </form>
+
+        <div id="resultado-reset"></div>
+
+        <script>
+            const formCadastro = document.getElementById('form-cadastro');
+            const resultadoReset = document.getElementById('resultado-reset');
+
+            // Evento reset
+            formCadastro.addEventListener('reset', function(e) {
+                // Se quiser prevenir o reset padrão, use: e.preventDefault();
+                
+                resultadoReset.className = 'info';
+                resultadoReset.textContent = '🔄 Formulário resetado!';
+
+                // Limpa a mensagem após 2 segundos
+                setTimeout(() => {
+                    resultadoReset.textContent = '';
+                }, 2000);
+            });
+
+            // Evento submit
+            formCadastro.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nome = document.getElementById('nome-cadastro').value;
+                const idade = document.getElementById('idade').value;
+
+                resultadoReset.className = 'sucesso';
+                resultadoReset.textContent = `✅ Cadastro enviado! Nome: ${nome}, Idade: ${idade}`;
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 6: Contador de caracteres (input + maxlength) -->
+    <div class="exemplo">
+        <h3>6) Contador de caracteres em tempo real</h3>
+        <p>Combinando <code>input</code> com validação de limite de caracteres.</p>
+
+        <form>
+            <label for="bio">Bio (máximo 200 caracteres):</label>
+            <textarea id="bio" rows="4" maxlength="200" placeholder="Conte um pouco sobre você..."></textarea>
+            <div id="contador-bio" class="contador">0 / 200 caracteres</div>
+        </form>
+
+        <script>
+            const bioTextarea = document.getElementById('bio');
+            const contadorBio = document.getElementById('contador-bio');
+            const MAX_CHARS = 200;
+
+            bioTextarea.addEventListener('input', function() {
+                const atual = this.value.length;
+                contadorBio.textContent = `${atual} / ${MAX_CHARS} caracteres`;
+
+                // Muda a cor conforme se aproxima do limite
+                if (atual >= MAX_CHARS * 0.9) {
+                    contadorBio.style.color = '#f56565';
+                    contadorBio.style.fontWeight = 'bold';
+                } else if (atual >= MAX_CHARS * 0.7) {
+                    contadorBio.style.color = '#ed8936';
+                } else {
+                    contadorBio.style.color = '#718096';
+                    contadorBio.style.fontWeight = 'normal';
+                }
+            });
+        </script>
+    </div>
+
+    <!-- EXEMPLO 7: Validação de senha forte -->
+    <div class="exemplo">
+        <h3>7) Validação de senha forte em tempo real</h3>
+        <p>Verifica se a senha tem maiúsculas, minúsculas, números e caracteres especiais.</p>
+
+        <form>
+            <label for="senha-forte">Crie uma senha forte:</label>
+            <input type="password" id="senha-forte">
+            <div id="forca-senha" class="info">Digite uma senha...</div>
+        </form>
+
+        <script>
+            const senhaForteInput = document.getElementById('senha-forte');
+            const forcaSenha = document.getElementById('forca-senha');
+
+            senhaForteInput.addEventListener('input', function() {
+                const senha = this.value;
+                const criterios = {
+                    minusculas: /[a-z]/.test(senha),
+                    maiusculas: /[A-Z]/.test(senha),
+                    numeros: /[0-9]/.test(senha),
+                    especiais: /[!@#$%^&*(),.?":{}|<>]/.test(senha),
+                    tamanho: senha.length >= 8
+                };
+
+                const pontos = Object.values(criterios).filter(Boolean).length;
+
+                let mensagem = '';
+                let classe = '';
+
+                if (senha === '') {
+                    mensagem = 'Digite uma senha...';
+                    classe = 'info';
+                    senhaForteInput.className = '';
+                } else if (pontos <= 2) {
+                    mensagem = '❌ Senha fraca. Adicione maiúsculas, números e caracteres especiais.';
+                    classe = 'erro';
+                    senhaForteInput.className = 'invalido';
+                } else if (pontos <= 4) {
+                    mensagem = '⚠️ Senha média. Tente adicionar mais variedade.';
+                    classe = 'info';
+                    senhaForteInput.className = '';
+                } else {
+                    mensagem = '✅ Senha forte!';
+                    classe = 'sucesso';
+                    senhaForteInput.className = 'valido';
+                }
+
+                forcaSenha.className = classe;
+                forcaSenha.textContent = mensagem;
+            });
+        </script>
+    </div>
+
+    <footer class="exemplo">
+        <h3>📚 Resumo dos Eventos de Formulário</h3>
+        <ul>
+            <li><code>submit</code> — Disparado ao enviar o formulário (use preventDefault para validar)</li>
+            <li><code>input</code> — Disparado a cada caractere digitado (tempo real)</li>
+            <li><code>change</code> — Disparado quando o valor muda e perde foco (selects, checkboxes)</li>
+            <li><code>focus</code> — Quando o campo ganha foco (clique ou tab)</li>
+            <li><code>blur</code> — Quando o campo perde foco</li>
+            <li><code>reset</code> — Quando o formulário é resetado</li>
+        </ul>
+        <p><strong>Dica:</strong> Sempre valide no cliente E no servidor para segurança!</p>
+    </footer>
+
+</body>
+</html>
