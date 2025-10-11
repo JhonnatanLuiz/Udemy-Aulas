@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecionando Elementos no DOM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .input-texto {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            width: 300px;
+            border: 2px solid #4f46e5;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        h2 {
+            color: #4f46e5;
+            margin-top: 30px;
+        }
+        .exemplo {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .resumo {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aprendendo a Selecionar Elementos no DOM</h1>
+
+    <!-- ============================================ -->
+    <!-- EXEMPLO 1: getElementById -->
+    <!-- ============================================ -->
+    <div class="exemplo">
+        <h2>1. Selecionando por ID com getElementById()</h2>
+        <p>Use quando o elemento tem um <strong>id único</strong>.</p>
+        
+        <input type="text"
+            placeholder="Digite seu nome"
+            id="nome_usuario" 
+            class="input-texto"
+            name="nome"
+        >
+    </div>
+
+    <script>
+        // getElementById() - Seleciona UM elemento pelo ID (sem #)
+        // Retorna: um único elemento ou null se não encontrar
+        
+        const campoNome = document.getElementById("nome_usuario");
+        campoNome.value = "Jhonnatan";
+        console.log("✅ Exemplo 1 - getElementById:", campoNome.value);
+    </script>
+
+    <!-- ============================================ -->
+    <!-- EXEMPLO 2: getElementsByTagName -->
+    <!-- ============================================ -->
+    <div class="exemplo">
+        <h2>2. Selecionando por TAG com getElementsByTagName()</h2>
+        <p>Use quando quer pegar <strong>todos os elementos de uma tag</strong> (ex: todos os inputs).</p>
+        
+        <input type="text"
+            placeholder="Digite seu email"
+            id="email_usuario"
+            class="input-texto"
+            name="email"
+        >
+    </div>
+
+    <script>
+        // getElementsByTagName() - Seleciona TODOS elementos pela tag (ex: "input", "div", "p")
+        // ATENÇÃO: Não use <> nem id/class aqui, apenas o nome da tag!
+        // Retorna: HTMLCollection (array-like) - use [0] para pegar o primeiro
+        
+        const todosInputs = document.getElementsByTagName("input");
+        // Encontra o input de email (é o segundo input na página, índice 1)
+        todosInputs[1].value = "jhonnatan@mail.com";
+        console.log("✅ Exemplo 2 - getElementsByTagName:", todosInputs[1].value);
+        console.log("   Total de inputs na página:", todosInputs.length);
+    </script>
+
+    <!-- ============================================ -->
+    <!-- EXEMPLO 3: getElementsByClassName -->
+    <!-- ============================================ -->
+    <div class="exemplo">
+        <h2>3. Selecionando por CLASSE com getElementsByClassName()</h2>
+        <p>Use quando quer pegar <strong>todos os elementos com determinada classe</strong>.</p>
+        
+        <input type="text"
+            placeholder="Digite seu telefone"
+            id="telefone_usuario"
+            class="input-texto input-contato"
+            name="telefone"
+        >
+    </div>
+
+    <script>
+        // getElementsByClassName() - Seleciona TODOS elementos pela classe
+        // ATENÇÃO: Não use o ponto (.) antes do nome da classe!
+        // Retorna: HTMLCollection (array-like) - use [índice] para acessar
+        
+        const camposContato = document.getElementsByClassName("input-contato");
+        camposContato[0].value = "(11) 98765-4321";
+        console.log("✅ Exemplo 3 - getElementsByClassName:", camposContato[0].value);
+        console.log("   Elementos com classe 'input-contato':", camposContato.length);
+    </script>
+
+    <!-- ============================================ -->
+    <!-- EXEMPLO 4: querySelector (RECOMENDADO) -->
+    <!-- ============================================ -->
+    <div class="exemplo">
+        <h2>4. Selecionando com querySelector() - Mais Moderno!</h2>
+        <p>Use <strong>seletores CSS</strong> (# para id, . para classe). Retorna o <strong>primeiro elemento</strong> que encontrar.</p>
+        
+        <input type="text"
+            placeholder="Digite seu endereço"
+            id="endereco_usuario"
+            class="input-texto"
+            name="endereco"
+        >
+    </div>
+
+    <script>
+        // querySelector() - Usa seletores CSS (mais flexível!)
+        // Use # para id, . para classe, nome direto para tag
+        // Retorna: primeiro elemento encontrado ou null
+        
+        const campoEndereco = document.querySelector("#endereco_usuario"); // # para id
+        campoEndereco.value = "Rua Exemplo, 123";
+        console.log("✅ Exemplo 4 - querySelector:", campoEndereco.value);
+        
+        // Também funciona com classe:
+        const primeiroInput = document.querySelector(".input-texto");
+        console.log("   Primeiro input com classe 'input-texto':", primeiroInput.placeholder);
+    </script>
+
+    <!-- ============================================ -->
+    <!-- RESUMO E DICAS -->
+    <!-- ============================================ -->
+    <div class="exemplo resumo">
+        <h2>📌 Resumo - Quando usar cada método:</h2>
+        <ul>
+            <li><strong>getElementById("nome")</strong> → Quando tem ID único (mais rápido)</li>
+            <li><strong>getElementsByTagName("input")</strong> → Quando quer TODOS de uma tag (sem &lt;&gt;)</li>
+            <li><strong>getElementsByClassName("classe")</strong> → Quando quer TODOS de uma classe (sem ponto)</li>
+            <li><strong>querySelector("#id")</strong> ou <strong>querySelector(".classe")</strong> → Mais flexível e moderno! ✨</li>
+        </ul>
+        
+        <h3>⚠️ Erros Comuns:</h3>
+        <ul>
+            <li>❌ <code>getElementsByTagName("&lt;input&gt;")</code> → Não usar &lt;&gt;</li>
+            <li>❌ <code>getElementsByTagName("#meuId")</code> → Não usar # ou .</li>
+            <li>❌ <code>getElementsByClassName(".minhaClasse")</code> → Não usar ponto</li>
+            <li>✅ <code>querySelector("#meuId")</code> → Aqui SIM usar # e .</li>
+        </ul>
+    </div>
+
+    <script>
+        // 🎯 DESAFIO: Tente você mesmo!
+        // Abra o Console (F12) e teste:
+        
+        console.log("\n🎯 DESAFIO - Teste estes comandos no Console:");
+        console.log("document.getElementById('nome_usuario')");
+        console.log("document.getElementsByTagName('input')");
+        console.log("document.getElementsByClassName('input-texto')");
+        console.log("document.querySelector('.input-texto')");
+        console.log("document.querySelectorAll('.input-texto')");
+    </script>
+</body>
+</html>

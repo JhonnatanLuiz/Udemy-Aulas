@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Object Model</title>
+    <style>
+        body {
+            font-family: "Inter", Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 24px;
+            color: #222;
+        }
+        h1 {
+            margin-bottom: 8px;
+        }
+        h2 {
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        button {
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            padding: 8px 16px;
+            margin-top: 12px;
+            background: #4f46e5;
+            color: #fff;
+            font-weight: 600;
+        }
+        button:hover {
+            background: #4338ca;
+        }
+        ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+        ul li {
+            margin: 4px 0;
+        }
+        .is-highlighted {
+            background: #fff7d6;
+            border-left: 6px solid #facc15;
+        }
+        .log {
+            font-family: "Fira Code", monospace;
+            background: #111827;
+            color: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            min-height: 50px;
+        }
+        /* Animações e transições */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        }
+        ul li {
+            animation: slideIn 0.3s ease-out;
+            transition: background 0.2s, transform 0.2s;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        ul li:hover {
+            background: #f3f4f6;
+            transform: translateX(4px);
+        }
+        ul li.removing {
+            animation: fadeOut 0.3s ease-out;
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateX(20px); }
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        input[type="text"], input[type="search"] {
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 300px;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus, input[type="search"]:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+        input.invalid {
+            border-color: #ef4444;
+        }
+        .success-message {
+            color: #10b981;
+            font-size: 14px;
+            margin-top: 8px;
+            animation: fadeIn 0.3s;
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 8px;
+            animation: fadeIn 0.3s;
+        }
+        .badge {
+            display: inline-block;
+            background: #4f46e5;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .dragging {
+            opacity: 0.5;
+            cursor: move;
+        }
+        .drag-over {
+            border-top: 3px solid #4f46e5;
+        }
+        .search-container {
+            margin-bottom: 12px;
+        }
+        .search-input {
+            margin-bottom: 8px;
+        }
+        .btn-success {
+            background: #059669;
+        }
+        .btn-success:hover {
+            background: #047857;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .hidden {
+            display: none;
+        }
+        kbd {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        [data-js="lista-navegavel"] li.focused {
+            background: #dbeafe;
+            outline: 2px solid #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Manipulação do DOM na prática</h1>
+        <p>Exemplos comentados mostrando seleções, criação, atualização, remoção e tratamento de eventos com JavaScript.</p>
+    </header>
+
+    <main>
+        <section class="card" id="seletores-card">
+            <h2>1. Selecionando elementos</h2>
+            <p class="card__description">Este parágrafo terá o conteúdo substituído via JavaScript ao carregar a página.</p>
+        </section>
+
+        <section class="card" id="lista-card">
+            <h2>2. Criando e inserindo elementos</h2>
+            <p>Lista gerada dinamicamente:</p>
+            <div class="search-container">
+                <input type="search" class="search-input" data-js="busca-fruta" placeholder="🔍 Buscar frutas...">
+                <span class="badge" data-js="contador-frutas">0</span>
+            </div>
+            <ul data-js="frutas-list"></ul>
+            <button data-js="adicionar-fruta">Adicionar nova fruta</button>
+            <button class="btn-success" data-js="ordenar-frutas">Ordenar A-Z</button>
+        </section>
+
+        <section class="card" id="datasets-card">
+            <h2>3. Lendo atributos <code>data-*</code></h2>
+            <p>Os cartões recebem atributos <code>data-step</code> via JavaScript. A lista abaixo é preenchida dinamicamente.</p>
+            <ul data-js="dataset-list"></ul>
+        </section>
+
+        <section class="card" id="atributos-card">
+            <h2>4. Atualizando classes e atributos</h2>
+            <p data-js="atributos-texto">Clique no botão para alternar um destaque CSS via <code>classList.toggle</code>.</p>
+            <button data-js="toggle-highlight">Alternar destaque</button>
+        </section>
+
+        <section class="card" id="remocao-card">
+            <h2>5. Removendo elementos</h2>
+            <p>Use o botão para remover o último item da lista de frutas:</p>
+            <button data-js="remover-fruta">Remover último item</button>
+        </section>
+
+        <section class="card" id="delegacao-card">
+            <h2>6. Delegação de eventos</h2>
+            <p>Cliques em qualquer item da lista serão tratados por um único listener no elemento <code>&lt;ul&gt;</code>.</p>
+            <div class="log" data-js="log"></div>
+        </section>
+
+        <section class="card" id="conteudo-card">
+            <h2>7. Atualizando conteúdo com segurança</h2>
+            <p data-js="conteudo-texto">Clique no botão para ver a diferença entre <code>textContent</code> e <code>innerHTML</code>.</p>
+            <button data-js="atualizar-conteudo">Atualizar conteúdo</button>
+        </section>
+
+        <section class="card" id="formulario-card">
+            <h2>8. Formulários e validação em tempo real</h2>
+            <form data-js="form-contato">
+                <div class="form-group">
+                    <label for="nome-input">Nome completo:</label>
+                    <input type="text" id="nome-input" data-js="nome-input" placeholder="Digite seu nome">
+                    <span class="error-message hidden" data-js="nome-erro"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email-input">E-mail:</label>
+                    <input type="text" id="email-input" data-js="email-input" placeholder="seu@email.com">
+                    <span class="error-message hidden" data-js="email-erro"></span>
+                </div>
+                <button type="submit">Enviar formulário</button>
+                <span class="success-message hidden" data-js="form-sucesso">✓ Formulário enviado com sucesso!</span>
+            </form>
+        </section>
+
+        <section class="card" id="drag-drop-card">
+            <h2>9. Arrastar e soltar (Drag & Drop)</h2>
+            <p>Arraste os itens da lista para reordená-los:</p>
+            <ul data-js="lista-ordenavel">
+                <li draggable="true">Item 1 - Arrastar</li>
+                <li draggable="true">Item 2 - Arrastar</li>
+                <li draggable="true">Item 3 - Arrastar</li>
+                <li draggable="true">Item 4 - Arrastar</li>
+            </ul>
+        </section>
+
+        <section class="card" id="template-card">
+            <h2>10. Clonagem com &lt;template&gt;</h2>
+            <p>Crie cartões de usuário rapidamente usando templates HTML:</p>
+            <button data-js="adicionar-usuario">Adicionar usuário</button>
+            <div data-js="usuarios-container"></div>
+            
+            <template data-js="usuario-template">
+                <div class="card" style="margin-top: 12px; padding: 16px;">
+                    <h3 data-parte="nome">Nome do Usuário</h3>
+                    <p data-parte="email">email@exemplo.com</p>
+                    <button data-acao="remover" style="background: #dc2626;">Remover</button>
+                </div>
+            </template>
+        </section>
+
+        <section class="card" id="keyboard-card">
+            <h2>11. Navegação por teclado</h2>
+            <p>Use <kbd>Tab</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd> e <kbd>Enter</kbd> para navegar:</p>
+            <ul data-js="lista-navegavel" tabindex="0">
+                <li tabindex="-1">Opção A (pressione Enter)</li>
+                <li tabindex="-1">Opção B (pressione Enter)</li>
+                <li tabindex="-1">Opção C (pressione Enter)</li>
+            </ul>
+            <div class="log" data-js="keyboard-log">Aguardando interação...</div>
+        </section>
+    </main>
+
+    <script>
+        // 1) Selecionando elementos
+        // ------------------------------------------------------------------
+        // querySelector retorna o primeiro elemento que corresponder ao seletor CSS informado.
+        const seletoresCard = document.querySelector('#seletores-card .card__description');
+        seletoresCard.textContent = 'Este texto foi definido via querySelector no carregamento da página.';
+
+        // Também é comum capturar vários elementos com querySelectorAll (retorna NodeList).
+        const cards = document.querySelectorAll('.card');
+        // Adiciona um atributo data-step em cada card para identificá-los no HTML.
+        cards.forEach((card, index) => {
+            card.dataset.step = index + 1; // data-step="1", data-step="2", etc.
+        });
+
+        // Usa os atributos para listar os passos no card 3.
+        const datasetList = document.querySelector('[data-js="dataset-list"]');
+        cards.forEach(card => {
+            const item = document.createElement('li');
+            const titulo = card.querySelector('h2')?.textContent ?? '(sem título)';
+            item.textContent = `${titulo} → data-step = ${card.dataset.step}`;
+            datasetList.appendChild(item);
+        });
+
+        // 2) Criando e inserindo elementos
+        // ------------------------------------------------------------------
+        // Vamos montar uma lista <li> dinamicamente.
+        const STORAGE_KEY = 'frutas_lista';
+        let frutas = JSON.parse(localStorage.getItem(STORAGE_KEY)) || ['Maçã Fuji', 'Banana Nanica', 'Uva Crimson'];
+        const listaFrutas = document.querySelector('[data-js="frutas-list"]');
+        const buscaFrutas = document.querySelector('[data-js="busca-fruta"]');
+        const contadorFrutas = document.querySelector('[data-js="contador-frutas"]');
+        let frutasFiltradas = [...frutas];
+
+        function salvarNoLocalStorage() {
+            // Persiste a lista atual no localStorage do navegador.
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(frutas));
+        }
+
+        function atualizarContador() {
+            contadorFrutas.textContent = frutasFiltradas.length;
+        }
+
+        function renderizarLista() {
+            // Limpa o conteúdo atual da <ul> substituindo por string vazia.
+            listaFrutas.innerHTML = '';
+
+            frutasFiltradas.forEach((fruta, index) => {
+                const item = document.createElement('li'); // cria novo <li>
+                item.textContent = fruta;                  // define o conteúdo de texto
+                item.dataset.index = frutas.indexOf(fruta); // guarda índice original
+                listaFrutas.appendChild(item);             // insere o <li> na lista
+            });
+            
+            atualizarContador();
+        }
+
+        renderizarLista();
+
+        const botaoAdicionar = document.querySelector('[data-js="adicionar-fruta"]');
+        botaoAdicionar.addEventListener('click', () => {
+            // Cria um novo <li> com conteúdo incremental.
+            const novaFruta = `Fruta #${frutas.length + 1}`;
+            frutas.push(novaFruta);
+            salvarNoLocalStorage();
+            frutasFiltradas = [...frutas]; // reseta filtro ao adicionar
+            buscaFrutas.value = ''; // limpa busca
+            renderizarLista();
+        });
+
+        // Busca/filtro em tempo real
+        buscaFrutas.addEventListener('input', (e) => {
+            const termo = e.target.value.toLowerCase().trim();
+            frutasFiltradas = frutas.filter(f => f.toLowerCase().includes(termo));
+            renderizarLista();
+        });
+
+        // Ordenação alfabética
+        const botaoOrdenar = document.querySelector('[data-js="ordenar-frutas"]');
+        botaoOrdenar.addEventListener('click', () => {
+            frutas.sort((a, b) => a.localeCompare(b));
+            salvarNoLocalStorage();
+            frutasFiltradas = [...frutas];
+            renderizarLista();
+        });
+
+        // 3) Atualizando classes e atributos
+        // ------------------------------------------------------------------
+        const textoAtributos = document.querySelector('[data-js="atributos-texto"]');
+        const botaoToggle = document.querySelector('[data-js="toggle-highlight"]');
+
+        botaoToggle.addEventListener('click', () => {
+            // classList.toggle adiciona a classe se ela não existir e remove se já estiver aplicada.
+            textoAtributos.classList.toggle('is-highlighted');
+
+            // setAttribute é útil para atualizar atributos arbitrários.
+            const estado = textoAtributos.classList.contains('is-highlighted') ? 'on' : 'off';
+            textoAtributos.setAttribute('data-highlight', estado);
+        });
+
+        // 4) Removendo elementos
+        // ------------------------------------------------------------------
+        const botaoRemover = document.querySelector('[data-js="remover-fruta"]');
+        botaoRemover.addEventListener('click', () => {
+            if (frutas.length === 0) return;
+
+            // Adiciona animação de saída antes de remover
+            const ultimoItem = listaFrutas.lastElementChild;
+            if (ultimoItem) {
+                ultimoItem.classList.add('removing');
+                setTimeout(() => {
+                    frutas.pop();
+                    salvarNoLocalStorage();
+                    frutasFiltradas = [...frutas];
+                    renderizarLista();
+                }, 300);
+            }
+        });
+
+        // 5) Delegação de eventos
+        // ------------------------------------------------------------------
+        // Em vez de adicionar um listener a cada <li>, adicionamos apenas ao elemento pai (<ul>)
+        // e verificamos onde o evento realmente ocorreu usando event.target.
+        const logArea = document.querySelector('[data-js="log"]');
+        logArea.textContent = 'Clique em um item da lista de frutas para registrar o texto aqui.';
+
+        listaFrutas.addEventListener('click', (event) => {
+            // Garante que o clique veio de um <li> (ignora clicks na área vazia da <ul>).
+            if (event.target.tagName !== 'LI') return;
+
+            const mensagem = `Você clicou em: ${event.target.textContent}`;
+            logArea.textContent = mensagem;
+        });
+
+        // 6) Observando mutações (extra opcional)
+        // ------------------------------------------------------------------
+        // MutationObserver permite reagir a mudanças no DOM (ex.: itens adicionados/removidos).
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'childList') {
+                    logArea.textContent = `A lista agora possui ${listaFrutas.children.length} item(ns).`;
+                }
+            });
+        });
+
+        observer.observe(listaFrutas, { childList: true });
+
+        // 7) Atualizando conteúdo com segurança
+        // ------------------------------------------------------------------
+        const botaoConteudo = document.querySelector('[data-js="atualizar-conteudo"]');
+        const textoConteudo = document.querySelector('[data-js="conteudo-texto"]');
+
+        botaoConteudo.addEventListener('click', () => {
+            textoConteudo.textContent = 'Usando textContent: tags viram texto literal (veja <strong>não renderizado</strong>).';
+
+            setTimeout(() => {
+                textoConteudo.innerHTML = 'Agora com innerHTML: <strong>tags são interpretadas</strong> e <em>renderizadas</em>.';
+            }, 1200);
+        });
+
+        // 8) Formulários e validação em tempo real
+        // ------------------------------------------------------------------
+        const formContato = document.querySelector('[data-js="form-contato"]');
+        const nomeInput = document.querySelector('[data-js="nome-input"]');
+        const emailInput = document.querySelector('[data-js="email-input"]');
+        const nomeErro = document.querySelector('[data-js="nome-erro"]');
+        const emailErro = document.querySelector('[data-js="email-erro"]');
+        const formSucesso = document.querySelector('[data-js="form-sucesso"]');
+
+        function validarNome(nome) {
+            if (nome.trim().length < 3) {
+                return 'Nome deve ter pelo menos 3 caracteres';
+            }
+            if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/.test(nome)) {
+                return 'Nome deve conter apenas letras';
+            }
+            return null;
+        }
+
+        function validarEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regex.test(email)) {
+                return 'E-mail inválido';
+            }
+            return null;
+        }
+
+        // Validação em tempo real conforme o usuário digita
+        nomeInput.addEventListener('input', () => {
+            const erro = validarNome(nomeInput.value);
+            if (erro) {
+                nomeErro.textContent = erro;
+                nomeErro.classList.remove('hidden');
+                nomeInput.classList.add('invalid');
+            } else {
+                nomeErro.classList.add('hidden');
+                nomeInput.classList.remove('invalid');
+            }
+        });
+
+        emailInput.addEventListener('input', () => {
+            const erro = validarEmail(emailInput.value);
+            if (erro) {
+                emailErro.textContent = erro;
+                emailErro.classList.remove('hidden');
+                emailInput.classList.add('invalid');
+            } else {
+                emailErro.classList.add('hidden');
+                emailInput.classList.remove('invalid');
+            }
+        });
+
+        formContato.addEventListener('submit', (e) => {
+            e.preventDefault(); // Impede o envio real do formulário
+
+            const erroNome = validarNome(nomeInput.value);
+            const erroEmail = validarEmail(emailInput.value);
+
+            if (!erroNome && !erroEmail) {
+                formSucesso.classList.remove('hidden');
+                setTimeout(() => {
+                    formSucesso.classList.add('hidden');
+                    formContato.reset();
+                }, 3000);
+            }
+        });
+
+        // 9) Drag & Drop - Arrastar e soltar
+        // ------------------------------------------------------------------
+        const listaOrdenavel = document.querySelector('[data-js="lista-ordenavel"]');
+        let elementoArrastado = null;
+
+        listaOrdenavel.addEventListener('dragstart', (e) => {
+            if (e.target.tagName === 'LI') {
+                elementoArrastado = e.target;
+                e.target.classList.add('dragging');
+            }
+        });
+
+        listaOrdenavel.addEventListener('dragend', (e) => {
+            if (e.target.tagName === 'LI') {
+                e.target.classList.remove('dragging');
+            }
+        });
+
+        listaOrdenavel.addEventListener('dragover', (e) => {
+            e.preventDefault(); // necessário para permitir drop
+            const itemAtual = e.target.closest('li');
+            if (itemAtual && itemAtual !== elementoArrastado) {
+                itemAtual.classList.add('drag-over');
+            }
+        });
+
+        listaOrdenavel.addEventListener('dragleave', (e) => {
+            const itemAtual = e.target.closest('li');
+            if (itemAtual) {
+                itemAtual.classList.remove('drag-over');
+            }
+        });
+
+        listaOrdenavel.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const itemAlvo = e.target.closest('li');
+            if (itemAlvo && itemAlvo !== elementoArrastado) {
+                itemAlvo.classList.remove('drag-over');
+                // Insere o elemento arrastado antes do alvo
+                listaOrdenavel.insertBefore(elementoArrastado, itemAlvo);
+            }
+        });
+
+        // 10) Templates e clonagem
+        // ------------------------------------------------------------------
+        const botaoAdicionarUsuario = document.querySelector('[data-js="adicionar-usuario"]');
+        const usuariosContainer = document.querySelector('[data-js="usuarios-container"]');
+        const usuarioTemplate = document.querySelector('[data-js="usuario-template"]');
+        let contadorUsuarios = 0;
+
+        botaoAdicionarUsuario.addEventListener('click', () => {
+            contadorUsuarios++;
+            
+            // Clona o conteúdo do template
+            const clone = usuarioTemplate.content.cloneNode(true);
+            
+            // Atualiza os dados do clone
+            clone.querySelector('[data-parte="nome"]').textContent = `Usuário ${contadorUsuarios}`;
+            clone.querySelector('[data-parte="email"]').textContent = `usuario${contadorUsuarios}@exemplo.com`;
+            
+            // Adiciona evento ao botão de remover
+            const btnRemover = clone.querySelector('[data-acao="remover"]');
+            btnRemover.addEventListener('click', function() {
+                this.closest('.card').remove();
+            });
+            
+            // Insere no container
+            usuariosContainer.appendChild(clone);
+        });
+
+        // 11) Navegação por teclado
+        // ------------------------------------------------------------------
+        const listaNavegavel = document.querySelector('[data-js="lista-navegavel"]');
+        const keyboardLog = document.querySelector('[data-js="keyboard-log"]');
+        let indiceFocado = -1;
+
+        function atualizarFoco(novoIndice) {
+            const itens = listaNavegavel.querySelectorAll('li');
+            
+            // Remove foco anterior
+            itens.forEach(item => item.classList.remove('focused'));
+            
+            // Adiciona novo foco
+            if (novoIndice >= 0 && novoIndice < itens.length) {
+                indiceFocado = novoIndice;
+                itens[indiceFocado].classList.add('focused');
+                itens[indiceFocado].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+        }
+
+        listaNavegavel.addEventListener('keydown', (e) => {
+            const itens = listaNavegavel.querySelectorAll('li');
+            
+            switch(e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    atualizarFoco(Math.min(indiceFocado + 1, itens.length - 1));
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    atualizarFoco(Math.max(indiceFocado - 1, 0));
+                    break;
+                case 'Enter':
+                    if (indiceFocado >= 0) {
+                        const itemSelecionado = itens[indiceFocado].textContent;
+                        keyboardLog.textContent = `Você selecionou: ${itemSelecionado}`;
+                    }
+                    break;
+            }
+        });
+
+        listaNavegavel.addEventListener('focus', () => {
+            if (indiceFocado === -1) {
+                atualizarFoco(0);
+            }
+        });
+    </script>
+</body>
+</html>
