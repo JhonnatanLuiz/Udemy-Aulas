@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulando Valores de Inputs no DOM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+        }
+        .exemplo {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .exemplo h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        input[type="text"], 
+        input[type="email"],
+        input[type="number"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .resultado {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 6px;
+            color: #155724;
+        }
+        .hidden {
+            display: none;
+        }
+        .campo-readonly {
+            cursor: not-allowed;
+        }
+        .campo-letras {
+            background-color: #e3f2fd;
+        }
+        .campo-numeros {
+            background-color: #fff3e0;
+        }
+        .espacamento-top {
+            margin-top: 20px;
+        }
+        .info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Manipulando Valores de Inputs no DOM</h1>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 1: Lendo valores de inputs -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>1. Lendo (GET) valores de inputs</h2>
+            <p>Use a propriedade <code>.value</code> para <strong>ler</strong> o conteúdo de um input.</p>
+            
+            <input type="text" id="nome" placeholder="Digite seu nome">
+            <button onclick="lerNome()">Ler Nome</button>
+            
+            <div id="resultado-nome" class="resultado hidden"></div>
+        </div>
+
+        <script>
+            // Função para LER o valor do input
+            function lerNome() {
+                // 1. Primeiro, SELECIONE o elemento input
+                const inputNome = document.getElementById('nome');
+                
+                // 2. Use .value para PEGAR o valor digitado
+                const valorDigitado = inputNome.value;
+                
+                // 3. Exiba o resultado
+                const divResultado = document.getElementById('resultado-nome');
+                divResultado.textContent = `Você digitou: "${valorDigitado}"`;
+                divResultado.classList.remove('hidden');
+                
+                console.log('📖 Valor lido:', valorDigitado);
+            }
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 2: Definindo valores em inputs -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>2. Definindo (SET) valores em inputs</h2>
+            <p>Use <code>.value = "novo valor"</code> para <strong>definir/alterar</strong> o conteúdo.</p>
+            
+            <input type="text" id="email" placeholder="Digite seu email">
+            <button onclick="preencherEmail()">Preencher Automaticamente</button>
+            <button onclick="limparEmail()">Limpar</button>
+        </div>
+
+        <script>
+            function preencherEmail() {
+                // 1. Selecione o input
+                const inputEmail = document.getElementById('email');
+                
+                // 2. DEFINA um novo valor usando .value = 
+                inputEmail.value = 'usuario@exemplo.com';
+                
+                console.log('✍️ Valor definido para:', inputEmail.value);
+            }
+
+            function limparEmail() {
+                // Para LIMPAR um input, defina .value como string vazia
+                const inputEmail = document.getElementById('email');
+                inputEmail.value = '';
+                
+                console.log('🧹 Input limpo!');
+            }
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 3: Validando valores -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>3. Validando valores digitados</h2>
+            <p>Sempre valide o que o usuário digitou antes de processar.</p>
+            
+            <input type="number" id="idade" placeholder="Digite sua idade">
+            <button onclick="validarIdade()">Validar Idade</button>
+            
+            <div id="resultado-idade" class="resultado hidden"></div>
+        </div>
+
+        <script>
+            function validarIdade() {
+                // 1. Leia o valor
+                const inputIdade = document.getElementById('idade');
+                const idade = inputIdade.value;
+                
+                // 2. Valide se não está vazio
+                if (idade === '' || idade === null) {
+                    alert('⚠️ Por favor, digite sua idade!');
+                    inputIdade.focus(); // Coloca o cursor de volta no input
+                    return;
+                }
+                
+                // 3. Converta para número e valide
+                const idadeNumero = Number(idade);
+                
+                if (idadeNumero < 0 || idadeNumero > 150) {
+                    alert('⚠️ Idade inválida!');
+                    return;
+                }
+                
+                // 4. Mostre o resultado
+                const divResultado = document.getElementById('resultado-idade');
+                divResultado.textContent = idadeNumero >= 18 
+                    ? `✅ Você tem ${idadeNumero} anos - Maior de idade!` 
+                    : `⚠️ Você tem ${idadeNumero} anos - Menor de idade!`;
+                divResultado.classList.remove('hidden');
+                
+                console.log('🔍 Validação completa. Idade:', idadeNumero);
+            }
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 4: Manipulando vários inputs -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>4. Trabalhando com múltiplos inputs (Formulário)</h2>
+            <p>Coletando e processando vários valores de uma vez.</p>
+            
+            <input type="text" id="form-nome" placeholder="Nome completo">
+            <input type="email" id="form-email" placeholder="E-mail">
+            <input type="text" id="form-telefone" placeholder="Telefone">
+            
+            <button onclick="processarFormulario()">Processar Dados</button>
+            <button onclick="limparFormulario()">Limpar Tudo</button>
+            
+            <div id="resultado-form" class="resultado hidden"></div>
+        </div>
+
+        <script>
+            function processarFormulario() {
+                // Coletando valores de vários inputs
+                const nome = document.getElementById('form-nome').value;
+                const email = document.getElementById('form-email').value;
+                const telefone = document.getElementById('form-telefone').value;
+                
+                // Validação básica
+                if (!nome || !email || !telefone) {
+                    alert('⚠️ Preencha todos os campos!');
+                    return;
+                }
+                
+                // Criando um objeto com os dados
+                const dados = {
+                    nome: nome,
+                    email: email,
+                    telefone: telefone
+                };
+                
+                // Exibindo os dados coletados
+                const divResultado = document.getElementById('resultado-form');
+                divResultado.innerHTML = `
+                    <strong>📋 Dados Coletados:</strong><br>
+                    👤 Nome: ${dados.nome}<br>
+                    📧 Email: ${dados.email}<br>
+                    📱 Telefone: ${dados.telefone}
+                `;
+                divResultado.classList.remove('hidden');
+                
+                console.log('📦 Objeto criado:', dados);
+            }
+
+            function limparFormulario() {
+                // Limpar múltiplos inputs de uma vez
+                document.getElementById('form-nome').value = '';
+                document.getElementById('form-email').value = '';
+                document.getElementById('form-telefone').value = '';
+                document.getElementById('resultado-form').classList.add('hidden');
+                
+                console.log('🧹 Formulário limpo!');
+            }
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 5: Eventos em tempo real -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>5. Reagindo enquanto o usuário digita (eventos)</h2>
+            <p>Use o evento <code>input</code> para detectar mudanças em tempo real.</p>
+            
+            <input type="text" id="busca" placeholder="Digite para buscar...">
+            <div id="resultado-busca" class="resultado hidden"></div>
+        </div>
+
+        <script>
+            // Adiciona um "listener" (ouvinte) que dispara enquanto você digita
+            const inputBusca = document.getElementById('busca');
+            const divResultadoBusca = document.getElementById('resultado-busca');
+            
+            inputBusca.addEventListener('input', function() {
+                // Este código executa TODA VEZ que o valor muda
+                const textoBusca = this.value; // 'this' se refere ao próprio input
+                
+                if (textoBusca.length === 0) {
+                    divResultadoBusca.classList.add('hidden');
+                    return;
+                }
+                
+                divResultadoBusca.textContent = `🔎 Buscando por: "${textoBusca}" (${textoBusca.length} caracteres)`;
+                divResultadoBusca.classList.remove('hidden');
+                
+                console.log('⌨️ Digitando:', textoBusca);
+            });
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 6: Transformando valores -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>6. Transformando valores (maiúscula, minúscula, etc.)</h2>
+            <p>Manipule o texto antes de salvar ou exibir.</p>
+            
+            <input type="text" id="texto-transform" placeholder="Digite um texto qualquer">
+            <button onclick="transformarMaiuscula()">MAIÚSCULA</button>
+            <button onclick="transformarMinuscula()">minúscula</button>
+            <button onclick="transformarCapitalizar()">Capitalizar</button>
+            
+            <div id="resultado-transform" class="resultado hidden"></div>
+        </div>
+
+        <script>
+            function transformarMaiuscula() {
+                const input = document.getElementById('texto-transform');
+                const texto = input.value;
+                
+                // .toUpperCase() converte para MAIÚSCULA
+                const textoMaiuscula = texto.toUpperCase();
+                
+                // IMPORTANTE: Você pode escolher:
+                // Opção 1: Alterar o próprio input
+                input.value = textoMaiuscula;
+                
+                // Opção 2: Apenas exibir (sem alterar o input)
+                mostrarResultadoTransform(`MAIÚSCULA: ${textoMaiuscula}`);
+            }
+
+            function transformarMinuscula() {
+                const input = document.getElementById('texto-transform');
+                const texto = input.value;
+                
+                // .toLowerCase() converte para minúscula
+                input.value = texto.toLowerCase();
+                mostrarResultadoTransform(`minúscula: ${input.value}`);
+            }
+
+            function transformarCapitalizar() {
+                const input = document.getElementById('texto-transform');
+                const texto = input.value;
+                
+                // Primeira letra maiúscula, resto minúscula
+                const capitalizado = texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+                
+                input.value = capitalizado;
+                mostrarResultadoTransform(`Capitalizado: ${capitalizado}`);
+            }
+
+            function mostrarResultadoTransform(mensagem) {
+                const div = document.getElementById('resultado-transform');
+                div.textContent = mensagem;
+                div.classList.remove('hidden');
+            }
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 7: SWITCH CASE SEM BREAK (FALL-THROUGH) -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 7: Categorização Automática com Switch (sem break)</h2>
+            <p>
+                Digite algo no campo abaixo. O sistema irá automaticamente categorizar:
+                <br>📝 <strong>Letras</strong> vão para o campo "Somente Letras"
+                <br>🔢 <strong>Números</strong> vão para o campo "Somente Números"
+                <br>O switch sem break permite executar múltiplos cases!
+            </p>
+
+            <label for="entrada-categorizar">Digite letras ou números:</label>
+            <input 
+                type="text" 
+                id="entrada-categorizar" 
+                placeholder="Digite aqui e pressione Enter..."
+            >
+
+            <div class="espacamento-top">
+                <label for="campo-letras">📝 Somente Letras:</label>
+                <input 
+                    type="text" 
+                    id="campo-letras" 
+                    placeholder="Letras aparecerão aqui"
+                    readonly
+                    class="campo-readonly campo-letras"
+                >
+                
+                <label for="campo-numeros">🔢 Somente Números:</label>
+                <input 
+                    type="text" 
+                    id="campo-numeros" 
+                    placeholder="Números aparecerão aqui"
+                    readonly
+                    class="campo-readonly campo-numeros"
+                >
+            </div>
+
+            <div id="resultado-categorizar" class="hidden"></div>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 7: Switch case SEM BREAK (fall-through)
+            // =====================================================
+            
+            const inputCategorizar = document.getElementById('entrada-categorizar');
+            const campoLetras = document.getElementById('campo-letras');
+            const campoNumeros = document.getElementById('campo-numeros');
+            
+            // Evento quando usuário pressiona Enter
+            inputCategorizar.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    categorizarEntrada();
+                }
+            });
+            
+            function categorizarEntrada() {
+                const entrada = inputCategorizar.value.trim();
+                
+                // Validação: verifica se não está vazio
+                if (entrada === '') {
+                    mostrarResultadoCategorizar('⚠️ Digite algo primeiro!', 'error');
+                    return;
+                }
+                
+                // Processa cada caractere da entrada
+                let letras = '';
+                let numeros = '';
+                
+                // Loop por cada caractere
+                for (let i = 0; i < entrada.length; i++) {
+                    const caractere = entrada[i];
+                    
+                    // ==========================================
+                    // SWITCH sem BREAK - Fall-through Pattern
+                    // ==========================================
+                    // Quando NÃO usamos break, o código "cai" 
+                    // para os próximos cases até encontrar break
+                    // ==========================================
+                    
+                    switch (true) {
+                        // Verifica se é letra (a-z ou A-Z)
+                        case /[a-zA-Z]/.test(caractere):
+                            letras += caractere;
+                            // SEM BREAK aqui! Vamos testar os próximos cases também
+                            
+                        // Verifica se é número (0-9)
+                        case /[0-9]/.test(caractere):
+                            if (/[0-9]/.test(caractere)) {
+                                numeros += caractere;
+                            }
+                            break; // Aqui sim temos break para sair do switch
+                            
+                        // Caso seja outro tipo de caractere (espaço, símbolo)
+                        default:
+                            // Ignora caracteres especiais
+                            break;
+                    }
+                }
+                
+                // Atualiza os campos com os resultados
+                campoLetras.value = letras || '(nenhuma letra encontrada)';
+                campoNumeros.value = numeros || '(nenhum número encontrado)';
+                
+                // Mostra mensagem de sucesso
+                let mensagem = '✅ Categorizado com sucesso!\n';
+                if (letras) mensagem += `📝 ${letras.length} letra(s) encontrada(s)\n`;
+                if (numeros) mensagem += `🔢 ${numeros.length} número(s) encontrado(s)`;
+                
+                mostrarResultadoCategorizar(mensagem, 'success');
+                
+                // Limpa o campo de entrada
+                inputCategorizar.value = '';
+                inputCategorizar.focus();
+            }
+            
+            function mostrarResultadoCategorizar(mensagem, tipo) {
+                const div = document.getElementById('resultado-categorizar');
+                div.textContent = mensagem;
+                div.style.whiteSpace = 'pre-line'; // Respeita quebras de linha
+                
+                // Define cor baseada no tipo
+                if (tipo === 'error') {
+                    div.style.backgroundColor = '#ffebee';
+                    div.style.color = '#c62828';
+                } else {
+                    div.style.backgroundColor = '#e8f5e9';
+                    div.style.color = '#2e7d32';
+                }
+                
+                div.classList.remove('hidden');
+            }
+            
+            // ==========================================
+            // 💡 EXPLICAÇÃO: Por que NÃO usar break?
+            // ==========================================
+            // Quando NÃO colocamos break em um case,
+            // o JavaScript executa os próximos cases
+            // até encontrar um break. Isso é chamado
+            // de "fall-through" e pode ser útil quando
+            // queremos executar múltiplas ações.
+            //
+            // IMPORTANTE: Neste exemplo, usamos uma 
+            // abordagem diferente - switch(true) com 
+            // condições regex. Cada case testa uma 
+            // condição e podemos omitir o break para
+            // permitir que múltiplos testes ocorram.
+            // ==========================================
+        </script>
+
+        <!-- ============================================ -->
+        <!-- RESUMO E DICAS -->
+        <!-- ============================================ -->
+        <div class="info">
+            <h2>📌 Resumo - Manipulação de Valores</h2>
+            <ul>
+                <li><code>elemento.value</code> → LER o valor atual</li>
+                <li><code>elemento.value = "novo"</code> → DEFINIR novo valor</li>
+                <li><code>elemento.value = ''</code> → LIMPAR o input</li>
+                <li><code>elemento.focus()</code> → Colocar cursor no input</li>
+                <li><code>addEventListener('input', ...)</code> → Detectar digitação em tempo real</li>
+            </ul>
+            
+            <h3>⚠️ Dicas Importantes:</h3>
+            <ul>
+                <li>✅ Sempre VALIDE os valores antes de usar</li>
+                <li>✅ Use <code>Number()</code> para converter texto em número</li>
+                <li>✅ Use <code>.trim()</code> para remover espaços nas pontas</li>
+                <li>✅ Teste se o valor não está vazio (<code>value === ''</code>)</li>
+                <li>✅ Use <code>console.log()</code> para debugar</li>
+            </ul>
+        </div>
+
+        <script>
+            // 🎯 DESAFIO FINAL
+            console.log('\n🎯 DESAFIO: Abra o Console (F12) e tente:');
+            console.log('1. document.getElementById("nome").value');
+            console.log('2. document.getElementById("nome").value = "Seu Nome"');
+            console.log('3. Interaja com os exemplos acima e observe os logs!');
+        </script>
+    </div>
+</body>
+</html>

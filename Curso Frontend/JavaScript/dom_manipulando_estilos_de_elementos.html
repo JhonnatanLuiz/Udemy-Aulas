@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulando Estilos de Elementos no DOM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        h1 {
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .exemplo {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 10px;
+            border-left: 5px solid #1e3c72;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .exemplo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .exemplo h2 {
+            color: #1e3c72;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+        }
+        .exemplo p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 5px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .caixa-demonstracao {
+            width: 200px;
+            height: 200px;
+            background: #e3f2fd;
+            border: 3px solid #1e88e5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1565c0;
+            transition: all 0.3s;
+        }
+        .texto-demonstracao {
+            padding: 20px;
+            background: #fff3e0;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .info {
+            background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 2px solid #7e22ce;
+        }
+        .info h2 {
+            color: #4a148c;
+            margin-top: 0;
+        }
+        .info ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        .info code {
+            background: rgba(126, 34, 206, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #6a1b9a;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        .grid-demonstracao {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .card {
+            padding: 20px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .hidden {
+            display: none;
+        }
+        .destaque {
+            background: #fff9c4;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        /* Classes para o Exemplo 5 */
+        .tema-claro {
+            background-color: white;
+            color: #333;
+        }
+        .tema-escuro {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+        /* Classes para animações */
+        .girar {
+            animation: girar 1s linear;
+        }
+        @keyframes girar {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .pulsar {
+            animation: pulsar 0.5s ease-in-out;
+        }
+        @keyframes pulsar {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Manipulando Estilos no DOM</h1>
+        <p class="subtitle">Aprenda a modificar CSS usando JavaScript com exemplos práticos</p>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 1: style.property (Estilo Inline) -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 1: Modificar Estilos Inline (style.property)</h2>
+            <p>
+                A propriedade <code>style</code> permite alterar estilos CSS diretamente no elemento.
+                <br><strong>Importante:</strong> Isso adiciona estilo inline (tem alta prioridade).
+            </p>
+
+            <div id="caixa1" class="caixa-demonstracao">
+                Caixa de Demonstração
+            </div>
+
+            <button onclick="mudarCor()">🎨 Mudar Cor de Fundo</button>
+            <button onclick="mudarTamanho()">📏 Aumentar Tamanho</button>
+            <button onclick="mudarBorda()">🖼️ Mudar Borda</button>
+            <button onclick="resetarCaixa1()">🔄 Resetar</button>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 1: Manipulando estilos com .style
+            // =====================================================
+            
+            // Pega o elemento pelo ID
+            const caixa1 = document.getElementById('caixa1');
+            
+            function mudarCor() {
+                // ==========================================
+                // .style.backgroundColor
+                // Modifica a cor de fundo diretamente
+                // Nota: use camelCase (backgroundColor, não background-color)
+                // ==========================================
+                caixa1.style.backgroundColor = '#ffcdd2'; // Rosa claro
+                caixa1.style.color = '#c62828'; // Texto vermelho escuro
+                
+                console.log('✅ Cor alterada via style.backgroundColor');
+            }
+            
+            function mudarTamanho() {
+                // ==========================================
+                // .style.width e .style.height
+                // Modifica dimensões do elemento
+                // Importante: sempre incluir a unidade (px, %, em, rem)
+                // ==========================================
+                caixa1.style.width = '300px';
+                caixa1.style.height = '300px';
+                caixa1.style.fontSize = '24px';
+                
+                console.log('✅ Tamanho alterado via style.width/height');
+            }
+            
+            function mudarBorda() {
+                // ==========================================
+                // .style.border
+                // Modifica bordas do elemento
+                // Formato: "largura estilo cor"
+                // ==========================================
+                caixa1.style.border = '5px dashed #7e22ce';
+                caixa1.style.borderRadius = '20px';
+                
+                console.log('✅ Borda alterada via style.border');
+            }
+            
+            function resetarCaixa1() {
+                // ==========================================
+                // Resetar estilos inline
+                // Define como string vazia para remover o estilo inline
+                // O elemento voltará a usar os estilos do CSS
+                // ==========================================
+                caixa1.style.backgroundColor = '';
+                caixa1.style.color = '';
+                caixa1.style.width = '';
+                caixa1.style.height = '';
+                caixa1.style.fontSize = '';
+                caixa1.style.border = '';
+                caixa1.style.borderRadius = '';
+                
+                console.log('🔄 Estilos resetados');
+            }
+            
+            // ==========================================
+            // 💡 DICA IMPORTANTE:
+            // ==========================================
+            // Propriedades CSS com hífen (-) viram camelCase:
+            // background-color → backgroundColor
+            // font-size → fontSize
+            // border-radius → borderRadius
+            // margin-top → marginTop
+            // ==========================================
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 2: classList - Adicionar/Remover Classes -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 2: Manipular Classes CSS (classList)</h2>
+            <p>
+                Em vez de modificar estilos inline, é melhor usar classes CSS.
+                <br><code>classList</code> permite adicionar, remover e alternar classes.
+            </p>
+
+            <div id="texto1" class="texto-demonstracao">
+                Este texto pode receber diferentes estilos através de classes CSS!
+            </div>
+
+            <button onclick="adicionarDestaque()">⭐ Adicionar Destaque</button>
+            <button onclick="removerDestaque()">❌ Remover Destaque</button>
+            <button onclick="alternarDestaque()">🔄 Alternar Destaque</button>
+            <button onclick="verificarClasse()">🔍 Verificar Classe</button>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 2: Trabalhando com classList
+            // =====================================================
+            
+            const texto1 = document.getElementById('texto1');
+            
+            function adicionarDestaque() {
+                // ==========================================
+                // .classList.add()
+                // Adiciona uma ou mais classes ao elemento
+                // Se a classe já existir, não duplica
+                // ==========================================
+                texto1.classList.add('destaque');
+                
+                console.log('✅ Classe "destaque" adicionada');
+                console.log('Classes atuais:', texto1.classList);
+            }
+            
+            function removerDestaque() {
+                // ==========================================
+                // .classList.remove()
+                // Remove uma ou mais classes do elemento
+                // Se a classe não existir, não dá erro
+                // ==========================================
+                texto1.classList.remove('destaque');
+                
+                console.log('❌ Classe "destaque" removida');
+                console.log('Classes atuais:', texto1.classList);
+            }
+            
+            function alternarDestaque() {
+                // ==========================================
+                // .classList.toggle()
+                // Se a classe existe, remove. Se não existe, adiciona.
+                // Muito útil para botões liga/desliga
+                // Retorna true (adicionou) ou false (removeu)
+                // ==========================================
+                const adicionou = texto1.classList.toggle('destaque');
+                
+                if (adicionou) {
+                    console.log('🔄 Classe "destaque" foi ADICIONADA');
+                } else {
+                    console.log('🔄 Classe "destaque" foi REMOVIDA');
+                }
+            }
+            
+            function verificarClasse() {
+                // ==========================================
+                // .classList.contains()
+                // Verifica se o elemento tem determinada classe
+                // Retorna true ou false
+                // ==========================================
+                const temDestaque = texto1.classList.contains('destaque');
+                
+                if (temDestaque) {
+                    alert('✅ O texto TEM a classe "destaque"');
+                } else {
+                    alert('❌ O texto NÃO TEM a classe "destaque"');
+                }
+                
+                console.log('Verificação:', temDestaque);
+            }
+            
+            // ==========================================
+            // 💡 MÉTODOS ÚTEIS DO classList:
+            // ==========================================
+            // .add('classe1', 'classe2') → adiciona múltiplas classes
+            // .remove('classe1', 'classe2') → remove múltiplas classes
+            // .toggle('classe') → alterna a classe
+            // .contains('classe') → verifica se tem a classe
+            // .replace('antiga', 'nova') → substitui uma classe
+            // ==========================================
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 3: getComputedStyle - Ler Estilos Aplicados -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 3: Ler Estilos Computados (getComputedStyle)</h2>
+            <p>
+                Usar <code>elemento.style</code> só lê estilos inline.
+                <br>Para ler estilos do CSS (stylesheet), use <code>getComputedStyle()</code>.
+            </p>
+
+            <div id="caixa2" class="caixa-demonstracao">
+                Leia meus estilos!
+            </div>
+
+            <button onclick="lerEstilos()">📖 Ler Estilos Atuais</button>
+            <button onclick="compararEstilos()">⚖️ Comparar style vs getComputedStyle</button>
+
+            <div id="resultado-estilos" class="hidden texto-demonstracao"></div>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 3: Lendo estilos com getComputedStyle
+            // =====================================================
+            
+            const caixa2 = document.getElementById('caixa2');
+            const resultadoEstilos = document.getElementById('resultado-estilos');
+            
+            function lerEstilos() {
+                // ==========================================
+                // window.getComputedStyle(elemento)
+                // Retorna TODOS os estilos aplicados ao elemento
+                // (CSS externo + interno + inline + valores padrão)
+                // ==========================================
+                const estilos = window.getComputedStyle(caixa2);
+                
+                // Lendo propriedades específicas
+                const corFundo = estilos.backgroundColor;
+                const largura = estilos.width;
+                const altura = estilos.height;
+                const corTexto = estilos.color;
+                const fonte = estilos.fontSize;
+                
+                // Exibe os resultados
+                let texto = '📊 ESTILOS COMPUTADOS:\n\n';
+                texto += `🎨 Cor de fundo: ${corFundo}\n`;
+                texto += `📏 Largura: ${largura}\n`;
+                texto += `📏 Altura: ${altura}\n`;
+                texto += `✒️ Cor do texto: ${corTexto}\n`;
+                texto += `🔤 Tamanho da fonte: ${fonte}`;
+                
+                resultadoEstilos.textContent = texto;
+                resultadoEstilos.style.whiteSpace = 'pre-line';
+                resultadoEstilos.classList.remove('hidden');
+                
+                console.log('📖 Estilos lidos:', {
+                    corFundo,
+                    largura,
+                    altura,
+                    corTexto,
+                    fonte
+                });
+            }
+            
+            function compararEstilos() {
+                // ==========================================
+                // COMPARAÇÃO: .style vs getComputedStyle()
+                // ==========================================
+                
+                // .style só lê estilos INLINE (atributo style="")
+                const inlineWidth = caixa2.style.width;
+                
+                // getComputedStyle lê o estilo FINAL aplicado
+                const computedWidth = window.getComputedStyle(caixa2).width;
+                
+                let texto = '⚖️ COMPARAÇÃO:\n\n';
+                texto += `elemento.style.width:\n`;
+                texto += `"${inlineWidth}" ${inlineWidth ? '(tem inline)' : '(vazio - sem inline)'}\n\n`;
+                texto += `getComputedStyle().width:\n`;
+                texto += `"${computedWidth}" (valor final aplicado)`;
+                
+                resultadoEstilos.textContent = texto;
+                resultadoEstilos.style.whiteSpace = 'pre-line';
+                resultadoEstilos.classList.remove('hidden');
+                
+                console.log('⚖️ Comparação:', {
+                    inline: inlineWidth,
+                    computed: computedWidth
+                });
+            }
+            
+            // ==========================================
+            // 💡 QUANDO USAR CADA UM:
+            // ==========================================
+            // elemento.style → para MODIFICAR estilos inline
+            // getComputedStyle() → para LER estilos aplicados
+            // ==========================================
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 4: Modificar Múltiplos Estilos (cssText) -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 4: Aplicar Múltiplos Estilos (cssText)</h2>
+            <p>
+                Use <code>style.cssText</code> para aplicar vários estilos de uma vez.
+                <br><strong>Atenção:</strong> Isso substitui TODOS os estilos inline existentes.
+            </p>
+
+            <div id="caixa3" class="caixa-demonstracao">
+                Estilize-me!
+            </div>
+
+            <button onclick="aplicarEstiloCompleto()">🎨 Estilo Completo</button>
+            <button onclick="adicionarEstilos()">➕ Adicionar Estilos</button>
+            <button onclick="limparEstilos()">🗑️ Limpar Estilos</button>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 4: cssText para múltiplos estilos
+            // =====================================================
+            
+            const caixa3 = document.getElementById('caixa3');
+            
+            function aplicarEstiloCompleto() {
+                // ==========================================
+                // .style.cssText
+                // Aplica múltiplos estilos de uma vez
+                // SUBSTITUI todos os estilos inline anteriores
+                // Sintaxe: igual CSS normal (com hífens)
+                // ==========================================
+                caixa3.style.cssText = `
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    width: 250px;
+                    height: 250px;
+                    border: 4px solid #4c1d95;
+                    border-radius: 50%;
+                    font-size: 20px;
+                    font-weight: bold;
+                    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+                    transform: rotate(5deg);
+                `;
+                
+                console.log('✅ Estilos completos aplicados via cssText');
+            }
+            
+            function adicionarEstilos() {
+                // ==========================================
+                // Adicionar sem perder estilos existentes
+                // Use += para concatenar ao cssText atual
+                // ==========================================
+                caixa3.style.cssText += `
+                    animation: pulsar 0.5s ease-in-out;
+                    cursor: pointer;
+                `;
+                
+                console.log('➕ Estilos adicionados ao cssText existente');
+            }
+            
+            function limparEstilos() {
+                // ==========================================
+                // Limpar todos os estilos inline
+                // Define cssText como string vazia
+                // ==========================================
+                caixa3.style.cssText = '';
+                
+                console.log('🗑️ Todos os estilos inline removidos');
+            }
+            
+            // ==========================================
+            // 💡 DIFERENÇA:
+            // ==========================================
+            // style.property → modifica UMA propriedade
+            // style.cssText → modifica MÚLTIPLAS propriedades
+            // 
+            // CUIDADO: cssText SUBSTITUI tudo!
+            // Use += se quiser ADICIONAR aos estilos existentes
+            // ==========================================
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 5: Alternar Tema (Claro/Escuro) -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 5: Sistema de Tema Claro/Escuro</h2>
+            <p>
+                Exemplo prático: alternar entre tema claro e escuro usando classes.
+                <br>Demonstra como criar um sistema de temas eficiente.
+            </p>
+
+            <div id="area-tema" class="texto-demonstracao tema-claro">
+                <h3>Área com Tema</h3>
+                <p>Este conteúdo muda de tema ao clicar no botão abaixo.</p>
+                <p>✨ Observe as cores mudando automaticamente!</p>
+            </div>
+
+            <button onclick="alternarTema()">🌓 Alternar Tema</button>
+            <button onclick="forcarTemaClaro()">☀️ Tema Claro</button>
+            <button onclick="forcarTemaEscuro()">🌙 Tema Escuro</button>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 5: Sistema de Temas
+            // =====================================================
+            
+            const areaTema = document.getElementById('area-tema');
+            
+            function alternarTema() {
+                // ==========================================
+                // Alternando entre duas classes
+                // Remove uma e adiciona outra
+                // ==========================================
+                
+                if (areaTema.classList.contains('tema-claro')) {
+                    // Se está claro, muda para escuro
+                    areaTema.classList.remove('tema-claro');
+                    areaTema.classList.add('tema-escuro');
+                    console.log('🌙 Tema escuro ativado');
+                } else {
+                    // Se está escuro, muda para claro
+                    areaTema.classList.remove('tema-escuro');
+                    areaTema.classList.add('tema-claro');
+                    console.log('☀️ Tema claro ativado');
+                }
+            }
+            
+            function forcarTemaClaro() {
+                // ==========================================
+                // Força um tema específico
+                // Remove qualquer tema e adiciona o desejado
+                // ==========================================
+                areaTema.classList.remove('tema-escuro');
+                areaTema.classList.add('tema-claro');
+                
+                console.log('☀️ Tema claro forçado');
+            }
+            
+            function forcarTemaEscuro() {
+                areaTema.classList.remove('tema-claro');
+                areaTema.classList.add('tema-escuro');
+                
+                console.log('🌙 Tema escuro forçado');
+            }
+            
+            // ==========================================
+            // 💡 BOA PRÁTICA:
+            // ==========================================
+            // Usar CLASSES para temas é melhor que style.property
+            // Vantagens:
+            // 1. Mais organizado (CSS separado do JS)
+            // 2. Mais performático
+            // 3. Mais fácil de manter
+            // 4. Reutilizável
+            // ==========================================
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 6: Animações com Classes CSS -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 6: Adicionar Animações com Classes</h2>
+            <p>
+                Combine JavaScript com animações CSS para criar efeitos visuais.
+                <br>As animações são definidas no CSS e ativadas via JavaScript.
+            </p>
+
+            <div id="caixa-animada" class="caixa-demonstracao">
+                🎭 Anime-me!
+            </div>
+
+            <button onclick="girarCaixa()">🔄 Girar</button>
+            <button onclick="pulsarCaixa()">💓 Pulsar</button>
+            <button onclick="mudarCorAnimada()">🎨 Mudar Cor</button>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 6: Animações com classes CSS
+            // =====================================================
+            
+            const caixaAnimada = document.getElementById('caixa-animada');
+            
+            function girarCaixa() {
+                // ==========================================
+                // Adiciona classe de animação
+                // Quando a animação termina, remove a classe
+                // para poder reanimar depois
+                // ==========================================
+                
+                // Remove se já tiver (para permitir reanimar)
+                caixaAnimada.classList.remove('girar');
+                
+                // Pequeno delay para forçar o navegador a reprocessar
+                setTimeout(() => {
+                    caixaAnimada.classList.add('girar');
+                }, 10);
+                
+                // Remove após a animação terminar (1 segundo)
+                setTimeout(() => {
+                    caixaAnimada.classList.remove('girar');
+                }, 1000);
+                
+                console.log('🔄 Animação de rotação iniciada');
+            }
+            
+            function pulsarCaixa() {
+                // Remove classes anteriores
+                caixaAnimada.classList.remove('pulsar');
+                
+                setTimeout(() => {
+                    caixaAnimada.classList.add('pulsar');
+                }, 10);
+                
+                // Remove após 0.5 segundos
+                setTimeout(() => {
+                    caixaAnimada.classList.remove('pulsar');
+                }, 500);
+                
+                console.log('💓 Animação de pulsar iniciada');
+            }
+            
+            function mudarCorAnimada() {
+                // ==========================================
+                // Combina mudança de estilo com transição CSS
+                // A transição suaviza a mudança
+                // ==========================================
+                
+                // Gera cor aleatória
+                const r = Math.floor(Math.random() * 256);
+                const g = Math.floor(Math.random() * 256);
+                const b = Math.floor(Math.random() * 256);
+                const corAleatoria = `rgb(${r}, ${g}, ${b})`;
+                
+                // A transição CSS (definida no .caixa-demonstracao) 
+                // faz a mudança ser suave
+                caixaAnimada.style.backgroundColor = corAleatoria;
+                
+                console.log(`🎨 Cor alterada para: ${corAleatoria}`);
+            }
+            
+            // ==========================================
+            // 💡 DICAS PARA ANIMAÇÕES:
+            // ==========================================
+            // 1. Defina animações no CSS (@keyframes)
+            // 2. Use JS apenas para adicionar/remover classes
+            // 3. Use addEventListener('animationend') para 
+            //    detectar quando a animação termina
+            // 4. Sempre remova a classe antes de readicionar
+            //    para permitir reanimar
+            // ==========================================
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 7: Galeria com Estilos Dinâmicos -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 7: Galeria Interativa com Estilos Dinâmicos</h2>
+            <p>
+                Exemplo completo: galeria de cards que mudam de estilo ao serem clicados.
+                <br>Demonstra aplicação prática de manipulação de estilos.
+            </p>
+
+            <div class="grid-demonstracao" id="galeria">
+                <div class="card" data-cor="#e3f2fd">Card 1</div>
+                <div class="card" data-cor="#f3e5f5">Card 2</div>
+                <div class="card" data-cor="#e8f5e9">Card 3</div>
+                <div class="card" data-cor="#fff3e0">Card 4</div>
+                <div class="card" data-cor="#fce4ec">Card 5</div>
+                <div class="card" data-cor="#e0f2f1">Card 6</div>
+            </div>
+
+            <button onclick="resetarGaleria()">🔄 Resetar Galeria</button>
+            <button onclick="destacarTodos()">⭐ Destacar Todos</button>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 7: Galeria interativa
+            // =====================================================
+            
+            const galeria = document.getElementById('galeria');
+            const cards = galeria.querySelectorAll('.card');
+            
+            // ==========================================
+            // Adiciona evento de clique em cada card
+            // ==========================================
+            cards.forEach((card, index) => {
+                card.addEventListener('click', function() {
+                    // Pega a cor do atributo data-cor
+                    const cor = this.getAttribute('data-cor');
+                    
+                    // Aplica múltiplos estilos
+                    this.style.backgroundColor = cor;
+                    this.style.transform = 'scale(1.1) rotate(5deg)';
+                    this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+                    this.style.fontWeight = 'bold';
+                    this.style.border = '3px solid #7e22ce';
+                    
+                    // Adiciona emoji
+                    if (!this.textContent.includes('✨')) {
+                        this.textContent += ' ✨';
+                    }
+                    
+                    console.log(`🎯 Card ${index + 1} clicado e estilizado`);
+                });
+            });
+            
+            function resetarGaleria() {
+                // ==========================================
+                // Reseta todos os cards para o estado inicial
+                // ==========================================
+                cards.forEach((card, index) => {
+                    card.style.cssText = ''; // Remove todos os estilos inline
+                    card.textContent = `Card ${index + 1}`; // Remove emojis
+                });
+                
+                console.log('🔄 Galeria resetada');
+            }
+            
+            function destacarTodos() {
+                // ==========================================
+                // Aplica estilo destacado em todos os cards
+                // ==========================================
+                cards.forEach((card, index) => {
+                    const cor = card.getAttribute('data-cor');
+                    
+                    card.style.cssText = `
+                        background-color: ${cor};
+                        transform: scale(1.05);
+                        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+                        font-weight: bold;
+                        border: 2px solid #1e3c72;
+                    `;
+                    
+                    if (!card.textContent.includes('⭐')) {
+                        card.textContent += ' ⭐';
+                    }
+                });
+                
+                console.log('⭐ Todos os cards destacados');
+            }
+        </script>
+
+        <!-- ============================================ -->
+        <!-- EXEMPLO 8: Modificar Variáveis CSS (Custom Properties) -->
+        <!-- ============================================ -->
+        <div class="exemplo">
+            <h2>Exemplo 8: Modificar Variáveis CSS</h2>
+            <p>
+                CSS Custom Properties (variáveis CSS) podem ser modificadas via JavaScript.
+                <br>Isso permite alterar cores de todo o site dinamicamente!
+            </p>
+
+            <div id="area-variaveis" class="texto-demonstracao">
+                <h3>Área com Variáveis CSS</h3>
+                <p>As cores desta área são controladas por variáveis CSS.</p>
+            </div>
+
+            <button onclick="mudarVariavelCor()">🎨 Mudar Cor de Fundo</button>
+            <button onclick="mudarVariavelTexto()">✒️ Mudar Cor do Texto</button>
+            <button onclick="resetarVariaveis()">🔄 Resetar Variáveis</button>
+        </div>
+
+        <script>
+            // =====================================================
+            // EXEMPLO 8: Trabalhando com CSS Custom Properties
+            // =====================================================
+            
+            const areaVariaveis = document.getElementById('area-variaveis');
+            
+            function mudarVariavelCor() {
+                // ==========================================
+                // .style.setProperty()
+                // Define o valor de uma variável CSS
+                // Sintaxe: setProperty('--nome-variavel', 'valor')
+                // ==========================================
+                
+                // Array de cores para escolher aleatoriamente
+                const cores = ['#ffcdd2', '#f8bbd0', '#e1bee7', '#c5cae9', '#bbdefb'];
+                const corAleatoria = cores[Math.floor(Math.random() * cores.length)];
+                
+                areaVariaveis.style.setProperty('--cor-fundo', corAleatoria);
+                areaVariaveis.style.backgroundColor = `var(--cor-fundo, ${corAleatoria})`;
+                
+                console.log(`🎨 Variável --cor-fundo alterada para: ${corAleatoria}`);
+            }
+            
+            function mudarVariavelTexto() {
+                const coresTexto = ['#c62828', '#6a1b9a', '#1565c0', '#2e7d32', '#f57c00'];
+                const corAleatoria = coresTexto[Math.floor(Math.random() * coresTexto.length)];
+                
+                areaVariaveis.style.setProperty('--cor-texto', corAleatoria);
+                areaVariaveis.style.color = `var(--cor-texto, ${corAleatoria})`;
+                
+                console.log(`✒️ Variável --cor-texto alterada para: ${corAleatoria}`);
+            }
+            
+            function resetarVariaveis() {
+                // ==========================================
+                // .style.removeProperty()
+                // Remove uma variável CSS customizada
+                // O elemento volta a usar o valor padrão
+                // ==========================================
+                areaVariaveis.style.removeProperty('--cor-fundo');
+                areaVariaveis.style.removeProperty('--cor-texto');
+                areaVariaveis.style.backgroundColor = '';
+                areaVariaveis.style.color = '';
+                
+                console.log('🔄 Variáveis CSS resetadas');
+            }
+            
+            // ==========================================
+            // 💡 VARIÁVEIS CSS GLOBAIS:
+            // ==========================================
+            // Para alterar variáveis no :root (global):
+            // document.documentElement.style.setProperty('--cor', 'red');
+            //
+            // Para ler uma variável CSS:
+            // const cor = getComputedStyle(elemento).getPropertyValue('--cor');
+            // ==========================================
+        </script>
+
+        <!-- ============================================ -->
+        <!-- RESUMO E BOAS PRÁTICAS -->
+        <!-- ============================================ -->
+        <div class="info">
+            <h2>📌 Resumo - Manipulação de Estilos no DOM</h2>
+            
+            <h3>🔧 Principais Métodos:</h3>
+            <ul>
+                <li><code>elemento.style.property = valor</code> → Modifica estilo inline individual</li>
+                <li><code>elemento.style.cssText = "..."</code> → Modifica múltiplos estilos inline</li>
+                <li><code>elemento.classList.add('classe')</code> → Adiciona classe CSS</li>
+                <li><code>elemento.classList.remove('classe')</code> → Remove classe CSS</li>
+                <li><code>elemento.classList.toggle('classe')</code> → Alterna classe CSS</li>
+                <li><code>elemento.classList.contains('classe')</code> → Verifica se tem a classe</li>
+                <li><code>window.getComputedStyle(elemento)</code> → Lê estilos computados (finais)</li>
+                <li><code>elemento.style.setProperty('--var', valor)</code> → Define variável CSS</li>
+            </ul>
+            
+            <h3>✅ Boas Práticas:</h3>
+            <ul>
+                <li>✅ Prefira <strong>classes CSS</strong> ao invés de <code>style.property</code></li>
+                <li>✅ Use <code>style</code> apenas para valores dinâmicos (calculados)</li>
+                <li>✅ Lembre-se: propriedades CSS com hífen viram camelCase (background-color → backgroundColor)</li>
+                <li>✅ Use <code>getComputedStyle()</code> para LER estilos, não <code>elemento.style</code></li>
+                <li>✅ Sempre inclua unidades (px, %, em) ao definir tamanhos</li>
+                <li>✅ Use <code>cssText</code> com cuidado - ele substitui TODOS os estilos inline</li>
+                <li>✅ Para animações, defina no CSS e controle com classes via JS</li>
+            </ul>
+            
+            <h3>⚠️ Cuidados:</h3>
+            <ul>
+                <li>⚠️ Estilos inline têm alta prioridade (podem sobrescrever CSS)</li>
+                <li>⚠️ <code>elemento.style</code> só retorna estilos inline, não do CSS</li>
+                <li>⚠️ <code>cssText = "..."</code> remove estilos inline anteriores (use <code>+=</code> para adicionar)</li>
+                <li>⚠️ Muitas modificações via JS podem deixar o código difícil de manter</li>
+            </ul>
+            
+            <h3>🎯 Quando usar cada técnica:</h3>
+            <ul>
+                <li><strong>Classes CSS:</strong> Para estilos predefinidos (temas, estados, animações)</li>
+                <li><strong>style.property:</strong> Para valores calculados dinamicamente</li>
+                <li><strong>cssText:</strong> Para aplicar vários estilos de uma vez</li>
+                <li><strong>Variáveis CSS:</strong> Para valores que podem mudar globalmente</li>
+            </ul>
+        </div>
+
+        <script>
+            // 🎯 DESAFIO FINAL
+            console.log('\n🎯 DESAFIO FINAL: Abra o Console (F12) e experimente:');
+            console.log('1. Selecione um elemento: const el = document.querySelector(".caixa-demonstracao")');
+            console.log('2. Mude a cor: el.style.backgroundColor = "red"');
+            console.log('3. Adicione classe: el.classList.add("girar")');
+            console.log('4. Leia estilos: getComputedStyle(el).width');
+            console.log('5. Use variáveis: el.style.setProperty("--cor", "blue")');
+            console.log('\n✨ Interaja com os exemplos acima e observe os logs!');
+            console.log('💡 Dica: Clique com botão direito > Inspecionar para ver as mudanças no HTML');
+        </script>
+    </div>
+</body>
+</html>
