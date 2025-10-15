@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulando Classes de Elementos - DOM</title>
+    <style>
+        /* Estilos para demonstração */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .caixa {
+            padding: 20px;
+            margin: 10px 0;
+            border: 2px solid #333;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .destaque {
+            background-color: #ffeb3b;
+            border-color: #fbc02d;
+            font-weight: bold;
+        }
+        
+        .ativo {
+            background-color: #4caf50;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .erro {
+            background-color: #f44336;
+            color: white;
+            border-color: #c62828;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #2196f3;
+            color: white;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manipulação de Classes no DOM</h1>
+    
+    <!-- Elementos para demonstração -->
+    <div id="elemento1" class="caixa">Elemento 1</div>
+    <div id="elemento2" class="caixa destaque">Elemento 2 (com classe destaque)</div>
+    <div id="elemento3" class="caixa">Elemento 3</div>
+    
+    <hr>
+    
+    <!-- Botões de controle -->
+    <button onclick="exemploAdd()">Adicionar Classe</button>
+    <button onclick="exemploRemove()">Remover Classe</button>
+    <button onclick="exemploToggle()">Toggle Classe</button>
+    <button onclick="exemploReplace()">Substituir Classe</button>
+    <button onclick="exemploContains()">Verificar Classe</button>
+    
+    <script>
+        // ========================================
+        // MANIPULANDO CLASSES DE ELEMENTOS NO DOM
+        // ========================================
+        
+        // Selecionando elementos para trabalhar
+        const elem1 = document.getElementById('elemento1');
+        const elem2 = document.getElementById('elemento2');
+        const elem3 = document.getElementById('elemento3');
+        
+        
+        // ========================================
+        // 1. PROPRIEDADE className
+        // ========================================
+        // className retorna/define TODAS as classes como uma string
+        
+        console.log('Classes do elem2:', elem2.className); // "caixa destaque"
+        
+        // CUIDADO: Sobrescreve TODAS as classes
+        // elem2.className = 'nova-classe'; // Remove "caixa" e "destaque"
+        
+        // Para adicionar sem remover, use concatenação (não recomendado)
+        // elem2.className = elem2.className + ' outra-classe';
+        
+        
+        // ========================================
+        // 2. PROPRIEDADE classList (RECOMENDADO)
+        // ========================================
+        // classList retorna um objeto DOMTokenList com métodos úteis
+        
+        console.log('classList do elem1:', elem1.classList);
+        // DOMTokenList ["caixa"] com métodos: add, remove, toggle, contains, replace
+        
+        
+        // ========================================
+        // 3. MÉTODO add() - Adicionar Classes
+        // ========================================
+        // Adiciona uma ou mais classes (ignora duplicadas)
+        
+        function exemploAdd() {
+            // Adicionar uma classe
+            elem1.classList.add('destaque');
+            console.log('✅ Classe "destaque" adicionada ao elemento 1');
+            
+            // Adicionar múltiplas classes de uma vez
+            elem3.classList.add('ativo', 'destaque');
+            console.log('✅ Classes "ativo" e "destaque" adicionadas ao elemento 3');
+            
+            // Não cria duplicata se a classe já existe
+            elem2.classList.add('destaque'); // Não adiciona novamente
+        }
+        
+        
+        // ========================================
+        // 4. MÉTODO remove() - Remover Classes
+        // ========================================
+        // Remove uma ou mais classes (não dá erro se não existir)
+        
+        function exemploRemove() {
+            // Remover uma classe
+            elem1.classList.remove('destaque');
+            console.log('❌ Classe "destaque" removida do elemento 1');
+            
+            // Remover múltiplas classes
+            elem3.classList.remove('ativo', 'destaque');
+            console.log('❌ Classes "ativo" e "destaque" removidas do elemento 3');
+            
+            // Não dá erro se tentar remover classe que não existe
+            elem1.classList.remove('classe-inexistente'); // Sem erro
+        }
+        
+        
+        // ========================================
+        // 5. MÉTODO toggle() - Alternar Classes
+        // ========================================
+        // Adiciona se não existir, remove se existir
+        // Muito usado para botões de ativar/desativar
+        
+        function exemploToggle() {
+            // Toggle simples - inverte o estado
+            elem1.classList.toggle('ativo');
+            console.log('🔄 Toggle "ativo" no elemento 1');
+            
+            // Toggle com múltiplas classes
+            elem2.classList.toggle('erro');
+            elem3.classList.toggle('destaque');
+            
+            // Toggle com segundo parâmetro (força adicionar ou remover)
+            const deveTerClasse = true;
+            elem1.classList.toggle('destaque', deveTerClasse); // Força adicionar
+            
+            // Retorna true se adicionou, false se removeu
+            const foiAdicionada = elem2.classList.toggle('ativo');
+            console.log('Foi adicionada?', foiAdicionada);
+        }
+        
+        
+        // ========================================
+        // 6. MÉTODO contains() - Verificar Classes
+        // ========================================
+        // Retorna true se o elemento tem a classe, false caso contrário
+        
+        function exemploContains() {
+            // Verificar se tem uma classe
+            const temDestaque = elem2.classList.contains('destaque');
+            console.log('Elem2 tem classe "destaque"?', temDestaque);
+            
+            // Usar em condicionais
+            if (elem1.classList.contains('ativo')) {
+                console.log('✅ Elemento 1 está ativo');
+            } else {
+                console.log('❌ Elemento 1 NÃO está ativo');
+            }
+            
+            // Útil para verificar estado antes de adicionar/remover
+            if (!elem3.classList.contains('erro')) {
+                elem3.classList.add('erro');
+                console.log('➕ Classe "erro" adicionada ao elemento 3');
+            }
+        }
+        
+        
+        // ========================================
+        // 7. MÉTODO replace() - Substituir Classes
+        // ========================================
+        // Substitui uma classe por outra (retorna true se conseguiu)
+        
+        function exemploReplace() {
+            // Substitui "destaque" por "erro"
+            const sucesso = elem2.classList.replace('destaque', 'erro');
+            
+            if (sucesso) {
+                console.log('🔁 Classe "destaque" substituída por "erro"');
+            } else {
+                console.log('⚠️ Classe "destaque" não encontrada');
+            }
+            
+            // Útil para trocar estados
+            // elem1.classList.replace('inativo', 'ativo');
+        }
+        
+        
+        // ========================================
+        // 8. PROPRIEDADES ÚTEIS do classList
+        // ========================================
+        
+        // length - número de classes
+        console.log('Número de classes do elem2:', elem2.classList.length);
+        
+        // value - string com todas as classes (igual className)
+        console.log('Classes como string:', elem2.classList.value);
+        
+        // Acessar classe por índice (como array)
+        console.log('Primeira classe do elem2:', elem2.classList[0]);
+        console.log('Segunda classe do elem2:', elem2.classList[1]);
+        
+        
+        // ========================================
+        // 9. ITERAÇÃO - Percorrer Classes
+        // ========================================
+        
+        // Usando forEach (mais moderno)
+        elem2.classList.forEach((classe, index) => {
+            console.log(`Classe ${index}: ${classe}`);
+        });
+        
+        // Usando for...of
+        for (const classe of elem2.classList) {
+            console.log('Classe encontrada:', classe);
+        }
+        
+        // Usando for tradicional
+        for (let i = 0; i < elem2.classList.length; i++) {
+            console.log(`Índice ${i}: ${elem2.classList[i]}`);
+        }
+        
+        
+        // ========================================
+        // 10. CASOS DE USO PRÁTICOS
+        // ========================================
+        
+        // Exemplo 1: Sistema de tabs/abas
+        function ativarTab(tabClicada) {
+            // Remove "ativo" de todas as tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('ativo');
+            });
+            
+            // Adiciona "ativo" apenas na clicada
+            tabClicada.classList.add('ativo');
+        }
+        
+        // Exemplo 2: Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            
+            // Salvar preferência
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+        }
+        
+        // Exemplo 3: Menu mobile (hamburguer)
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const botao = document.getElementById('botao-menu');
+            
+            menu.classList.toggle('aberto');
+            botao.classList.toggle('ativo');
+            
+            // Adicionar classe no body para prevenir scroll
+            document.body.classList.toggle('menu-aberto');
+        }
+        
+        // Exemplo 4: Validação de formulário
+        function validarCampo(input) {
+            input.classList.remove('sucesso', 'erro'); // Limpa estados anteriores
+            
+            if (input.value.trim() === '') {
+                input.classList.add('erro');
+            } else {
+                input.classList.add('sucesso');
+            }
+        }
+        
+        // Exemplo 5: Loading/carregamento
+        function mostrarLoading() {
+            document.body.classList.add('loading');
+        }
+        
+        function esconderLoading() {
+            document.body.classList.remove('loading');
+        }
+        
+        
+        // ========================================
+        // 11. COMPARAÇÃO: className vs classList
+        // ========================================
+        
+        // ❌ RUIM - usando className
+        // elem1.className = elem1.className + ' nova-classe'; // Pode ter espaços duplos
+        // elem1.className = elem1.className.replace('antiga', 'nova'); // Difícil e propenso a erros
+        
+        // ✅ BOM - usando classList
+        // elem1.classList.add('nova-classe'); // Simples e seguro
+        // elem1.classList.replace('antiga', 'nova'); // Método específico
+        
+        
+        // ========================================
+        // 12. COMPATIBILIDADE E SUPORTE
+        // ========================================
+        
+        // classList é suportado em todos os navegadores modernos
+        // IE 10+, Chrome, Firefox, Safari, Edge
+        
+        // Para IE 9 ou anterior, use polyfill ou className
+        
+        
+        // ========================================
+        // 13. DICAS E BOAS PRÁTICAS
+        // ========================================
+        
+        // ✅ Use classList em vez de className (mais seguro e legível)
+        // ✅ Evite manipular atributo class diretamente com setAttribute
+        // ✅ Use toggle() para estados liga/desliga
+        // ✅ Use contains() antes de add() se quiser evitar duplicatas (já é automático)
+        // ✅ Remova classes antigas antes de adicionar novas em estados exclusivos
+        // ✅ Use nomes de classes semânticos (ex: 'ativo', 'selecionado', 'erro')
+        // ❌ Não use espaços nos nomes de classes
+        // ❌ Não modifique classList em loop sem necessidade (performance)
+        
+        
+        // ========================================
+        // RESUMO DOS MÉTODOS
+        // ========================================
+        /*
+         * classList.add('classe1', 'classe2')       - Adiciona classes
+         * classList.remove('classe1', 'classe2')    - Remove classes
+         * classList.toggle('classe')                - Alterna classe (add/remove)
+         * classList.toggle('classe', boolean)       - Força add (true) ou remove (false)
+         * classList.contains('classe')              - Verifica se tem a classe
+         * classList.replace('antiga', 'nova')       - Substitui uma classe por outra
+         * classList.length                          - Número de classes
+         * classList.value                           - String com todas as classes
+         * classList[index]                          - Acessa classe por índice
+         */
+        
+        console.log('📚 Arquivo carregado! Use os botões para testar as funcionalidades.');
+    </script>
+</body>
+</html>
