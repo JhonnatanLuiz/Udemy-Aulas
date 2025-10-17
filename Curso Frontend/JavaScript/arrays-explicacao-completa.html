@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrays em JavaScript - Guia Completo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .important {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #e83e8c;
+            font-family: 'Courier New', monospace;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+        }
+
+        .example {
+            background: #e7f3ff;
+            border: 2px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .example-title {
+            color: #2196F3;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .note-text {
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .final-message {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .final-message h2 {
+            color: white;
+            border: none;
+            margin: 0;
+        }
+
+        .final-message p {
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        .visual-diagram {
+            background: #fff;
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .array-visual {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 20px 0;
+        }
+
+        .array-item {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .array-index {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #764ba2;
+            font-size: 0.9rem;
+        }
+
+        .method-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .method-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .method-name {
+            color: #667eea;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .method-syntax {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Arrays em JavaScript</h1>
+        <p class="subtitle">Guia Completo e Didático para Dominar Arrays</p>
+
+        <!-- INTRODUÇÃO -->
+        <h2>🎯 1. O que é um Array?</h2>
+        
+        <div class="concept-box">
+            <p><strong>Definição:</strong> Um <strong>array</strong> (ou "vetor" em português) é uma estrutura de dados que permite armazenar <strong>múltiplos valores</strong> em uma única variável. É como uma lista ordenada de elementos.</p>
+        </div>
+
+        <p>Imagine um array como uma <strong>caixa com compartimentos numerados</strong>, onde cada compartimento pode guardar um valor:</p>
+
+        <div class="visual-diagram">
+            <h3>Representação Visual de um Array</h3>
+            <div class="array-visual">
+                <div class="array-item">
+                    <span class="array-index">índice 0</span>
+                    "Maçã"
+                </div>
+                <div class="array-item">
+                    <span class="array-index">índice 1</span>
+                    "Banana"
+                </div>
+                <div class="array-item">
+                    <span class="array-index">índice 2</span>
+                    "Laranja"
+                </div>
+                <div class="array-item">
+                    <span class="array-index">índice 3</span>
+                    "Uva"
+                </div>
+            </div>
+            <p class="note-text">
+                <strong>Importante:</strong> A numeração (índice) começa em <strong>0</strong>, não em 1!
+            </p>
+        </div>
+
+        <div class="important">
+            <strong>⚠️ Ponto Fundamental:</strong> Em JavaScript (e na maioria das linguagens), a contagem dos índices de um array sempre começa em <strong>0 (zero)</strong>. Isso significa que o primeiro elemento está na posição 0, o segundo na posição 1, e assim por diante.
+        </div>
+
+        <!-- CRIANDO ARRAYS -->
+        <h2>🛠️ 2. Como Criar Arrays</h2>
+
+        <h3>2.1 Sintaxe Literal (Mais Comum)</h3>
+        <pre><code>// Array vazio
+let arrayVazio = [];
+
+// Array com números
+let numeros = [1, 2, 3, 4, 5];
+
+// Array com strings (textos)
+let frutas = ["maçã", "banana", "laranja"];
+
+// Array com tipos mistos (JavaScript permite isso!)
+let misturado = [42, "texto", true, null, undefined];
+
+// Array com objetos
+let pessoas = [
+    { nome: "João", idade: 25 },
+    { nome: "Maria", idade: 30 }
+];</code></pre>
+
+        <h3>2.2 Usando o Construtor Array() (Menos Comum)</h3>
+        <pre><code>// Array vazio com tamanho 5
+let arr1 = new Array(5);  // [ <5 empty items> ]
+
+// Array com elementos específicos
+let arr2 = new Array(1, 2, 3);  // [1, 2, 3]</code></pre>
+
+        <div class="tip">
+            <strong>💡 Dica:</strong> Prefira sempre a sintaxe literal <code>[]</code> por ser mais simples, legível e evitar comportamentos inesperados.
+        </div>
+
+        <!-- ACESSANDO ELEMENTOS -->
+        <h2>🔍 3. Acessando Elementos do Array</h2>
+
+        <p>Para acessar um elemento específico, usamos o <strong>índice</strong> entre colchetes <code>[]</code>:</p>
+
+        <pre><code>let frutas = ["maçã", "banana", "laranja", "uva"];
+
+console.log(frutas[0]);  // "maçã" (primeiro elemento)
+console.log(frutas[1]);  // "banana" (segundo elemento)
+console.log(frutas[2]);  // "laranja" (terceiro elemento)
+console.log(frutas[3]);  // "uva" (quarto elemento)
+
+// Acessando índice que não existe
+console.log(frutas[10]); // undefined (não há elemento nesse índice)</code></pre>
+
+        <h3>3.1 Acessando o Último Elemento</h3>
+        <pre><code>let frutas = ["maçã", "banana", "laranja", "uva"];
+
+// Usando length - 1
+let ultimaFruta = frutas[frutas.length - 1];
+console.log(ultimaFruta);  // "uva"
+
+// Por que length - 1?
+// frutas.length é 4, mas o último índice é 3 (porque começa em 0)</code></pre>
+
+        <div class="example">
+            <div class="example-title">📝 Exemplo Prático: Lista de Tarefas</div>
+            <pre><code>let tarefas = [
+    "Estudar JavaScript",
+    "Fazer exercícios",
+    "Revisar arrays",
+    "Praticar código"
+];
+
+console.log("Primeira tarefa:", tarefas[0]);
+// "Estudar JavaScript"
+
+console.log("Total de tarefas:", tarefas.length);
+// 4
+
+console.log("Última tarefa:", tarefas[tarefas.length - 1]);
+// "Praticar código"</code></pre>
+        </div>
+
+        <!-- PROPRIEDADES -->
+        <h2>📊 4. Propriedade Length (Comprimento)</h2>
+
+        <p>A propriedade <code>length</code> retorna o <strong>número de elementos</strong> no array:</p>
+
+        <pre><code>let numeros = [10, 20, 30, 40, 50];
+
+console.log(numeros.length);  // 5
+
+let vazio = [];
+console.log(vazio.length);    // 0</code></pre>
+
+        <div class="important">
+            <strong>⚠️ Atenção:</strong> <code>length</code> retorna a <strong>quantidade de elementos</strong>, não o último índice. O último índice é sempre <code>length - 1</code>.
+        </div>
+
+        <!-- MODIFICANDO ARRAYS -->
+        <h2>✏️ 5. Modificando Arrays</h2>
+
+        <h3>5.1 Alterando Elementos Existentes</h3>
+        <pre><code>let frutas = ["maçã", "banana", "laranja"];
+
+// Modificar o segundo elemento (índice 1)
+frutas[1] = "morango";
+
+console.log(frutas);  // ["maçã", "morango", "laranja"]</code></pre>
+
+        <h3>5.2 Adicionando Elementos</h3>
+        <pre><code>let numeros = [1, 2, 3];
+
+// Adicionar no final
+numeros[3] = 4;
+console.log(numeros);  // [1, 2, 3, 4]
+
+// Adicionar "pulando" índices (cria espaços vazios)
+numeros[10] = 100;
+console.log(numeros);  // [1, 2, 3, 4, <6 empty items>, 100]
+console.log(numeros.length);  // 11</code></pre>
+
+        <div class="warning">
+            <strong>⚠️ Cuidado:</strong> Adicionar elementos "pulando" índices cria espaços vazios (<em>holes</em>) no array, o que pode causar comportamentos inesperados. Use métodos como <code>push()</code> para adicionar elementos de forma segura.
+        </div>
+
+        <!-- MÉTODOS PRINCIPAIS -->
+        <h2>🔧 6. Métodos Principais de Arrays</h2>
+
+        <p>Arrays em JavaScript possuem diversos métodos embutidos para manipulação. Vamos explorar os mais importantes:</p>
+
+        <!-- PUSH -->
+        <div class="method-card">
+            <div class="method-name">📌 push()</div>
+            <p><strong>O que faz:</strong> Adiciona um ou mais elementos <strong>no final</strong> do array.</p>
+            <p><strong>Retorna:</strong> O novo <code>length</code> do array.</p>
+            <div class="method-syntax">array.push(elemento1, elemento2, ...)</div>
+            
+            <pre><code>let frutas = ["maçã", "banana"];
+
+frutas.push("laranja");
+console.log(frutas);  // ["maçã", "banana", "laranja"]
+
+// Adicionar múltiplos elementos
+frutas.push("uva", "melancia");
+console.log(frutas);  // ["maçã", "banana", "laranja", "uva", "melancia"]
+
+// Retorno do método
+let novoTamanho = frutas.push("abacaxi");
+console.log(novoTamanho);  // 6</code></pre>
+        </div>
+
+        <!-- POP -->
+        <div class="method-card">
+            <div class="method-name">🔻 pop()</div>
+            <p><strong>O que faz:</strong> Remove e retorna o <strong>último elemento</strong> do array.</p>
+            <p><strong>Retorna:</strong> O elemento removido.</p>
+            <div class="method-syntax">array.pop()</div>
+            
+            <pre><code>let frutas = ["maçã", "banana", "laranja"];
+
+let removida = frutas.pop();
+console.log(removida);  // "laranja"
+console.log(frutas);    // ["maçã", "banana"]
+
+// Continuar removendo
+frutas.pop();
+console.log(frutas);    // ["maçã"]</code></pre>
+        </div>
+
+        <!-- UNSHIFT -->
+        <div class="method-card">
+            <div class="method-name">⬅️ unshift()</div>
+            <p><strong>O que faz:</strong> Adiciona um ou mais elementos <strong>no início</strong> do array.</p>
+            <p><strong>Retorna:</strong> O novo <code>length</code> do array.</p>
+            <div class="method-syntax">array.unshift(elemento1, elemento2, ...)</div>
+            
+            <pre><code>let numeros = [2, 3, 4];
+
+numeros.unshift(1);
+console.log(numeros);  // [1, 2, 3, 4]
+
+// Adicionar múltiplos
+numeros.unshift(-2, -1, 0);
+console.log(numeros);  // [-2, -1, 0, 1, 2, 3, 4]</code></pre>
+        </div>
+
+        <!-- SHIFT -->
+        <div class="method-card">
+            <div class="method-name">➡️ shift()</div>
+            <p><strong>O que faz:</strong> Remove e retorna o <strong>primeiro elemento</strong> do array.</p>
+            <p><strong>Retorna:</strong> O elemento removido.</p>
+            <div class="method-syntax">array.shift()</div>
+            
+            <pre><code>let frutas = ["maçã", "banana", "laranja"];
+
+let primeira = frutas.shift();
+console.log(primeira);  // "maçã"
+console.log(frutas);    // ["banana", "laranja"]</code></pre>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Resumo Visual:</strong><br>
+            • <code>push()</code> e <code>pop()</code> trabalham no <strong>final</strong> do array<br>
+            • <code>unshift()</code> e <code>shift()</code> trabalham no <strong>início</strong> do array
+        </div>
+
+        <!-- SPLICE -->
+        <div class="method-card">
+            <div class="method-name">✂️ splice()</div>
+            <p><strong>O que faz:</strong> Adiciona, remove ou substitui elementos em <strong>qualquer posição</strong> do array.</p>
+            <p><strong>Retorna:</strong> Array com os elementos removidos.</p>
+            <div class="method-syntax">array.splice(índiceInício, quantidadeRemover, item1, item2, ...)</div>
+            
+            <pre><code>let frutas = ["maçã", "banana", "laranja", "uva", "melancia"];
+
+// Remover 2 elementos a partir do índice 1
+let removidas = frutas.splice(1, 2);
+console.log(removidas);  // ["banana", "laranja"]
+console.log(frutas);     // ["maçã", "uva", "melancia"]
+
+// Adicionar elementos sem remover (quantidade = 0)
+frutas.splice(1, 0, "morango", "abacaxi");
+console.log(frutas);  // ["maçã", "morango", "abacaxi", "uva", "melancia"]
+
+// Substituir elementos
+frutas.splice(2, 1, "kiwi");  // Remove 1 no índice 2 e adiciona "kiwi"
+console.log(frutas);  // ["maçã", "morango", "kiwi", "uva", "melancia"]</code></pre>
+        </div>
+
+        <!-- SLICE -->
+        <div class="method-card">
+            <div class="method-name">🔪 slice()</div>
+            <p><strong>O que faz:</strong> Cria uma <strong>cópia rasa</strong> de uma parte do array <strong>sem modificar o original</strong>.</p>
+            <p><strong>Retorna:</strong> Novo array com os elementos copiados.</p>
+            <div class="method-syntax">array.slice(índiceInício, índiceFim)</div>
+            
+            <pre><code>let frutas = ["maçã", "banana", "laranja", "uva", "melancia"];
+
+// Copiar do índice 1 até 3 (não inclui o 3)
+let algumas = frutas.slice(1, 3);
+console.log(algumas);  // ["banana", "laranja"]
+console.log(frutas);   // ["maçã", "banana", "laranja", "uva", "melancia"] (original intacto)
+
+// Copiar do índice 2 até o final
+let resto = frutas.slice(2);
+console.log(resto);  // ["laranja", "uva", "melancia"]
+
+// Copiar todo o array
+let copia = frutas.slice();
+console.log(copia);  // ["maçã", "banana", "laranja", "uva", "melancia"]</code></pre>
+        </div>
+
+        <div class="important">
+            <strong>⚠️ Diferença Importante:</strong><br>
+            • <code>splice()</code> <strong>modifica</strong> o array original<br>
+            • <code>slice()</code> <strong>não modifica</strong> o array original (cria uma cópia)
+        </div>
+
+        <!-- CONCAT -->
+        <div class="method-card">
+            <div class="method-name">➕ concat()</div>
+            <p><strong>O que faz:</strong> Junta (concatena) dois ou mais arrays em um novo array.</p>
+            <p><strong>Retorna:</strong> Novo array resultante da concatenação.</p>
+            <div class="method-syntax">array1.concat(array2, array3, ...)</div>
+            
+            <pre><code>let arr1 = [1, 2, 3];
+let arr2 = [4, 5, 6];
+let arr3 = [7, 8, 9];
+
+let junto = arr1.concat(arr2);
+console.log(junto);  // [1, 2, 3, 4, 5, 6]
+
+// Concatenar múltiplos arrays
+let todosJuntos = arr1.concat(arr2, arr3);
+console.log(todosJuntos);  // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+// Arrays originais permanecem inalterados
+console.log(arr1);  // [1, 2, 3]</code></pre>
+        </div>
+
+        <!-- JOIN -->
+        <div class="method-card">
+            <div class="method-name">🔗 join()</div>
+            <p><strong>O que faz:</strong> Junta todos os elementos do array em uma <strong>string</strong>, separados por um delimitador.</p>
+            <p><strong>Retorna:</strong> String resultante.</p>
+            <div class="method-syntax">array.join(separador)</div>
+            
+            <pre><code>let frutas = ["maçã", "banana", "laranja"];
+
+// Separar por vírgula (padrão)
+let texto1 = frutas.join();
+console.log(texto1);  // "maçã,banana,laranja"
+
+// Separar por espaço
+let texto2 = frutas.join(" ");
+console.log(texto2);  // "maçã banana laranja"
+
+// Separar por hífen
+let texto3 = frutas.join(" - ");
+console.log(texto3);  // "maçã - banana - laranja"
+
+// Juntar sem separador
+let texto4 = frutas.join("");
+console.log(texto4);  // "maçãbanana laranja"</code></pre>
+        </div>
+
+        <!-- REVERSE -->
+        <div class="method-card">
+            <div class="method-name">🔄 reverse()</div>
+            <p><strong>O que faz:</strong> Inverte a ordem dos elementos do array <strong>(modifica o original)</strong>.</p>
+            <p><strong>Retorna:</strong> O próprio array invertido.</p>
+            <div class="method-syntax">array.reverse()</div>
+            
+            <pre><code>let numeros = [1, 2, 3, 4, 5];
+
+numeros.reverse();
+console.log(numeros);  // [5, 4, 3, 2, 1]
+
+let frutas = ["maçã", "banana", "laranja"];
+frutas.reverse();
+console.log(frutas);  // ["laranja", "banana", "maçã"]</code></pre>
+        </div>
+
+        <!-- SORT -->
+        <div class="method-card">
+            <div class="method-name">🔀 sort()</div>
+            <p><strong>O que faz:</strong> Ordena os elementos do array <strong>(modifica o original)</strong>.</p>
+            <p><strong>Retorna:</strong> O próprio array ordenado.</p>
+            <div class="method-syntax">array.sort([funçãoComparação])</div>
+            
+            <pre><code>// Ordenar strings (alfabética)
+let frutas = ["banana", "maçã", "laranja", "abacaxi"];
+frutas.sort();
+console.log(frutas);  // ["abacaxi", "banana", "laranja", "maçã"]
+
+// ATENÇÃO: Números são ordenados como strings por padrão!
+let numeros = [10, 5, 40, 25, 1000, 1];
+numeros.sort();
+console.log(numeros);  // [1, 10, 1000, 25, 40, 5] ⚠️ ERRADO!
+
+// Para ordenar números corretamente, use função de comparação
+numeros.sort((a, b) => a - b);  // Ordem crescente
+console.log(numeros);  // [1, 5, 10, 25, 40, 1000] ✅ CORRETO!
+
+// Ordem decrescente
+numeros.sort((a, b) => b - a);
+console.log(numeros);  // [1000, 40, 25, 10, 5, 1]</code></pre>
+
+            <div class="warning">
+                <strong>⚠️ Atenção:</strong> Por padrão, <code>sort()</code> converte elementos em strings antes de comparar. Para ordenar números, <strong>sempre use uma função de comparação</strong>!
+            </div>
+        </div>
+
+        <!-- INDEXOF e INCLUDES -->
+        <h2>🔎 7. Métodos de Busca</h2>
+
+        <div class="method-card">
+            <div class="method-name">🔍 indexOf()</div>
+            <p><strong>O que faz:</strong> Retorna o <strong>índice</strong> da primeira ocorrência de um elemento.</p>
+            <p><strong>Retorna:</strong> Índice do elemento, ou <code>-1</code> se não encontrado.</p>
+            <div class="method-syntax">array.indexOf(elemento, índiceInício)</div>
+            
+            <pre><code>let frutas = ["maçã", "banana", "laranja", "banana", "uva"];
+
+console.log(frutas.indexOf("banana"));      // 1 (primeira ocorrência)
+console.log(frutas.indexOf("uva"));         // 4
+console.log(frutas.indexOf("melancia"));    // -1 (não existe)
+
+// Começar busca a partir de um índice
+console.log(frutas.indexOf("banana", 2));   // 3 (segunda ocorrência)</code></pre>
+        </div>
+
+        <div class="method-card">
+            <div class="method-name">✅ includes()</div>
+            <p><strong>O que faz:</strong> Verifica se um elemento <strong>existe</strong> no array.</p>
+            <p><strong>Retorna:</strong> <code>true</code> ou <code>false</code>.</p>
+            <div class="method-syntax">array.includes(elemento, índiceInício)</div>
+            
+            <pre><code>let frutas = ["maçã", "banana", "laranja"];
+
+console.log(frutas.includes("banana"));     // true
+console.log(frutas.includes("melancia"));   // false
+
+// Mais legível que indexOf() para verificação
+if (frutas.includes("maçã")) {
+    console.log("Temos maçã!");
+}</code></pre>
+        </div>
+
+        <!-- ITERAÇÃO -->
+        <h2>🔁 8. Iterando sobre Arrays (Percorrendo Elementos)</h2>
+
+        <h3>8.1 Loop for Tradicional</h3>
+        <pre><code>let frutas = ["maçã", "banana", "laranja"];
+
+for (let i = 0; i < frutas.length; i++) {
+    console.log(`Índice ${i}: ${frutas[i]}`);
+}
+// Índice 0: maçã
+// Índice 1: banana
+// Índice 2: laranja</code></pre>
+
+        <h3>8.2 for...of (Mais Moderno)</h3>
+        <pre><code>let frutas = ["maçã", "banana", "laranja"];
+
+for (let fruta of frutas) {
+    console.log(fruta);
+}
+// maçã
+// banana
+// laranja</code></pre>
+
+        <h3>8.3 forEach() (Método de Array)</h3>
+        <pre><code>let frutas = ["maçã", "banana", "laranja"];
+
+frutas.forEach(function(fruta, indice) {
+    console.log(`${indice + 1}. ${fruta}`);
+});
+// 1. maçã
+// 2. banana
+// 3. laranja
+
+// Versão com arrow function (mais moderna)
+frutas.forEach((fruta, indice) => {
+    console.log(`${indice + 1}. ${fruta}`);
+});</code></pre>
+
+        <div class="tip">
+            <strong>💡 Quando usar cada um:</strong><br>
+            • <code>for</code> tradicional: Quando precisa controlar o índice manualmente<br>
+            • <code>for...of</code>: Quando só precisa dos valores<br>
+            • <code>forEach()</code>: Quando quer usar recursos funcionais e ter acesso ao índice
+        </div>
+
+        <!-- MÉTODOS AVANÇADOS -->
+        <h2>🚀 9. Métodos Avançados (Funcionais)</h2>
+
+        <div class="method-card">
+            <div class="method-name">🗺️ map()</div>
+            <p><strong>O que faz:</strong> Cria um <strong>novo array</strong> aplicando uma função a cada elemento.</p>
+            <p><strong>Retorna:</strong> Novo array transformado.</p>
+            
+            <pre><code>let numeros = [1, 2, 3, 4, 5];
+
+// Dobrar cada número
+let dobrados = numeros.map(num => num * 2);
+console.log(dobrados);  // [2, 4, 6, 8, 10]
+
+// Adicionar texto
+let nomes = ["João", "Maria", "Pedro"];
+let saudacoes = nomes.map(nome => `Olá, ${nome}!`);
+console.log(saudacoes);  // ["Olá, João!", "Olá, Maria!", "Olá, Pedro!"]</code></pre>
+        </div>
+
+        <div class="method-card">
+            <div class="method-name">🔍 filter()</div>
+            <p><strong>O que faz:</strong> Cria um <strong>novo array</strong> com elementos que passam em um teste.</p>
+            <p><strong>Retorna:</strong> Novo array filtrado.</p>
+            
+            <pre><code>let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// Pegar apenas números pares
+let pares = numeros.filter(num => num % 2 === 0);
+console.log(pares);  // [2, 4, 6, 8, 10]
+
+// Pegar apenas números maiores que 5
+let maioresQue5 = numeros.filter(num => num > 5);
+console.log(maioresQue5);  // [6, 7, 8, 9, 10]
+
+// Filtrar produtos por preço
+let produtos = [
+    { nome: "Notebook", preco: 3000 },
+    { nome: "Mouse", preco: 50 },
+    { nome: "Teclado", preco: 200 }
+];
+
+let baratos = produtos.filter(produto => produto.preco < 300);
+console.log(baratos);  // [{ nome: "Mouse", preco: 50 }, { nome: "Teclado", preco: 200 }]</code></pre>
+        </div>
+
+        <div class="method-card">
+            <div class="method-name">🔻 reduce()</div>
+            <p><strong>O que faz:</strong> Reduz o array a um <strong>único valor</strong> aplicando uma função acumuladora.</p>
+            <p><strong>Retorna:</strong> Valor único resultante.</p>
+            
+            <pre><code>let numeros = [1, 2, 3, 4, 5];
+
+// Somar todos os números
+let soma = numeros.reduce((acumulador, atual) => acumulador + atual, 0);
+console.log(soma);  // 15
+
+// Como funciona passo a passo:
+// acumulador = 0 (valor inicial), atual = 1 → retorna 0 + 1 = 1
+// acumulador = 1, atual = 2 → retorna 1 + 2 = 3
+// acumulador = 3, atual = 3 → retorna 3 + 3 = 6
+// acumulador = 6, atual = 4 → retorna 6 + 4 = 10
+// acumulador = 10, atual = 5 → retorna 10 + 5 = 15
+
+// Encontrar o maior número
+let maiorNumero = numeros.reduce((maior, atual) => {
+    return atual > maior ? atual : maior;
+});
+console.log(maiorNumero);  // 5</code></pre>
+        </div>
+
+        <div class="method-card">
+            <div class="method-name">🔎 find()</div>
+            <p><strong>O que faz:</strong> Retorna o <strong>primeiro elemento</strong> que passa em um teste.</p>
+            <p><strong>Retorna:</strong> O elemento encontrado, ou <code>undefined</code>.</p>
+            
+            <pre><code>let numeros = [5, 12, 8, 130, 44];
+
+// Encontrar o primeiro número maior que 10
+let resultado = numeros.find(num => num > 10);
+console.log(resultado);  // 12
+
+// Buscar objeto em array
+let usuarios = [
+    { id: 1, nome: "João" },
+    { id: 2, nome: "Maria" },
+    { id: 3, nome: "Pedro" }
+];
+
+let usuario = usuarios.find(user => user.id === 2);
+console.log(usuario);  // { id: 2, nome: "Maria" }</code></pre>
+        </div>
+
+        <div class="method-card">
+            <div class="method-name">✅ every() e some()</div>
+            <p><strong>O que fazem:</strong></p>
+            <ul>
+                <li><code>every()</code>: Verifica se <strong>todos</strong> os elementos passam em um teste</li>
+                <li><code>some()</code>: Verifica se <strong>pelo menos um</strong> elemento passa em um teste</li>
+            </ul>
+            <p><strong>Retornam:</strong> <code>true</code> ou <code>false</code>.</p>
+            
+            <pre><code>let numeros = [2, 4, 6, 8, 10];
+
+// Verificar se TODOS são pares
+let todosPares = numeros.every(num => num % 2 === 0);
+console.log(todosPares);  // true
+
+// Verificar se ALGUM é maior que 5
+let algumMaiorQue5 = numeros.some(num => num > 5);
+console.log(algumMaiorQue5);  // true (6, 8, 10 são maiores)
+
+// Exemplo prático
+let idades = [18, 20, 22, 17, 25];
+let todosMaiores = idades.every(idade => idade >= 18);
+console.log(todosMaiores);  // false (17 não é maior que 18)</code></pre>
+        </div>
+
+        <!-- ARRAYS MULTIDIMENSIONAIS -->
+        <h2>📊 10. Arrays Multidimensionais (Arrays dentro de Arrays)</h2>
+
+        <p>Um array pode conter outros arrays, criando estruturas bidimensionais (matrizes) ou mais complexas:</p>
+
+        <pre><code>// Array bidimensional (matriz 3x3)
+let matriz = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+// Acessar elementos
+console.log(matriz[0]);      // [1, 2, 3] (primeira linha)
+console.log(matriz[0][0]);   // 1 (linha 0, coluna 0)
+console.log(matriz[1][2]);   // 6 (linha 1, coluna 2)
+console.log(matriz[2][1]);   // 8 (linha 2, coluna 1)
+
+// Percorrer matriz com loops aninhados
+for (let i = 0; i < matriz.length; i++) {
+    for (let j = 0; j < matriz[i].length; j++) {
+        console.log(`Posição [${i}][${j}]: ${matriz[i][j]}`);
+    }
+}</code></pre>
+
+        <div class="example">
+            <div class="example-title">📝 Exemplo Prático: Tabela de Notas</div>
+            <pre><code>// Cada linha é um aluno, cada coluna é uma prova
+let notas = [
+    [8.5, 9.0, 7.5],  // João
+    [6.0, 7.0, 8.0],  // Maria
+    [9.5, 9.0, 10.0]  // Pedro
+];
+
+let nomes = ["João", "Maria", "Pedro"];
+
+// Calcular média de cada aluno
+for (let i = 0; i < notas.length; i++) {
+    let soma = notas[i].reduce((acc, nota) => acc + nota, 0);
+    let media = soma / notas[i].length;
+    console.log(`${nomes[i]}: Média ${media.toFixed(2)}`);
+}
+// João: Média 8.33
+// Maria: Média 7.00
+// Pedro: Média 9.50</code></pre>
+        </div>
+
+        <!-- SPREAD OPERATOR -->
+        <h2>📦 11. Spread Operator (...) - Espalhamento</h2>
+
+        <p>O operador <code>...</code> (spread) permite "espalhar" elementos de um array:</p>
+
+        <pre><code>// Copiar array
+let original = [1, 2, 3];
+let copia = [...original];
+console.log(copia);  // [1, 2, 3]
+
+// Concatenar arrays
+let arr1 = [1, 2, 3];
+let arr2 = [4, 5, 6];
+let junto = [...arr1, ...arr2];
+console.log(junto);  // [1, 2, 3, 4, 5, 6]
+
+// Adicionar elementos
+let numeros = [2, 3, 4];
+let maisNumeros = [1, ...numeros, 5, 6];
+console.log(maisNumeros);  // [1, 2, 3, 4, 5, 6]
+
+// Passar elementos como argumentos de função
+let valores = [10, 20, 30];
+console.log(Math.max(...valores));  // 30 (equivale a Math.max(10, 20, 30))</code></pre>
+
+        <!-- DESTRUCTURING -->
+        <h2>📤 12. Destructuring - Desestruturação</h2>
+
+        <p>Permite extrair valores de arrays e atribuir a variáveis de forma concisa:</p>
+
+        <pre><code>// Atribuição básica
+let frutas = ["maçã", "banana", "laranja"];
+let [primeira, segunda, terceira] = frutas;
+
+console.log(primeira);   // "maçã"
+console.log(segunda);    // "banana"
+console.log(terceira);   // "laranja"
+
+// Pular elementos
+let [a, , c] = frutas;
+console.log(a);  // "maçã"
+console.log(c);  // "laranja"
+
+// Resto dos elementos com ...rest
+let numeros = [1, 2, 3, 4, 5];
+let [primeiro, segundo, ...resto] = numeros;
+console.log(primeiro);  // 1
+console.log(segundo);   // 2
+console.log(resto);     // [3, 4, 5]
+
+// Trocar variáveis
+let x = 10;
+let y = 20;
+[x, y] = [y, x];
+console.log(x);  // 20
+console.log(y);  // 10</code></pre>
+
+        <!-- EXEMPLO FINAL -->
+        <h2>🎯 13. Projeto Prático Completo: Sistema de Gerenciamento de Tarefas</h2>
+
+        <div class="example">
+            <div class="example-title">📝 Mini Projeto: To-Do List</div>
+            <pre><code>// Sistema completo de gerenciamento de tarefas
+class GerenciadorTarefas {
+    constructor() {
+        this.tarefas = [];
+        this.proximoId = 1;
+    }
+
+    // Adicionar tarefa
+    adicionarTarefa(descricao, prioridade = 'normal') {
+        const novaTarefa = {
+            id: this.proximoId++,
+            descricao: descricao,
+            prioridade: prioridade,
+            concluida: false,
+            dataCriacao: new Date()
+        };
+        this.tarefas.push(novaTarefa);
+        return novaTarefa;
+    }
+
+    // Listar todas as tarefas
+    listarTarefas() {
+        return this.tarefas.map((tarefa, index) => {
+            const status = tarefa.concluida ? '✅' : '⏳';
+            return `${index + 1}. ${status} ${tarefa.descricao} (${tarefa.prioridade})`;
+        }).join('\n');
+    }
+
+    // Marcar tarefa como concluída
+    concluirTarefa(id) {
+        const tarefa = this.tarefas.find(t => t.id === id);
+        if (tarefa) {
+            tarefa.concluida = true;
+            return true;
+        }
+        return false;
+    }
+
+    // Remover tarefa
+    removerTarefa(id) {
+        const indice = this.tarefas.findIndex(t => t.id === id);
+        if (indice !== -1) {
+            this.tarefas.splice(indice, 1);
+            return true;
+        }
+        return false;
+    }
+
+    // Filtrar tarefas por prioridade
+    filtrarPorPrioridade(prioridade) {
+        return this.tarefas.filter(t => t.prioridade === prioridade);
+    }
+
+    // Tarefas pendentes
+    tarefasPendentes() {
+        return this.tarefas.filter(t => !t.concluida);
+    }
+
+    // Tarefas concluídas
+    tarefasConcluidas() {
+        return this.tarefas.filter(t => t.concluida);
+    }
+
+    // Estatísticas
+    estatisticas() {
+        const total = this.tarefas.length;
+        const concluidas = this.tarefasConcluidas().length;
+        const pendentes = this.tarefasPendentes().length;
+        const percentual = total > 0 ? (concluidas / total * 100).toFixed(1) : 0;
+
+        return {
+            total,
+            concluidas,
+            pendentes,
+            percentualConclusao: `${percentual}%`
+        };
+    }
+}
+
+// Testando o sistema
+const gerenciador = new GerenciadorTarefas();
+
+// Adicionar tarefas
+gerenciador.adicionarTarefa('Estudar Arrays', 'alta');
+gerenciador.adicionarTarefa('Fazer exercícios', 'alta');
+gerenciador.adicionarTarefa('Revisar código', 'normal');
+gerenciador.adicionarTarefa('Ler documentação', 'baixa');
+
+// Listar todas
+console.log('=== TODAS AS TAREFAS ===');
+console.log(gerenciador.listarTarefas());
+
+// Concluir algumas tarefas
+gerenciador.concluirTarefa(1);
+gerenciador.concluirTarefa(2);
+
+// Listar novamente
+console.log('\n=== APÓS CONCLUSÕES ===');
+console.log(gerenciador.listarTarefas());
+
+// Estatísticas
+console.log('\n=== ESTATÍSTICAS ===');
+console.log(gerenciador.estatisticas());
+
+// Filtrar por prioridade
+console.log('\n=== TAREFAS DE ALTA PRIORIDADE ===');
+const altaPrioridade = gerenciador.filtrarPorPrioridade('alta');
+console.log(altaPrioridade);</code></pre>
+        </div>
+
+        <!-- TABELA RESUMO -->
+        <h2>📋 14. Tabela Resumo de Métodos</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Método</th>
+                    <th>Modifica Original?</th>
+                    <th>Retorno</th>
+                    <th>Uso Principal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>push()</code></td>
+                    <td>✅ Sim</td>
+                    <td>Novo length</td>
+                    <td>Adicionar no final</td>
+                </tr>
+                <tr>
+                    <td><code>pop()</code></td>
+                    <td>✅ Sim</td>
+                    <td>Elemento removido</td>
+                    <td>Remover do final</td>
+                </tr>
+                <tr>
+                    <td><code>unshift()</code></td>
+                    <td>✅ Sim</td>
+                    <td>Novo length</td>
+                    <td>Adicionar no início</td>
+                </tr>
+                <tr>
+                    <td><code>shift()</code></td>
+                    <td>✅ Sim</td>
+                    <td>Elemento removido</td>
+                    <td>Remover do início</td>
+                </tr>
+                <tr>
+                    <td><code>splice()</code></td>
+                    <td>✅ Sim</td>
+                    <td>Elementos removidos</td>
+                    <td>Adicionar/remover em qualquer posição</td>
+                </tr>
+                <tr>
+                    <td><code>slice()</code></td>
+                    <td>❌ Não</td>
+                    <td>Novo array</td>
+                    <td>Copiar parte do array</td>
+                </tr>
+                <tr>
+                    <td><code>concat()</code></td>
+                    <td>❌ Não</td>
+                    <td>Novo array</td>
+                    <td>Juntar arrays</td>
+                </tr>
+                <tr>
+                    <td><code>join()</code></td>
+                    <td>❌ Não</td>
+                    <td>String</td>
+                    <td>Converter para texto</td>
+                </tr>
+                <tr>
+                    <td><code>reverse()</code></td>
+                    <td>✅ Sim</td>
+                    <td>Array invertido</td>
+                    <td>Inverter ordem</td>
+                </tr>
+                <tr>
+                    <td><code>sort()</code></td>
+                    <td>✅ Sim</td>
+                    <td>Array ordenado</td>
+                    <td>Ordenar elementos</td>
+                </tr>
+                <tr>
+                    <td><code>indexOf()</code></td>
+                    <td>❌ Não</td>
+                    <td>Índice ou -1</td>
+                    <td>Encontrar posição</td>
+                </tr>
+                <tr>
+                    <td><code>includes()</code></td>
+                    <td>❌ Não</td>
+                    <td>Boolean</td>
+                    <td>Verificar existência</td>
+                </tr>
+                <tr>
+                    <td><code>map()</code></td>
+                    <td>❌ Não</td>
+                    <td>Novo array</td>
+                    <td>Transformar elementos</td>
+                </tr>
+                <tr>
+                    <td><code>filter()</code></td>
+                    <td>❌ Não</td>
+                    <td>Novo array</td>
+                    <td>Filtrar elementos</td>
+                </tr>
+                <tr>
+                    <td><code>reduce()</code></td>
+                    <td>❌ Não</td>
+                    <td>Valor único</td>
+                    <td>Reduzir a um valor</td>
+                </tr>
+                <tr>
+                    <td><code>find()</code></td>
+                    <td>❌ Não</td>
+                    <td>Elemento ou undefined</td>
+                    <td>Buscar elemento</td>
+                </tr>
+                <tr>
+                    <td><code>every()</code></td>
+                    <td>❌ Não</td>
+                    <td>Boolean</td>
+                    <td>Testar todos</td>
+                </tr>
+                <tr>
+                    <td><code>some()</code></td>
+                    <td>❌ Não</td>
+                    <td>Boolean</td>
+                    <td>Testar algum</td>
+                </tr>
+                <tr>
+                    <td><code>forEach()</code></td>
+                    <td>❌ Não</td>
+                    <td>undefined</td>
+                    <td>Iterar elementos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- DICAS FINAIS -->
+        <h2>💡 15. Dicas e Boas Práticas</h2>
+
+        <div class="tip">
+            <strong>✅ Boas Práticas:</strong>
+            <ul>
+                <li>Use <code>const</code> ao declarar arrays que não serão reatribuídos (você ainda pode modificar o conteúdo)</li>
+                <li>Prefira métodos que não modificam o original (<code>slice</code>, <code>map</code>, <code>filter</code>) para evitar efeitos colaterais</li>
+                <li>Use <code>includes()</code> em vez de <code>indexOf() !== -1</code> para verificar existência</li>
+                <li>Sempre passe função de comparação para <code>sort()</code> ao ordenar números</li>
+                <li>Use destructuring e spread operator para código mais limpo</li>
+                <li>Considere usar <code>for...of</code> em vez de <code>for</code> tradicional quando possível</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>❌ Evite:</strong>
+            <ul>
+                <li>Modificar array durante iteração (pode causar comportamentos inesperados)</li>
+                <li>Criar "buracos" no array (índices vazios) manualmente</li>
+                <li>Confiar em <code>sort()</code> sem função de comparação para números</li>
+                <li>Usar <code>delete</code> para remover elementos (deixa índice vazio, use <code>splice</code>)</li>
+                <li>Assumir que métodos retornam novo array (alguns modificam o original!)</li>
+            </ul>
+        </div>
+
+        <!-- EXERCÍCIOS -->
+        <h2>🎓 16. Exercícios para Praticar</h2>
+
+        <div class="example">
+            <div class="example-title">🏋️ Exercício 1: Básico</div>
+            <p>Crie um array com 5 nomes de frutas. Adicione uma fruta no início, outra no final, e remova a fruta do meio.</p>
+        </div>
+
+        <div class="example">
+            <div class="example-title">🏋️ Exercício 2: Intermediário</div>
+            <p>Dado um array de números <code>[3, 15, 7, 2, 22, 10]</code>, use métodos para:</p>
+            <ul>
+                <li>Filtrar apenas números maiores que 10</li>
+                <li>Dobrar cada número restante</li>
+                <li>Somar todos os números resultantes</li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title">🏋️ Exercício 3: Avançado</div>
+            <p>Crie uma função que receba um array de objetos (produtos com nome e preço) e retorne:</p>
+            <ul>
+                <li>Array ordenado por preço crescente</li>
+                <li>Produto mais caro</li>
+                <li>Média de preços</li>
+                <li>Produtos com preço acima da média</li>
+            </ul>
+        </div>
+
+        <!-- RECURSOS EXTRAS -->
+        <h2>📚 17. Recursos para Aprofundamento</h2>
+
+        <ul>
+            <li><strong>MDN Web Docs:</strong> <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank" rel="noopener noreferrer">Documentação completa sobre Arrays</a></li>
+            <li><strong>JavaScript.info:</strong> <a href="https://javascript.info/array" target="_blank" rel="noopener noreferrer">Tutorial interativo sobre Arrays</a></li>
+            <li><strong>Eloquent JavaScript:</strong> Capítulo 4 - Data Structures: Objects and Arrays</li>
+            <li><strong>FreeCodeCamp:</strong> Exercícios práticos de Arrays</li>
+        </ul>
+
+        <!-- CONCLUSÃO -->
+        <h2>🎉 Conclusão</h2>
+
+        <div class="concept-box">
+            <p>Arrays são estruturas de dados fundamentais em JavaScript. Dominar arrays e seus métodos é essencial para:</p>
+            <ul>
+                <li>Manipular coleções de dados eficientemente</li>
+                <li>Trabalhar com APIs e dados dinâmicos</li>
+                <li>Criar aplicações mais complexas e robustas</li>
+                <li>Escrever código mais limpo e funcional</li>
+            </ul>
+            <p><strong>Continue praticando!</strong> A melhor forma de aprender arrays é usar em projetos reais. Comece com exercícios simples e vá aumentando a complexidade gradualmente.</p>
+        </div>
+
+        <div class="final-message">
+            <h2>🚀 Boa sorte nos estudos!</h2>
+            <p>Pratique, experimente e construa projetos incríveis com JavaScript!</p>
+        </div>
+    </div>
+
+    <script>
+        // Demonstração interativa (abra o console F12 para ver)
+        console.log("%c📚 Arrays em JavaScript - Demonstração Interativa", "color: #667eea; font-size: 20px; font-weight: bold;");
+        
+        // Exemplo 1: Criando e manipulando array
+        console.log("\n%c1️⃣ Criando e Manipulando Arrays", "color: #764ba2; font-size: 16px; font-weight: bold;");
+        let frutas = ["Maçã", "Banana", "Laranja"];
+        console.log("Array inicial:", frutas);
+        frutas.push("Uva");
+        console.log("Após push('Uva'):", frutas);
+        frutas.pop();
+        console.log("Após pop():", frutas);
+        
+        // Exemplo 2: Métodos de transformação
+        console.log("\n%c2️⃣ Métodos de Transformação", "color: #764ba2; font-size: 16px; font-weight: bold;");
+        let numeros = [1, 2, 3, 4, 5];
+        let dobrados = numeros.map(n => n * 2);
+        console.log("Originais:", numeros);
+        console.log("Dobrados:", dobrados);
+        
+        let pares = numeros.filter(n => n % 2 === 0);
+        console.log("Apenas pares:", pares);
+        
+        let soma = numeros.reduce((acc, n) => acc + n, 0);
+        console.log("Soma de todos:", soma);
+        
+        // Exemplo 3: Busca e verificação
+        console.log("\n%c3️⃣ Busca e Verificação", "color: #764ba2; font-size: 16px; font-weight: bold;");
+        console.log("Tem o número 3?", numeros.includes(3));
+        console.log("Índice do número 4:", numeros.indexOf(4));
+        console.log("Primeiro número > 3:", numeros.find(n => n > 3));
+        
+        console.log("\n%c✅ Abra este arquivo no navegador e veja o console para mais exemplos!", "color: #10b981; font-size: 14px;");
+    </script>
+</body>
+</html>
