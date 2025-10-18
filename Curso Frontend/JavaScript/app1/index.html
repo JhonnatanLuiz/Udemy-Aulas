@@ -1,79 +1,149 @@
+<!-- 
+  CALCULADORA INTERATIVA - PROJETO EM JAVASCRIPT
+  Demonstra conceitos de: DOM, eventos, strings, operadores, condicionais
+  Autor: Aprendizado Udemy
+-->
 <html lang="pt-BR">
   <head>
+    <!-- Define o tipo de caractere: UTF-8 suporta acentuação -->
     <meta charset="utf-8" />
+    <!-- Configuração responsiva: adapta a página para dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Título que aparece na aba do navegador -->
     <title>Calculadora</title>
 
-    <!-- Latest compiled and minified CSS -->
+    <!-- 
+      CDN (Content Delivery Network) do Bootstrap 4
+      Bootstrap fornece componentes CSS prontos (botões, grid, etc)
+      integrity: valida se o arquivo não foi modificado
+      crossorigin: permite carregar recursos de outro domínio
+    -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 
+    <!-- Tag <style> com CSS específico da página (estilos internos) -->
+    <!-- Tag <style> com CSS específico da página (estilos internos) -->
     <style>
+      /* CLASSE: .calculadora - estilo do container principal da calculadora */
       .calculadora {
-        margin-top: 40px;
-        border: solid 1px #000;
-        padding: 20px;
-        background-color: #2E2E2E;
-        border-radius: 10px;
-        box-shadow: 1px 1px 5px #000;
+        margin-top: 40px;           /* Espaçamento acima */
+        border: solid 1px #000;     /* Borda sólida preta, espessura 1px */
+        padding: 20px;              /* Espaçamento interno (dentro da borda) */
+        background-color: #2E2E2E;  /* Cor de fundo cinza escuro (hex: #2E2E2E) */
+        border-radius: 10px;        /* Cantos arredondados (raio de 10px) */
+        box-shadow: 1px 1px 5px #000; /* Sombra: 1px direita, 1px baixo, 5px desfoque, cor preta */
       }
 
+      /* CLASSE: .btn - estilo dos botões da calculadora */
       .btn {
-        width: 60px;
-        height: 50px;
-        margin: 5px;
-        box-shadow: 1px 1px 1px #000;
+        width: 60px;                /* Largura fixa: 60 pixels */
+        height: 50px;               /* Altura fixa: 50 pixels */
+        margin: 5px;                /* Espaçamento externo em todos os lados (5px) */
+        box-shadow: 1px 1px 1px #000; /* Sombra leve para dar profundidade */
       }
 
+      /* CLASSE: .clear - estilo do botão "C" (Limpar) */
       .clear {
-        width: 130px;
+        width: 130px;               /* Largura maior para ocupar 2 colunas */
       }
 
+      /* CLASSE: .enter - estilo do botão "=" (Igual/Enter) */
       .enter {
-        height: 110px;
+        height: 110px;              /* Altura aumentada para ocupar 2 linhas */
       }
 
+      /* CLASSE: .zero - estilo do botão "0" */
       .zero {
-        width: 130px;
+        width: 130px;               /* Largura maior para ocupar 2 colunas */
       }
 
+      /* CLASSE: .resultado - estilo do visor de resultado */
       .resultado {
-        text-align: right;
-        font-size: 20px;
-        margin-top: 10px;
-        margin-bottom: 20px;
-        border: solid 1px #000;
-        box-shadow: 1px 1px 1px #000;
+        text-align: right;          /* Alinha o texto à direita (padrão de calculadoras) */
+        font-size: 20px;            /* Tamanho da fonte aumentado para melhor leitura */
+        margin-top: 10px;           /* Espaçamento acima */
+        margin-bottom: 20px;        /* Espaçamento abaixo */
+        border: solid 1px #000;     /* Borda preta sólida */
+        box-shadow: 1px 1px 1px #000; /* Sombra leve */
       }
 
+      /* CLASSE: .row-zero - ajuste para alinhar botão 0 corretamente */
       .row-zero {
-        margin-top: -60px;
+        margin-top: -60px;          /* Margem negativa para subir 60px (compensação) */
       }
     </style>
   </head>
   <body>
-
+    <!-- 
+      ESTRUTURA HTML DO BOOTSTRAP:
+      .container = container responsivo (largura máxima adapta-se à tela)
+      .row = linha (usa flexbox do Bootstrap)
+      .col = coluna (divide o espaço horizontalmente)
+      .d-flex = display flex (alinha conteúdo flexivelmente)
+      .justify-content-center = centra o conteúdo horizontalmente
+    -->
     <div class="container">
       <div class="row">
         <div class="col d-flex justify-content-center">
           <br />
 
+          <!-- DIV PRINCIPAL: Container da calculadora -->
           <div class="calculadora">
+            <!-- 
+              INPUT: Campo de entrada/saída da calculadora
+              id="resultado" = identificador único do elemento (usado no JavaScript)
+              type="text" = tipo de input (texto)
+              class="form-control resultado" = classes Bootstrap e CSS custom
+              placeholder="0" = texto exibido quando vazio
+              readonly = impede que o usuário digite diretamente (só JavaScript digita)
+            -->
             <input id="resultado" type="text" class="form-control resultado" placeholder="0" readonly />
             
+            <!-- 
+              PRIMEIRA LINHA DE BOTÕES: C (limpar), / (divisão), * (multiplicação)
+              class="row" = alinha os botões horizontalmente
+            -->
             <div class="row">
+              <!-- 
+                BOTÃO "C" (Clear - Limpar):
+                onclick="calcular('acao', 'C')" = executa função calcular quando clicado
+                    Primeiro parâmetro 'acao': tipo de ação
+                    Segundo parâmetro 'C': valor da ação (limpar)
+                type="button" = tipo do botão (não submete formulário)
+                class="btn btn-dark btn-lg clear" = classes Bootstrap para estilo
+                    btn = estilo básico de botão
+                    btn-dark = fundo preto
+                    btn-lg = tamanho large (grande)
+                    clear = classe custom com width: 130px
+                font-weight-light = peso da fonte (leve)
+              -->
               <button onclick="calcular('acao', 'C')" type="button" class="btn btn-dark btn-lg clear font-weight-light">C</button>
+              
+              <!-- BOTÃO "/" (Divisão) -->
               <button onclick="calcular('acao', '/')" type="button" class="btn btn-dark btn-lg font-weight-light">/</button>
+              
+              <!-- BOTÃO "*" exibido como "x" (Multiplicação) -->
               <button onclick="calcular('acao', '*')" type="button" class="btn btn-dark btn-lg font-weight-light">x</button>
             </div>
 
+            <!-- 
+              SEGUNDA LINHA DE BOTÕES: 7, 8, 9 (números) e - (subtração)
+              Diferença: usamos 'valor' em vez de 'acao' para botões de números
+            -->
             <div class="row">
+              <!-- 
+                BOTÃO "7" (Número):
+                onclick="calcular('valor', '7')" = tipo é 'valor', não 'acao'
+                'valor' = indica que é um número a ser adicionado ao display
+              -->
               <button onclick="calcular('valor', '7')" type="button" class="btn btn-dark btn-lg font-weight-light">7</button>
               <button onclick="calcular('valor', '8')" type="button" class="btn btn-dark btn-lg font-weight-light">8</button>
               <button onclick="calcular('valor', '9')" type="button" class="btn btn-dark btn-lg font-weight-light">9</button>
+              <!-- BOTÃO "-" (Subtração) = é uma acao, não valor -->
               <button onclick="calcular('acao', '-')" type="button" class="btn btn-dark btn-lg font-weight-light">-</button>
             </div>
             
+            <!-- TERCEIRA LINHA: 4, 5, 6 (números) e + (adição) -->
             <div class="row">
               <button onclick="calcular('valor', '4')" type="button" class="btn btn-dark btn-lg font-weight-light">4</button>
               <button onclick="calcular('valor', '5')" type="button" class="btn btn-dark btn-lg font-weight-light">5</button>
@@ -81,51 +151,136 @@
               <button onclick="calcular('acao', '+')" type="button" class="btn btn-dark btn-lg font-weight-light">+</button>
             </div>
 
+            <!-- QUARTA LINHA: 1, 2, 3 (números) e = (executar cálculo) -->
             <div class="row">
               <button onclick="calcular('valor', '1')" type="button" class="btn btn-dark btn-lg font-weight-light">1</button>
               <button onclick="calcular('valor', '2')" type="button" class="btn btn-dark btn-lg font-weight-light">2</button>
               <button onclick="calcular('valor', '3')" type="button" class="btn btn-dark btn-lg font-weight-light">3</button>
+              <!-- 
+                BOTÃO "=" (Igual):
+                class="enter" = altura aumentada (110px) para ocupar 2 linhas visualmente
+              -->
               <button onclick="calcular('acao', '=')" type="button" class="btn btn-dark btn-lg enter">=</button>
             </div>
 
+            <!-- 
+              QUINTA LINHA: 0 (número especial) e . (ponto decimal)
+              class="row-zero" = margem negativa (-60px) para alinhar corretamente
+              Problema: o Bootstrap cria gaps entre linhas, isso compensa
+            -->
             <div class="row row-zero">
+              <!-- 
+                BOTÃO "0" (Zero):
+                class="zero" = largura 130px (ocupa 2 colunas)
+                Botão 0 é maior porque é o dígito mais usado
+              -->
               <button onclick="calcular('valor', '0')" type="button" class="btn btn-dark zero btn-lg font-weight-light">0</button>
+              <!-- BOTÃO "." (Ponto decimal para números com vírgula) -->
               <button onclick="calcular('acao', '.')" type="button" class="btn btn-dark btn-lg font-weight-light">.</button>
             </div>
 
-          </div>
+          </div><!-- Fim da div.calculadora -->
         </div>
       </div>
-    </div>  
+    </div><!-- Fim da div.container -->
     
+    <!-- 
+      ============================================
+      JAVASCRIPT - LÓGICA DA CALCULADORA
+      ============================================
+      Esta seção contém a função principal que faz a calculadora funcionar
+    -->
     <script>
+      /* 
+        FUNÇÃO: calcular(tipo, valor)
+        Parâmetros:
+          - tipo: string que pode ser 'acao' (operadores/equal) ou 'valor' (números)
+          - valor: o que foi clicado (número, operador, etc)
+        
+        Esta função é chamada a cada clique de botão (via onclick no HTML)
+        Ela decide o que fazer baseado nos parâmetros recebidos
+      */
       function calcular(tipo, valor) {
 
+        /* 
+          CONDICIONAL: if (tipo === 'acao')
+          === verifica se o tipo é exatamente igual a 'acao'
+          Se for verdadeiro, entra no bloco abaixo
+          LÓGICA: Se clicou em C, /, *, -, +, =, etc (ações, não números)
+        */
         if (tipo === 'acao') {
+          
+          /* 
+            CONDICIONAL ANINHADA: if (valor === 'C')
+            Verifica se o valor clicado foi especificamente 'C' (Clear/Limpar)
+            AÇÃO: Limpar o visor (zerar o display)
+          */
           if (valor === 'C') {
-            // limpar o visor
+            // document = objeto que representa a página HTML inteira
+            // getElementById('resultado') = encontra o elemento com id="resultado"
+            // .value = propriedade que armazena o conteúdo do input
+            // = '' = atribui uma string vazia (limpa o campo)
             document.getElementById('resultado').value = '';
+            // Após esta linha, o input estará vazio!
           }
 
-          // 1) Atualizar operador: escreva direto no input (substituir bloco que lida com operadores)
+          /* 
+            CONDICIONAL: if (valor === '+' || valor === '-' || valor === '*' || valor === '/' || valor === '.')
+            || = operador lógico "OU" (se qualquer uma das condições for verdadeira, entra no bloco)
+            Verifica se o valor é um operador matemático ou ponto decimal
+            AÇÃO: Adicionar o operador ao display
+          */
           if (valor === '+' || valor === '-' || valor === '*' || valor === '/' || valor === '.') {
-            // atualiza o visor imediatamente (antes você só criava a variável)
+            // Aqui é diferente do 'C': não queremos SUBSTITUIR, queremos ADICIONAR ao que já existe
+            // += é operador de concatenação (juntar strings)
+            // Exemplo: se tinha "5", agora fica "5+"
             document.getElementById('resultado').value += valor;
           }
 
+          /* 
+            CONDICIONAL: if (valor === '=')
+            Verifica se o usuário clicou no botão de IGUAL (executar cálculo)
+            AÇÃO: Calcular a expressão e mostrar resultado
+          */
           if (valor === '=') { 
+            // var = declaração de variável (armazena dados)
+            // Aqui capturamos o conteúdo atual do input (a expressão inteira)
+            // Exemplo: se input tem "5+3", valor_campo recebe "5+3"
             var valor_campo = document.getElementById('resultado').value;
-            var resultado = eval(valor_campo);  // Calcula a expressão
-            document.getElementById('resultado').value = resultado;  // Mostra resultado
+            
+            // eval() = função JavaScript que AVALIA/EXECUTA uma string como código
+            // ATENÇÃO: eval é perigoso em produção, mas funciona para este exemplo
+            // Aqui: se valor_campo = "5+3", eval calcula e retorna 8
+            var resultado = eval(valor_campo);
+            
+            // Mostrar o resultado no input
+            // Substitui a expressão pelo seu resultado
+            document.getElementById('resultado').value = resultado;
+            
+            // console.log() = exibe mensagem no console do navegador (F12 para abrir)
+            // Útil para debug (verificar o que está acontecendo)
+            // + é concatenação de strings aqui (não adição)
+            // Exemplo output: "5+3 = 8"
             console.log(valor_campo + ' = ' + resultado);
           }
 
-        } else if (tipo === 'valor') {
+        } 
+        /* 
+          CONDICIONAL: else if (tipo === 'valor')
+          "else if" = se o if anterior for falso, tenta esta condição
+          Se o tipo NÃO foi 'acao', mas é 'valor' (número)
+          LÓGICA: Se clicou em um número (0-9)
+        */
+        else if (tipo === 'valor') {
+           // Adicionar o número ao input (concatenação, não substituição)
+           // += junta o novo valor ao que já existe
+           // Exemplo: se input tem "5" e clica "3", fica "53"
            document.getElementById('resultado').value += valor;
         }
 
-      }
+      }// Fim da função calcular
     </script>
   </body>	
 
 </html>
+    

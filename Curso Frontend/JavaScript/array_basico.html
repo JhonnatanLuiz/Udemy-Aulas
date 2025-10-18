@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array basico</title>
+</head>
+<body>
+    <script>
+        // Criando um array vazio
+        let lista_frutas = Array();
+
+        lista_frutas[1] = 'Banana';
+        lista_frutas[2] = 'Maça';
+        lista_frutas['x'] = 'Morango';
+        lista_frutas[4] = '100';
+
+        console.log(lista_frutas[4]);
+
+        // Outra forma de criar array
+        let lista_frutas2 = ['Banana', 'Maça', 'Morango', 'Uva'];
+        console.log(lista_frutas2[2]);
+
+        // Outra forma de criar array
+        let lista_frutas3 = new Array('Banana', 'Maça', 'Morango', 'Uva');
+        console.log(lista_frutas3[3]);
+
+        // Outra forma de criar array
+        let lista_frutas4 = Array.of('Banana', 'Maça', 'Morango', 'Uva');
+        console.log(lista_frutas4[0]);
+    </script>
+</body>
+</html>
