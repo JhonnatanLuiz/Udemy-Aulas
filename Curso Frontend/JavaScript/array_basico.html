@@ -1,33 +1,494 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Array basico</title>
+    <title>📚 Guia Completo de Arrays em JavaScript</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .info-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
+    <h1>📚 Guia Completo de Arrays em JavaScript</h1>
+    
+    <div class="info-box">
+        <h2>📋 Como Visualizar os Exemplos:</h2>
+        <ol>
+            <li>Abra o <strong>Console do Navegador</strong> pressionando <code>F12</code></li>
+            <li>Vá para a aba <strong>"Console"</strong></li>
+            <li>Veja todos os exemplos executando automaticamente</li>
+        </ol>
+        <p><strong>💡 Dica:</strong> Cada seção está organizada por categoria para facilitar o aprendizado!</p>
+    </div>
+
     <script>
-        // Criando um array vazio
+        // ============================================
+        // 📖 GUIA COMPLETO DE ARRAYS EM JAVASCRIPT
+        // ============================================
+        
+        console.log('%c📚 GUIA COMPLETO DE ARRAYS EM JAVASCRIPT', 'color: #22D4FD; font-size: 20px; font-weight: bold');
+        console.log('%c='.repeat(60), 'color: #22D4FD');
+
+        // ============================================
+        // 1️⃣ CRIANDO ARRAYS - DIFERENTES FORMAS
+        // ============================================
+        console.log('\n%c1️⃣ CRIANDO ARRAYS - DIFERENTES FORMAS', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // FORMA 1: Criando um array vazio com Array()
+        // Não recomendado - sintaxe antiga e confusa
         let lista_frutas = Array();
+        lista_frutas[0] = 'Banana';     // Índice 0 (primeiro elemento)
+        lista_frutas[1] = 'Maçã';       // Índice 1 (segundo elemento)
+        lista_frutas[2] = 'Morango';    // Índice 2 (terceiro elemento)
+        lista_frutas[3] = 'Uva';        // Índice 3 (quarto elemento)
+        console.log('Forma 1 - Array():', lista_frutas);
 
-        lista_frutas[1] = 'Banana';
-        lista_frutas[2] = 'Maça';
-        lista_frutas['x'] = 'Morango';
-        lista_frutas[4] = '100';
+        // FORMA 2: Array Literal - MAIS RECOMENDADA ✅
+        // Sintaxe moderna e clara - use esta!
+        let lista_frutas2 = ['Banana', 'Maçã', 'Morango', 'Uva'];
+        console.log('Forma 2 - Array Literal (Recomendada):', lista_frutas2);
+        console.log('Acessando índice 2:', lista_frutas2[2]); // Morango
 
-        console.log(lista_frutas[4]);
+        // FORMA 3: Construtor new Array()
+        // Pode causar confusão quando usado com um número
+        let lista_frutas3 = new Array('Banana', 'Maçã', 'Morango', 'Uva');
+        console.log('Forma 3 - new Array():', lista_frutas3);
+        console.log('Acessando índice 3:', lista_frutas3[3]); // Uva
 
-        // Outra forma de criar array
-        let lista_frutas2 = ['Banana', 'Maça', 'Morango', 'Uva'];
-        console.log(lista_frutas2[2]);
+        // FORMA 4: Array.of() - ES6
+        // Útil quando você quer criar um array com um único número
+        let lista_frutas4 = Array.of('Banana', 'Maçã', 'Morango', 'Uva');
+        console.log('Forma 4 - Array.of():', lista_frutas4);
+        console.log('Acessando índice 0:', lista_frutas4[0]); // Banana
 
-        // Outra forma de criar array
-        let lista_frutas3 = new Array('Banana', 'Maça', 'Morango', 'Uva');
-        console.log(lista_frutas3[3]);
+        // ⚠️ CUIDADO: Diferença entre new Array(n) e Array.of(n)
+        let array1 = new Array(5);     // Cria array vazio com 5 posições
+        let array2 = Array.of(5);      // Cria array com um elemento: [5]
+        console.log('new Array(5):', array1, '(length:', array1.length + ')');
+        console.log('Array.of(5):', array2);
 
-        // Outra forma de criar array
-        let lista_frutas4 = Array.of('Banana', 'Maça', 'Morango', 'Uva');
-        console.log(lista_frutas4[0]);
+        // ============================================
+        // 2️⃣ PROPRIEDADES BÁSICAS
+        // ============================================
+        console.log('\n%c2️⃣ PROPRIEDADES BÁSICAS', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // length - Retorna o número de elementos no array
+        let numeros = [10, 20, 30, 40, 50];
+        console.log('Array:', numeros);
+        console.log('Tamanho (length):', numeros.length); // 5
+
+        // Você pode modificar o length para truncar o array
+        numeros.length = 3; // Remove elementos após o índice 2
+        console.log('Após numeros.length = 3:', numeros); // [10, 20, 30]
+
+        // Acessar primeiro elemento
+        console.log('Primeiro elemento:', numeros[0]); // 10
+
+        // Acessar último elemento
+        console.log('Último elemento:', numeros[numeros.length - 1]); // 30
+
+        // ============================================
+        // 3️⃣ ARRAYS MULTIDIMENSIONAIS (MATRIZES)
+        // ============================================
+        console.log('\n%c3️⃣ ARRAYS MULTIDIMENSIONAIS', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // Array 2D (Matriz) - Array de arrays
+        // Pense como uma tabela com linhas e colunas
+        let matriz = [
+            [1, 2, 3],      // Linha 0
+            [4, 5, 6],      // Linha 1
+            [7, 8, 9]       // Linha 2
+        ];
+        console.log('Matriz completa:', matriz);
+        console.log('Elemento [1][2] (linha 1, coluna 2):', matriz[1][2]); // 6
+        console.log('Linha 0 completa:', matriz[0]); // [1, 2, 3]
+
+        // Exemplo prático: Tabela de produtos
+        let produtos = [
+            ['Notebook', 3500, 'Eletrônicos'],
+            ['Mouse', 50, 'Acessórios'],
+            ['Teclado', 200, 'Acessórios']
+        ];
+        console.log('\nTabela de Produtos:');
+        console.log('Produto 1:', produtos[0][0], '- R$', produtos[0][1]);
+        console.log('Produto 2:', produtos[1][0], '- R$', produtos[1][1]);
+        console.log('Produto 3:', produtos[2][0], '- R$', produtos[2][1]);
+
+        // ============================================
+        // 4️⃣ ADICIONAR E REMOVER ELEMENTOS
+        // ============================================
+        console.log('\n%c4️⃣ ADICIONAR E REMOVER ELEMENTOS', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        let veiculos = ['Carro', 'Moto'];
+        console.log('Array original:', veiculos);
+
+        // push() - Adiciona elemento NO FINAL do array
+        veiculos.push('Caminhão');
+        console.log('Após push("Caminhão"):', veiculos); // ['Carro', 'Moto', 'Caminhão']
+
+        // Você pode adicionar múltiplos elementos de uma vez
+        veiculos.push('Bicicleta', 'Avião');
+        console.log('Após push múltiplo:', veiculos);
+
+        // pop() - Remove e retorna o ÚLTIMO elemento
+        let removido = veiculos.pop();
+        console.log('Após pop():', veiculos);
+        console.log('Elemento removido:', removido); // 'Avião'
+
+        // unshift() - Adiciona elemento NO INÍCIO do array
+        veiculos.unshift('Trem');
+        console.log('Após unshift("Trem"):', veiculos); // ['Trem', 'Carro', 'Moto', 'Caminhão', 'Bicicleta']
+
+        // shift() - Remove e retorna o PRIMEIRO elemento
+        let primeiroRemovido = veiculos.shift();
+        console.log('Após shift():', veiculos);
+        console.log('Primeiro elemento removido:', primeiroRemovido); // 'Trem'
+
+        // splice() - Adiciona/Remove elementos em QUALQUER posição
+        // Sintaxe: splice(índice, quantosRemover, elementosParaAdicionar...)
+        let cores = ['Vermelho', 'Azul', 'Verde'];
+        console.log('\nArray cores original:', cores);
+
+        // Adicionar no índice 1 (sem remover nada)
+        cores.splice(1, 0, 'Amarelo', 'Roxo');
+        console.log('Após splice(1, 0, "Amarelo", "Roxo"):', cores);
+        // ['Vermelho', 'Amarelo', 'Roxo', 'Azul', 'Verde']
+
+        // Remover 2 elementos a partir do índice 1
+        let removidos = cores.splice(1, 2);
+        console.log('Após splice(1, 2):', cores);
+        console.log('Elementos removidos:', removidos);
+
+        // Substituir elementos (remover e adicionar ao mesmo tempo)
+        cores.splice(1, 1, 'Laranja', 'Rosa');
+        console.log('Após splice(1, 1, "Laranja", "Rosa"):', cores);
+
+        // ============================================
+        // 5️⃣ MÉTODOS DE PESQUISA E BUSCA
+        // ============================================
+        console.log('\n%c5️⃣ MÉTODOS DE PESQUISA E BUSCA', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        let animais = ['Cachorro', 'Gato', 'Pássaro', 'Gato', 'Coelho'];
+        console.log('Array de animais:', animais);
+
+        // indexOf() - Retorna o PRIMEIRO índice onde o elemento foi encontrado
+        // Retorna -1 se não encontrar
+        console.log('indexOf("Gato"):', animais.indexOf('Gato')); // 1
+        console.log('indexOf("Leão"):', animais.indexOf('Leão')); // -1 (não existe)
+
+        // lastIndexOf() - Retorna o ÚLTIMO índice onde o elemento foi encontrado
+        console.log('lastIndexOf("Gato"):', animais.lastIndexOf('Gato')); // 3
+
+        // includes() - Verifica se o elemento EXISTE no array (retorna true/false)
+        console.log('includes("Pássaro"):', animais.includes('Pássaro')); // true
+        console.log('includes("Tigre"):', animais.includes('Tigre')); // false
+
+        // find() - Retorna o PRIMEIRO elemento que satisfaz a condição
+        let numeros2 = [5, 12, 8, 130, 44];
+        let maiorQue10 = numeros2.find(function(num) {
+            return num > 10;
+        });
+        console.log('\nArray numeros2:', numeros2);
+        console.log('Primeiro número > 10:', maiorQue10); // 12
+
+        // findIndex() - Retorna o ÍNDICE do primeiro elemento que satisfaz a condição
+        let indice = numeros2.findIndex(function(num) {
+            return num > 10;
+        });
+        console.log('Índice do primeiro número > 10:', indice); // 1
+
+        // some() - Verifica se PELO MENOS UM elemento satisfaz a condição
+        let temMaiorQue100 = numeros2.some(function(num) {
+            return num > 100;
+        });
+        console.log('Tem algum número > 100?', temMaiorQue100); // true
+
+        // every() - Verifica se TODOS os elementos satisfazem a condição
+        let todosMaiorQue0 = numeros2.every(function(num) {
+            return num > 0;
+        });
+        console.log('Todos os números > 0?', todosMaiorQue0); // true
+
+        // ============================================
+        // 6️⃣ MÉTODOS DE ORDENAÇÃO E INVERSÃO
+        // ============================================
+        console.log('\n%c6️⃣ MÉTODOS DE ORDENAÇÃO E INVERSÃO', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // sort() - Ordena o array (MODIFICA o array original)
+        let letras = ['c', 'a', 'd', 'b'];
+        console.log('Array original:', letras);
+        letras.sort();
+        console.log('Após sort():', letras); // ['a', 'b', 'c', 'd']
+
+        // ⚠️ CUIDADO: sort() converte tudo para string!
+        let nums = [10, 5, 40, 25, 1000, 1];
+        console.log('\nArray de números:', nums);
+        nums.sort();
+        console.log('Após sort() padrão:', nums); // [1, 10, 1000, 25, 40, 5] - ERRADO!
+
+        // ✅ SOLUÇÃO: Use uma função de comparação para números
+        nums.sort(function(a, b) {
+            return a - b; // Ordem crescente
+        });
+        console.log('Após sort() com função:', nums); // [1, 5, 10, 25, 40, 1000] - CORRETO!
+
+        // Ordem decrescente
+        nums.sort(function(a, b) {
+            return b - a;
+        });
+        console.log('Ordem decrescente:', nums);
+
+        // reverse() - Inverte a ordem do array
+        let dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
+        console.log('\nArray original:', dias);
+        dias.reverse();
+        console.log('Após reverse():', dias);
+
+        // ============================================
+        // 7️⃣ MÉTODOS DE TRANSFORMAÇÃO
+        // ============================================
+        console.log('\n%c7️⃣ MÉTODOS DE TRANSFORMAÇÃO', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // map() - Cria um NOVO array aplicando uma função a cada elemento
+        // NÃO modifica o array original
+        let valores = [1, 2, 3, 4, 5];
+        let dobrados = valores.map(function(num) {
+            return num * 2;
+        });
+        console.log('Array original:', valores);
+        console.log('Array dobrado (map):', dobrados); // [2, 4, 6, 8, 10]
+
+        // filter() - Cria um NOVO array apenas com elementos que passam no teste
+        let pares = valores.filter(function(num) {
+            return num % 2 === 0;
+        });
+        console.log('Apenas pares (filter):', pares); // [2, 4]
+
+        // reduce() - Reduz o array a um único valor
+        // Útil para somar, calcular médias, etc.
+        let soma = valores.reduce(function(acumulador, valorAtual) {
+            return acumulador + valorAtual;
+        }, 0); // 0 é o valor inicial do acumulador
+        console.log('Soma de todos (reduce):', soma); // 15
+
+        // forEach() - Executa uma função para cada elemento
+        // NÃO retorna nada (undefined)
+        console.log('\nUsando forEach():');
+        valores.forEach(function(num, indice) {
+            console.log(`Índice ${indice}: ${num}`);
+        });
+
+        // ============================================
+        // 8️⃣ MÉTODOS DE CONCATENAÇÃO E EXTRAÇÃO
+        // ============================================
+        console.log('\n%c8️⃣ MÉTODOS DE CONCATENAÇÃO E EXTRAÇÃO', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // concat() - Junta dois ou mais arrays
+        let grupo1 = ['Ana', 'Bruno'];
+        let grupo2 = ['Carlos', 'Diana'];
+        let todosGrupos = grupo1.concat(grupo2);
+        console.log('Grupo 1:', grupo1);
+        console.log('Grupo 2:', grupo2);
+        console.log('Concatenados:', todosGrupos);
+
+        // slice() - Extrai uma CÓPIA de parte do array
+        // NÃO modifica o array original
+        // Sintaxe: slice(início, fim) - fim não é incluído
+        let frutas = ['Maçã', 'Banana', 'Laranja', 'Uva', 'Manga'];
+        console.log('\nArray frutas:', frutas);
+        let algumas = frutas.slice(1, 4);
+        console.log('slice(1, 4):', algumas); // ['Banana', 'Laranja', 'Uva']
+        console.log('Array original não mudou:', frutas);
+
+        // join() - Junta todos os elementos em uma STRING
+        let palavras = ['JavaScript', 'é', 'muito', 'legal'];
+        let frase = palavras.join(' ');
+        console.log('\nArray:', palavras);
+        console.log('join(" "):', frase); // "JavaScript é muito legal"
+
+        let numeros3 = [1, 2, 3, 4, 5];
+        console.log('join("-"):', numeros3.join('-')); // "1-2-3-4-5"
+
+        // ============================================
+        // 9️⃣ MÉTODOS MODERNOS (ES6+)
+        // ============================================
+        console.log('\n%c9️⃣ MÉTODOS MODERNOS (ES6+)', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // Array.from() - Cria array a partir de objeto iterável
+        let texto = 'JavaScript';
+        let letrasArray = Array.from(texto);
+        console.log('Array.from("JavaScript"):', letrasArray);
+
+        // Array.isArray() - Verifica se é um array
+        console.log('Array.isArray([1,2,3]):', Array.isArray([1,2,3])); // true
+        console.log('Array.isArray("texto"):', Array.isArray("texto")); // false
+
+        // fill() - Preenche o array com um valor estático
+        let zeros = new Array(5).fill(0);
+        console.log('Array com 5 zeros:', zeros); // [0, 0, 0, 0, 0]
+
+        let cores2 = ['Red', 'Blue', 'Green'];
+        cores2.fill('Yellow', 1, 3); // Preenche do índice 1 até 3 (não incluso)
+        console.log('Após fill("Yellow", 1, 3):', cores2);
+
+        // flat() - Achata arrays aninhados
+        let aninhado = [1, [2, 3], [4, [5, 6]]];
+        console.log('Array aninhado:', aninhado);
+        console.log('flat():', aninhado.flat()); // [1, 2, 3, 4, [5, 6]]
+        console.log('flat(2):', aninhado.flat(2)); // [1, 2, 3, 4, 5, 6]
+
+        // ============================================
+        // 🔟 DESESTRUTURAÇÃO DE ARRAYS (ES6)
+        // ============================================
+        console.log('\n%c🔟 DESESTRUTURAÇÃO DE ARRAYS', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // Desestruturação - Extrair valores do array para variáveis
+        let pessoa = ['João', 25, 'Desenvolvedor'];
+        
+        // Forma antiga
+        let nome = pessoa[0];
+        let idade = pessoa[1];
+        let profissao = pessoa[2];
+
+        // Forma moderna (desestruturação)
+        let [nome2, idade2, profissao2] = ['Maria', 30, 'Designer'];
+        console.log('Nome:', nome2);
+        console.log('Idade:', idade2);
+        console.log('Profissão:', profissao2);
+
+        // Pular elementos
+        let [primeiro, , terceiro] = [1, 2, 3, 4, 5];
+        console.log('Primeiro:', primeiro); // 1
+        console.log('Terceiro:', terceiro); // 3
+
+        // Spread Operator (...) - Expandir array
+        let numeros4 = [1, 2, 3];
+        let maisNumeros = [...numeros4, 4, 5, 6];
+        console.log('Spread:', maisNumeros); // [1, 2, 3, 4, 5, 6]
+
+        // Rest Operator (...) - Agrupar elementos restantes
+        let [a, b, ...resto] = [1, 2, 3, 4, 5];
+        console.log('a:', a); // 1
+        console.log('b:', b); // 2
+        console.log('resto:', resto); // [3, 4, 5]
+
+        // ============================================
+        // 1️⃣1️⃣ EXEMPLOS PRÁTICOS DO DIA A DIA
+        // ============================================
+        console.log('\n%c1️⃣1️⃣ EXEMPLOS PRÁTICOS', 'color: #FFD700; font-size: 16px; font-weight: bold');
+        console.log('%c' + '-'.repeat(60), 'color: #FFD700');
+
+        // EXEMPLO 1: Remover duplicatas de um array
+        let comDuplicatas = [1, 2, 2, 3, 4, 4, 5];
+        let semDuplicatas = [...new Set(comDuplicatas)];
+        console.log('Com duplicatas:', comDuplicatas);
+        console.log('Sem duplicatas:', semDuplicatas);
+
+        // EXEMPLO 2: Encontrar o maior número
+        let nums2 = [5, 12, 8, 130, 44];
+        let maior = Math.max(...nums2);
+        console.log('\nArray:', nums2);
+        console.log('Maior número:', maior); // 130
+
+        // EXEMPLO 3: Calcular média
+        let notas = [7, 8.5, 6, 9, 7.5];
+        let media = notas.reduce((acc, nota) => acc + nota, 0) / notas.length;
+        console.log('\nNotas:', notas);
+        console.log('Média:', media.toFixed(2));
+
+        // EXEMPLO 4: Filtrar produtos por preço
+        let produtos2 = [
+            { nome: 'Notebook', preco: 3500 },
+            { nome: 'Mouse', preco: 50 },
+            { nome: 'Teclado', preco: 200 },
+            { nome: 'Monitor', preco: 800 }
+        ];
+        let produtosBaratos = produtos2.filter(p => p.preco < 500);
+        console.log('\nProdutos com preço < 500:');
+        produtosBaratos.forEach(p => console.log(`- ${p.nome}: R$ ${p.preco}`));
+
+        // EXEMPLO 5: Ordenar objetos por propriedade
+        produtos2.sort((a, b) => a.preco - b.preco);
+        console.log('\nProdutos ordenados por preço:');
+        produtos2.forEach(p => console.log(`- ${p.nome}: R$ ${p.preco}`));
+
+        // EXEMPLO 6: Agrupar elementos
+        let idades = [12, 15, 18, 25, 30, 8];
+        let menores = idades.filter(i => i < 18);
+        let maiores = idades.filter(i => i >= 18);
+        console.log('\nIdades menores de 18:', menores);
+        console.log('Idades maiores ou igual a 18:', maiores);
+
+        // ============================================
+        // 📊 RESUMO DE MÉTODOS IMPORTANTES
+        // ============================================
+        console.log('\n%c📊 RESUMO - MÉTODOS MAIS USADOS', 'color: #00FF00; font-size: 18px; font-weight: bold');
+        console.log('%c' + '='.repeat(60), 'color: #00FF00');
+        console.log(`
+🔹 ADICIONAR/REMOVER:
+   • push()      - Adiciona no final
+   • pop()       - Remove do final
+   • unshift()   - Adiciona no início
+   • shift()     - Remove do início
+   • splice()    - Adiciona/Remove em qualquer posição
+
+🔹 BUSCAR:
+   • indexOf()   - Índice do elemento
+   • includes()  - Verifica se existe
+   • find()      - Primeiro elemento que satisfaz condição
+   • filter()    - Todos elementos que satisfazem condição
+
+🔹 ORDENAR:
+   • sort()      - Ordena o array
+   • reverse()   - Inverte a ordem
+
+🔹 TRANSFORMAR:
+   • map()       - Transforma cada elemento
+   • filter()    - Filtra elementos
+   • reduce()    - Reduz a um valor
+   • forEach()   - Itera sobre elementos
+
+🔹 OUTROS:
+   • concat()    - Junta arrays
+   • slice()     - Extrai parte do array
+   • join()      - Transforma em string
+   • length      - Tamanho do array
+        `);
+
+        console.log('\n%c✅ FIM DO GUIA! Pratique cada método para dominar arrays! 🚀', 'color: #22D4FD; font-size: 16px; font-weight: bold');
     </script>
 </body>
 </html>
