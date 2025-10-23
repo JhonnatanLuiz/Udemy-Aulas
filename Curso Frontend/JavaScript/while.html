@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de While em JavaScript</title>
+    <script>
+
+        // ========================================
+        // EXEMPLO 1: While Básico - Contagem
+        // ========================================
+        // O while executa enquanto a condição for verdadeira
+        // Neste exemplo: conta de 1 até 5
+        document.write("<h2>EXEMPLO 1: While Básico - Contagem</h2>");
+        
+        var contador = 1;
+        while (contador <= 5) {
+            document.write("Contador: " + contador + "<br>");
+            contador++; // Incrementa 1 a cada iteração
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 2: Somando Números
+        // ========================================
+        // Usar while para somar números de 1 a 10
+        document.write("<h2>EXEMPLO 2: Somando Números</h2>");
+        
+        var n = 1;
+        var soma = 0;
+        while (n <= 10) {
+            soma += n; // Acumula o valor na variável soma
+            n++;
+        }
+        document.write("Soma de 1 a 10: " + soma + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 3: Tabuada
+        // ========================================
+        // Exibir a tabuada de um número usando while
+        document.write("<h2>EXEMPLO 3: Tabuada do 7</h2>");
+        
+        var numero = 7;
+        var i = 1;
+        while (i <= 10) {
+            document.write(numero + " x " + i + " = " + (numero * i) + "<br>");
+            i++;
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 4: Números Pares
+        // ========================================
+        // Listar apenas números pares entre 0 e 20
+        document.write("<h2>EXEMPLO 4: Números Pares</h2>");
+        
+        var num = 0;
+        while (num <= 20) {
+            if (num % 2 === 0) { // % retorna o resto da divisão (0 = par)
+                document.write(num + " ");
+            }
+            num++;
+        }
+        document.write("<br><br>");
+
+
+        // ========================================
+        // EXEMPLO 5: Percorrer um Array
+        // ========================================
+        // Usar while para iterar sobre elementos de um array
+        document.write("<h2>EXEMPLO 5: Percorrer um Array</h2>");
+        
+        var frutas = ["maçã", "banana", "laranja", "morango"];
+        var indice = 0;
+        while (indice < frutas.length) { // frutas.length = quantidade de elementos
+            document.write(indice + ": " + frutas[indice] + "<br>");
+            indice++;
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 6: Usar BREAK para parar
+        // ========================================
+        // break interrompe o loop quando uma condição é atendida
+        document.write("<h2>EXEMPLO 6: Usando BREAK</h2>");
+        
+        var tentativa = 1;
+        while (true) { // Condição sempre verdadeira (loop infinito sem break)
+            document.write("Tentativa: " + tentativa + "<br>");
+            if (tentativa === 3) { // Se tentativa for igual a 3
+                document.write("Sucesso! Saindo do loop.<br>"); // Escreve mensagem
+                break; // Sai do loop
+            }
+            tentativa++;
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 7: Usar CONTINUE para pular
+        // ========================================
+        // continue pula para a próxima iteração sem executar o resto do código
+        document.write("<h2>EXEMPLO 7: Usando CONTINUE</h2>");
+        
+        var x = 0;
+        while (x < 5) {
+            x++;
+            if (x === 3) { // Se x for igual a 3
+                continue; // Pula para a próxima iteração (não mostra 3)
+            }
+            document.write("Valor: " + x + "<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 8: Calcular Potência
+        // ========================================
+        // Calcular 2^10 (2 elevado a 10) usando while
+        document.write("<h2>EXEMPLO 8: Calcular Potência (2^10)</h2>");
+        
+        var base = 2;
+        var expoente = 10;
+        var resultado = 1;
+        var temp = expoente; // Cópia do expoente para não perder o valor
+        
+        while (temp > 0) {
+            resultado *= base; // Multiplica a base pelo resultado
+            temp--; // Diminui o expoente
+        }
+        document.write("2 ^ 10 = " + resultado + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 9: Calcular Fatorial
+        // ========================================
+        // Calcular 5! (5 * 4 * 3 * 2 * 1 = 120)
+        document.write("<h2>EXEMPLO 9: Calcular Fatorial (5!)</h2>");
+        
+        var num_fatorial = 5;
+        var fatorial = 1;
+        var n_temp = num_fatorial;
+        
+        while (n_temp > 1) {
+            fatorial *= n_temp; // Multiplica fatorial pelo número
+            n_temp--; // Diminui o número
+        }
+        document.write("5! = " + fatorial + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 10: Verificar Número Primo
+        // ========================================
+        // Verificar se um número é primo usando while
+        // Número primo: só é divisível por 1 e por ele mesmo
+        document.write("<h2>EXEMPLO 10: Verificar Número Primo</h2>");
+        
+        var numero_teste = 17;
+        var ehPrimo = true;
+        var divisor = 2;
+        
+        while (divisor < numero_teste) {
+            if (numero_teste % divisor === 0) { // Se o resto da divisão for 0
+                ehPrimo = false; // Não é primo
+                break; // Sai do loop (não precisa continuar testando)
+            }
+            divisor++;
+        }
+        
+        if (ehPrimo) {
+            document.write(numero_teste + " é primo<br>");
+        } else {
+            document.write(numero_teste + " não é primo<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 11: Contagem Regressiva
+        // ========================================
+        // Contar de 10 até 1 (para trás)
+        document.write("<h2>EXEMPLO 11: Contagem Regressiva (10 até 1)</h2>");
+        
+        var contagem = 10;
+        while (contagem >= 1) {
+            document.write(contagem + " ");
+            contagem--; // Diminui em vez de aumentar
+        }
+        document.write("<br>Decolagem!<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 12: Do-While (executa antes de testar)
+        // ========================================
+        // do-while executa o bloco ANTES de testar a condição
+        // Por isso executa pelo menos uma vez, mesmo se a condição for falsa
+        document.write("<h2>EXEMPLO 12: Do-While</h2>");
+        
+        var y = 1;
+        do {
+            document.write("Número: " + y + "<br>");
+            y++;
+        } while (y <= 3); // Testa a condição DEPOIS de executar
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 13: Repetir String
+        // ========================================
+        // Repetir um caractere várias vezes usando while
+        document.write("<h2>EXEMPLO 13: Repetir String</h2>");
+        
+        var resultado_string = "";
+        var contador_string = 0;
+        while (contador_string < 5) {
+            resultado_string += "⭐ "; // Concatena estrela à string
+            contador_string++;
+        }
+        document.write(resultado_string + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 14: Comparação For vs While
+        // ========================================
+        // Mesmo resultado usando FOR e WHILE
+        document.write("<h2>EXEMPLO 14: Comparação FOR vs WHILE</h2>");
+        
+        document.write("Usando FOR:<br>");
+        for (var f = 0; f < 3; f++) {
+            document.write("FOR: " + f + "<br>");
+        }
+        
+        document.write("<br>Usando WHILE:<br>");
+        var w = 0;
+        while (w < 3) {
+            document.write("WHILE: " + w + "<br>");
+            w++;
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 15: Validação de Entrada
+        // ========================================
+        // Pedir entrada ao usuário até que digite um número válido
+        document.write("<h2>EXEMPLO 15: Validação de Entrada</h2>");
+        
+        var entrada = prompt("Digite um número entre 1 e 10:");
+        var numero_entrada = parseInt(entrada); // Converte string para número
+        
+        // Continuar pedindo enquanto o número for inválido
+        while (numero_entrada < 1 || numero_entrada > 10) {
+            entrada = prompt("Inválido! Digite um número entre 1 e 10:");
+            numero_entrada = parseInt(entrada);
+        }
+        
+        document.write("Você digitou: " + numero_entrada + "<br>");
+        document.write("Número válido aceito!<br>");
+
+    </script>
+</head>
+<body>
+    <!-- O conteúdo é gerado por document.write no script -->
+</body>
+</html>

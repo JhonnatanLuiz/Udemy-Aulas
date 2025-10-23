@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de While em JavaScript</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .exemplo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .exemplo {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .exemplo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .exemplo h2 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .descricao {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            padding: 12px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .codigo {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .codigo-linha {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .palavra-chave {
+            color: #ff79c6;
+        }
+
+        .numero {
+            color: #bd93f9;
+        }
+
+        .string {
+            color: #a1efe4;
+        }
+
+        .comentario {
+            color: #6272a4;
+        }
+
+        .funcao {
+            color: #8be9fd;
+        }
+
+        .saida {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .saida-titulo {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .saida-conteudo {
+            color: #1b5e20;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .botao {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .botao:hover {
+            background: #764ba2;
+        }
+
+        .botao:active {
+            transform: scale(0.98);
+        }
+
+        .notas {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .notas-titulo {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .tabela-saida {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: #f8f9fa;
+        }
+
+        .tabela-saida th,
+        .tabela-saida td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .tabela-saida th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .tabela-saida tr:hover {
+            background: #e8eef9;
+        }
+
+        .dificuldade {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .dificuldade.facil {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .dificuldade.medio {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .dificuldade.avancado {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Exemplos Completos de While em JavaScript</h1>
+
+        <div class="exemplo-grid">
+            <!-- EXEMPLO 1: Básico -->
+            <div class="exemplo">
+                <div class="dificuldade facil">Fácil</div>
+                <h2>1️⃣ While Básico - Contagem</h2>
+                <div class="descricao">
+                    O exemplo mais simples: contar de 1 até 5. O loop continua enquanto o contador for menor que 5.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> contador = <span class="numero">1</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (contador <= <span class="numero">5</span>) {</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(contador);</span>
+                    <span class="codigo-linha">  contador++;</span>
+                    <span class="codigo-linha">}</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">1
+2
+3
+4
+5</div>
+                </div>
+                <button class="botao" onclick="exemplo1()">▶️ Executar</button>
+                <div class="notas">
+                    <div class="notas-titulo">💡 Ponto-Chave:</div>
+                    Sem o `contador++`, seria um loop infinito! Sempre incremente ou mude a condição.
+                </div>
+            </div>
+
+            <!-- EXEMPLO 2: Soma -->
+            <div class="exemplo">
+                <div class="dificuldade facil">Fácil</div>
+                <h2>2️⃣ While - Somando Números</h2>
+                <div class="descricao">
+                    Usar while para somar números consecutivos de 1 a 10.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> n = <span class="numero">1</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> soma = <span class="numero">0</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (n <= <span class="numero">10</span>) {</span>
+                    <span class="codigo-linha">  soma += n;</span>
+                    <span class="codigo-linha">  n++;</span>
+                    <span class="codigo-linha">}</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha">console.<span class="funcao">log</span>(<span class="string">'Soma: '</span> + soma);</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">Soma: 55</div>
+                </div>
+                <button class="botao" onclick="exemplo2()">▶️ Executar</button>
+                <div class="notas">
+                    <div class="notas-titulo">💡 Ponto-Chave:</div>
+                    Use `+=` para acumular valores. 1+2+3+...+10 = 55
+                </div>
+            </div>
+
+            <!-- EXEMPLO 3: Tabuada -->
+            <div class="exemplo">
+                <div class="dificuldade facil">Fácil</div>
+                <h2>3️⃣ While - Tabuada</h2>
+                <div class="descricao">
+                    Exibir a tabuada de um número usando while.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> numero = <span class="numero">7</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> i = <span class="numero">1</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (i <= <span class="numero">10</span>) {</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(numero + <span class="string">' x '</span> + i + <span class="string">' = '</span> + (numero * i));</span>
+                    <span class="codigo-linha">  i++;</span>
+                    <span class="codigo-linha">}</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída (Tabuada do 7):</div>
+                    <div class="saida-conteudo">7 x 1 = 7
+7 x 2 = 14
+7 x 3 = 21
+...
+7 x 10 = 70</div>
+                </div>
+                <button class="botao" onclick="exemplo3()">▶️ Executar</button>
+            </div>
+
+            <!-- EXEMPLO 4: Entrada do Usuário -->
+            <div class="exemplo">
+                <div class="dificuldade medio">Médio</div>
+                <h2>4️⃣ While - Validação com Prompt</h2>
+                <div class="descricao">
+                    Continuar pedindo entrada até que o usuário digite uma resposta válida.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> senha = <span class="string">''</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (senha !== <span class="string">'123456'</span>) {</span>
+                    <span class="codigo-linha">  senha = <span class="funcao">prompt</span>(<span class="string">'Digite a senha:'</span>);</span>
+                    <span class="codigo-linha">  <span class="palavra-chave">if</span> (senha !== <span class="string">'123456'</span>) {</span>
+                    <span class="codigo-linha">    <span class="funcao">alert</span>(<span class="string">'Senha incorreta!'</span>);</span>
+                    <span class="codigo-linha">  }</span>
+                    <span class="codigo-linha">}</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="funcao">alert</span>(<span class="string">'Acesso concedido!'</span>);</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Comportamento:</div>
+                    <div class="saida-conteudo">Pede senha até acertar (senha: 123456)</div>
+                </div>
+                <button class="botao" onclick="exemplo4()">▶️ Executar</button>
+                <div class="notas">
+                    <div class="notas-titulo">⚠️ Cuidado:</div>
+                    Use com moderação! Loop infinito se o usuário nunca digitar a senha certa.
+                </div>
+            </div>
+
+            <!-- EXEMPLO 5: Array Percorrimento -->
+            <div class="exemplo">
+                <div class="dificuldade medio">Médio</div>
+                <h2>5️⃣ While - Percorrer Array</h2>
+                <div class="descricao">
+                    Usar while para iterar sobre um array de forma similar ao for.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> frutas = [<span class="string">'maçã'</span>, <span class="string">'banana'</span>, <span class="string">'laranja'</span>];</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> indice = <span class="numero">0</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (indice < frutas.<span class="funcao">length</span>) {</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(frutas[indice]);</span>
+                    <span class="codigo-linha">  indice++;</span>
+                    <span class="codigo-linha">}</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">maçã
+banana
+laranja</div>
+                </div>
+                <button class="botao" onclick="exemplo5()">▶️ Executar</button>
+                <div class="notas">
+                    <div class="notas-titulo">💡 Ponto-Chave:</div>
+                    Para arrays, geralmente é melhor usar `for` ou `forEach()`, mas `while` também funciona!
+                </div>
+            </div>
+
+            <!-- EXEMPLO 6: Número Par/Ímpar -->
+            <div class="exemplo">
+                <div class="dificuldade medio">Médio</div>
+                <h2>6️⃣ While - Números Pares</h2>
+                <div class="descricao">
+                    Listar apenas os números pares entre 0 e 20.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> num = <span class="numero">0</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (num <= <span class="numero">20</span>) {</span>
+                    <span class="codigo-linha">  <span class="palavra-chave">if</span> (num % <span class="numero">2</span> === <span class="numero">0</span>) {</span>
+                    <span class="codigo-linha">    console.<span class="funcao">log</span>(num);</span>
+                    <span class="codigo-linha">  }</span>
+                    <span class="codigo-linha">  num++;</span>
+                    <span class="codigo-linha">}</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20</div>
+                </div>
+                <button class="botao" onclick="exemplo6()">▶️ Executar</button>
+            </div>
+
+            <!-- EXEMPLO 7: Break -->
+            <div class="exemplo">
+                <div class="dificuldade medio">Médio</div>
+                <h2>7️⃣ While - Break (Parar o Loop)</h2>
+                <div class="descricao">
+                    Usar `break` para sair do loop quando uma condição é atendida.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> tentativa = <span class="numero">1</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (<span class="palavra-chave">true</span>) {</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(<span class="string">'Tentativa '</span> + tentativa);</span>
+                    <span class="codigo-linha">  <span class="palavra-chave">if</span> (tentativa === <span class="numero">3</span>) {</span>
+                    <span class="codigo-linha">    console.<span class="funcao">log</span>(<span class="string">'Sucesso!'</span>);</span>
+                    <span class="codigo-linha">    <span class="palavra-chave">break</span>;</span>
+                    <span class="codigo-linha">  }</span>
+                    <span class="codigo-linha">  tentativa++;</span>
+                    <span class="codigo-linha">}</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">Tentativa 1
+Tentativa 2
+Tentativa 3
+Sucesso!</div>
+                </div>
+                <button class="botao" onclick="exemplo7()">▶️ Executar</button>
+                <div class="notas">
+                    <div class="notas-titulo">💡 Ponto-Chave:</div>
+                    `break` sai imediatamente do loop. Útil para parar quando encontrar o que procura!
+                </div>
+            </div>
+
+            <!-- EXEMPLO 8: Continue -->
+            <div class="exemplo">
+                <div class="dificuldade medio">Médio</div>
+                <h2>8️⃣ While - Continue (Pular Iteração)</h2>
+                <div class="descricao">
+                    Usar `continue` para pular para a próxima iteração sem executar o resto do código.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> i = <span class="numero">0</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (i < <span class="numero">5</span>) {</span>
+                    <span class="codigo-linha">  i++;</span>
+                    <span class="codigo-linha">  <span class="palavra-chave">if</span> (i === <span class="numero">3</span>) {</span>
+                    <span class="codigo-linha">    <span class="palavra-chave">continue</span>;</span>
+                    <span class="codigo-linha">  }</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(i);</span>
+                    <span class="codigo-linha">}</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">1
+2
+4
+5</div>
+                </div>
+                <button class="botao" onclick="exemplo8()">▶️ Executar</button>
+                <div class="notas">
+                    <div class="notas-titulo">💡 Ponto-Chave:</div>
+                    Note que o número 3 foi pulado! `continue` pula para a próxima iteração.
+                </div>
+            </div>
+
+            <!-- EXEMPLO 9: Potência -->
+            <div class="exemplo">
+                <div class="dificuldade avancado">Avançado</div>
+                <h2>9️⃣ While - Calcular Potência</h2>
+                <div class="descricao">
+                    Calcular 2^10 usando while (sem usar o operador ^).
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> base = <span class="numero">2</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> expoente = <span class="numero">10</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> resultado = <span class="numero">1</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (expoente > <span class="numero">0</span>) {</span>
+                    <span class="codigo-linha">  resultado *= base;</span>
+                    <span class="codigo-linha">  expoente--;</span>
+                    <span class="codigo-linha">}</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha">console.<span class="funcao">log</span>(<span class="string">'2^10 = '</span> + resultado);</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">2^10 = 1024</div>
+                </div>
+                <button class="botao" onclick="exemplo9()">▶️ Executar</button>
+            </div>
+
+            <!-- EXEMPLO 10: Fatorial -->
+            <div class="exemplo">
+                <div class="dificuldade avancado">Avançado</div>
+                <h2>🔟 While - Calcular Fatorial</h2>
+                <div class="descricao">
+                    Calcular o fatorial de 5 (5! = 5×4×3×2×1 = 120).
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> n = <span class="numero">5</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> fatorial = <span class="numero">1</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (n > <span class="numero">1</span>) {</span>
+                    <span class="codigo-linha">  fatorial *= n;</span>
+                    <span class="codigo-linha">  n--;</span>
+                    <span class="codigo-linha">}</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha">console.<span class="funcao">log</span>(<span class="string">'5! = '</span> + fatorial);</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">5! = 120</div>
+                </div>
+                <button class="botao" onclick="exemplo10()">▶️ Executar</button>
+            </div>
+
+            <!-- EXEMPLO 11: Verificar Primo -->
+            <div class="exemplo">
+                <div class="dificuldade avancado">Avançado</div>
+                <h2>1️⃣1️⃣ While - Verificar Número Primo</h2>
+                <div class="descricao">
+                    Verificar se um número é primo usando while.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> numero = <span class="numero">17</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> ehPrimo = <span class="palavra-chave">true</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> divisor = <span class="numero">2</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (divisor < numero) {</span>
+                    <span class="codigo-linha">  <span class="palavra-chave">if</span> (numero % divisor === <span class="numero">0</span>) {</span>
+                    <span class="codigo-linha">    ehPrimo = <span class="palavra-chave">false</span>;</span>
+                    <span class="codigo-linha">    <span class="palavra-chave">break</span>;</span>
+                    <span class="codigo-linha">  }</span>
+                    <span class="codigo-linha">  divisor++;</span>
+                    <span class="codigo-linha">}</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha">console.<span class="funcao">log</span>(numero + (ehPrimo ? <span class="string">' é primo'</span> : <span class="string">' não é primo'</span>));</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">17 é primo</div>
+                </div>
+                <button class="botao" onclick="exemplo11()">▶️ Executar</button>
+            </div>
+
+            <!-- EXEMPLO 12: Contagem Regressiva -->
+            <div class="exemplo">
+                <div class="dificuldade facil">Fácil</div>
+                <h2>1️⃣2️⃣ While - Contagem Regressiva</h2>
+                <div class="descricao">
+                    Contar de trás para frente de 10 até 1.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> contador = <span class="numero">10</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (contador >= <span class="numero">1</span>) {</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(contador);</span>
+                    <span class="codigo-linha">  contador--;</span>
+                    <span class="codigo-linha">}</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha">console.<span class="funcao">log</span>(<span class="string">'Decolagem!'</span>);</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">10, 9, 8, 7, 6, 5, 4, 3, 2, 1
+Decolagem!</div>
+                </div>
+                <button class="botao" onclick="exemplo12()">▶️ Executar</button>
+            </div>
+
+            <!-- EXEMPLO 13: Do-While -->
+            <div class="exemplo">
+                <div class="dificuldade medio">Médio</div>
+                <h2>1️⃣3️⃣ Do-While - Pelo Menos Uma Vez</h2>
+                <div class="descricao">
+                    O `do-while` executa o código ANTES de verificar a condição.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> x = <span class="numero">1</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">do</span> {</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(<span class="string">'Número: '</span> + x);</span>
+                    <span class="codigo-linha">  x++;</span>
+                    <span class="codigo-linha">} <span class="palavra-chave">while</span> (x <= <span class="numero">3</span>);</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">Número: 1
+Número: 2
+Número: 3</div>
+                </div>
+                <button class="botao" onclick="exemplo13()">▶️ Executar</button>
+                <div class="notas">
+                    <div class="notas-titulo">💡 Diferença:</div>
+                    `do-while` executa mesmo se a condição inicial for falsa. `while` não!
+                </div>
+            </div>
+
+            <!-- EXEMPLO 14: String Repetida -->
+            <div class="exemplo">
+                <div class="dificuldade medio">Médio</div>
+                <h2>1️⃣4️⃣ While - Repetir String</h2>
+                <div class="descricao">
+                    Repetir uma string várias vezes usando while.
+                </div>
+                <div class="codigo">
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> resultado = <span class="string">''</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> i = <span class="numero">0</span>;</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (i < <span class="numero">5</span>) {</span>
+                    <span class="codigo-linha">  resultado += <span class="string">'⭐ '</span>;</span>
+                    <span class="codigo-linha">  i++;</span>
+                    <span class="codigo-linha">}</span>
+                    <span class="codigo-linha"></span>
+                    <span class="codigo-linha">console.<span class="funcao">log</span>(resultado);</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">⭐ ⭐ ⭐ ⭐ ⭐</div>
+                </div>
+                <button class="botao" onclick="exemplo14()">▶️ Executar</button>
+            </div>
+
+            <!-- EXEMPLO 15: Comparação For vs While -->
+            <div class="exemplo">
+                <div class="dificuldade avancado">Avançado</div>
+                <h2>1️⃣5️⃣ For vs While - Quando Usar?</h2>
+                <div class="descricao">
+                    Mesmo código em `for` e `while` para comparação.
+                </div>
+                <div class="codigo">
+                    <span class="comentario">// Usando FOR</span><br>
+                    <span class="codigo-linha"><span class="palavra-chave">for</span> (<span class="palavra-chave">let</span> i = <span class="numero">0</span>; i < <span class="numero">3</span>; i++) {</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(<span class="string">'FOR: '</span> + i);</span>
+                    <span class="codigo-linha">}</span>
+                    <span class="codigo-linha"></span>
+                    <span class="comentario">// Usando WHILE (mesmo resultado)</span><br>
+                    <span class="codigo-linha"><span class="palavra-chave">let</span> i = <span class="numero">0</span>;</span>
+                    <span class="codigo-linha"><span class="palavra-chave">while</span> (i < <span class="numero">3</span>) {</span>
+                    <span class="codigo-linha">  console.<span class="funcao">log</span>(<span class="string">'WHILE: '</span> + i);</span>
+                    <span class="codigo-linha">  i++;</span>
+                    <span class="codigo-linha">}</span>
+                </div>
+                <div class="saida">
+                    <div class="saida-titulo">📤 Saída:</div>
+                    <div class="saida-conteudo">FOR: 0
+FOR: 1
+FOR: 2
+WHILE: 0
+WHILE: 1
+WHILE: 2</div>
+                </div>
+                <button class="botao" onclick="exemplo15()">▶️ Executar</button>
+                <div class="notas">
+                    <div class="notas-titulo">✨ Quando Usar:</div>
+                    - **FOR**: Quando sabe quantas iterações<br>
+                    - **WHILE**: Quando a condição é desconhecida (validação, busca)
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>📚 Exemplos Educacionais de While em JavaScript</p>
+            <p>Criado para aprender loops em JavaScript</p>
+        </footer>
+    </div>
+
+    <script>
+        function exemplo1() {
+            console.clear();
+            let contador = 1;
+            while (contador <= 5) {
+                console.log(contador);
+                contador++;
+            }
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo2() {
+            console.clear();
+            let n = 1;
+            let soma = 0;
+            while (n <= 10) {
+                soma += n;
+                n++;
+            }
+            console.log('Soma: ' + soma);
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo3() {
+            console.clear();
+            let numero = 7;
+            let i = 1;
+            while (i <= 10) {
+                console.log(numero + ' x ' + i + ' = ' + (numero * i));
+                i++;
+            }
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo4() {
+            console.clear();
+            let senha = '';
+            while (senha !== '123456') {
+                senha = prompt('Digite a senha:');
+                if (senha !== '123456') {
+                    alert('Senha incorreta!');
+                } else {
+                    alert('Acesso concedido!');
+                }
+            }
+        }
+
+        function exemplo5() {
+            console.clear();
+            let frutas = ['maçã', 'banana', 'laranja'];
+            let indice = 0;
+            while (indice < frutas.length) {
+                console.log(frutas[indice]);
+                indice++;
+            }
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo6() {
+            console.clear();
+            let num = 0;
+            let pares = [];
+            while (num <= 20) {
+                if (num % 2 === 0) {
+                    pares.push(num);
+                }
+                num++;
+            }
+            console.log('Números pares: ' + pares.join(', '));
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo7() {
+            console.clear();
+            let tentativa = 1;
+            while (true) {
+                console.log('Tentativa ' + tentativa);
+                if (tentativa === 3) {
+                    console.log('Sucesso!');
+                    break;
+                }
+                tentativa++;
+            }
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo8() {
+            console.clear();
+            let i = 0;
+            while (i < 5) {
+                i++;
+                if (i === 3) {
+                    continue;
+                }
+                console.log(i);
+            }
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo9() {
+            console.clear();
+            let base = 2;
+            let expoente = 10;
+            let resultado = 1;
+            while (expoente > 0) {
+                resultado *= base;
+                expoente--;
+            }
+            console.log('2^10 = ' + resultado);
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo10() {
+            console.clear();
+            let n = 5;
+            let fatorial = 1;
+            while (n > 1) {
+                fatorial *= n;
+                n--;
+            }
+            console.log('5! = ' + fatorial);
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo11() {
+            console.clear();
+            let numero = 17;
+            let ehPrimo = true;
+            let divisor = 2;
+            while (divisor < numero) {
+                if (numero % divisor === 0) {
+                    ehPrimo = false;
+                    break;
+                }
+                divisor++;
+            }
+            console.log(numero + (ehPrimo ? ' é primo' : ' não é primo'));
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo12() {
+            console.clear();
+            let contador = 10;
+            while (contador >= 1) {
+                console.log(contador);
+                contador--;
+            }
+            console.log('Decolagem!');
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo13() {
+            console.clear();
+            let x = 1;
+            do {
+                console.log('Número: ' + x);
+                x++;
+            } while (x <= 3);
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo14() {
+            console.clear();
+            let resultado = '';
+            let i = 0;
+            while (i < 5) {
+                resultado += '⭐ ';
+                i++;
+            }
+            console.log(resultado);
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+
+        function exemplo15() {
+            console.clear();
+            console.log('=== Usando FOR ===');
+            for (let i = 0; i < 3; i++) {
+                console.log('FOR: ' + i);
+            }
+            console.log('\n=== Usando WHILE ===');
+            let i = 0;
+            while (i < 3) {
+                console.log('WHILE: ' + i);
+                i++;
+            }
+            alert('Verifique o console (F12) para ver a saída!');
+        }
+    </script>
+</body>
+</html>

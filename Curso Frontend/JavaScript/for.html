@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de For em JavaScript</title>
+    <script>
+        // ========================================
+        // EXEMPLO 1: For Básico - Contagem
+        // ========================================
+        // Estrutura do for: for (inicialização; condição; incremento)
+        // Neste exemplo: começa em 1, vai até 5, aumenta 1 a cada iteração
+        document.write("<h2>EXEMPLO 1: For Básico - Contagem</h2>");
+        
+        for (let i = 1; i <= 5; i++) {
+            document.write("Número: " + i + "<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 2: For - Somando Números
+        // ========================================
+        // Usar for para somar números de 1 a 10
+        document.write("<h2>EXEMPLO 2: For - Somando Números</h2>");
+        
+        var soma = 0;
+        for (var n = 1; n <= 10; n++) {
+            soma += n; // Acumula o valor
+        }
+        document.write("Soma de 1 a 10: " + soma + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 3: For - Tabuada
+        // ========================================
+        // Exibir a tabuada de um número usando for
+        document.write("<h2>EXEMPLO 3: For - Tabuada do 7</h2>");
+        
+        var numero = 7;
+        for (var i = 1; i <= 10; i++) {
+            document.write(numero + " x " + i + " = " + (numero * i) + "<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 4: For - Números Pares
+        // ========================================
+        // Listar números pares entre 0 e 20
+        // i += 2 significa: i = i + 2 (incremento de 2 em 2)
+        document.write("<h2>EXEMPLO 4: For - Números Pares (incremento de 2)</h2>");
+        
+        for (var i = 0; i <= 20; i += 2) {
+            document.write(i + " ");
+        }
+        document.write("<br><br>");
+
+
+        // ========================================
+        // EXEMPLO 5: For - Percorrer Array
+        // ========================================
+        // Usar for para iterar sobre elementos de um array
+        document.write("<h2>EXEMPLO 5: For - Percorrer Array</h2>");
+        
+        var frutas = ["maçã", "banana", "laranja", "morango", "uva"];
+        for (var i = 0; i < frutas.length; i++) {
+            document.write(i + ": " + frutas[i] + "<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 6: For - Usar BREAK
+        // ========================================
+        // break interrompe o loop quando uma condição é atendida
+        document.write("<h2>EXEMPLO 6: For - Usar BREAK</h2>");
+        
+        for (var i = 1; i <= 10; i++) {
+            if (i === 5) { // Se i for igual a 5
+                document.write("Parando no: " + i + "<br>");
+                break; // Sai do loop
+            }
+            document.write("Número: " + i + "<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 7: For - Usar CONTINUE
+        // ========================================
+        // continue pula para a próxima iteração
+        document.write("<h2>EXEMPLO 7: For - Usar CONTINUE</h2>");
+        
+        for (var i = 1; i <= 7; i++) {
+            if (i === 4) { // Se for 4
+                continue; // Pula para a próxima iteração (não mostra 4)
+            }
+            document.write("Número: " + i + "<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 8: For - Contagem Regressiva
+        // ========================================
+        // Contar para trás de 10 até 1
+        // i-- significa: i = i - 1 (diminui 1 a cada iteração)
+        document.write("<h2>EXEMPLO 8: For - Contagem Regressiva</h2>");
+        
+        for (var i = 10; i >= 1; i--) {
+            document.write(i + " ");
+        }
+        document.write("<br>🚀 Decolagem!<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 9: For - Calcular Potência
+        // ========================================
+        // Calcular 2^8 (2 elevado a 8) usando for
+        document.write("<h2>EXEMPLO 9: For - Calcular Potência (2^8)</h2>");
+        
+        var base = 2;
+        var expoente = 8;
+        var resultado = 1;
+        
+        for (var i = 0; i < expoente; i++) {
+            resultado *= base; // Multiplica a base
+        }
+        document.write("2 ^ 8 = " + resultado + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 10: For - Calcular Fatorial
+        // ========================================
+        // Calcular 5! (5 * 4 * 3 * 2 * 1 = 120)
+        document.write("<h2>EXEMPLO 10: For - Calcular Fatorial (5!)</h2>");
+        
+        var num_fatorial = 5;
+        var fatorial = 1;
+        
+        for (var i = num_fatorial; i > 1; i--) {
+            fatorial *= i; // Multiplica
+        }
+        document.write("5! = " + fatorial + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 11: For - Verificar Primo
+        // ========================================
+        // Verificar se um número é primo usando for
+        document.write("<h2>EXEMPLO 11: For - Verificar Número Primo</h2>");
+        
+        var numero_teste = 13;
+        var ehPrimo = true;
+        
+        for (var i = 2; i < numero_teste; i++) {
+            if (numero_teste % i === 0) { // Se o resto for 0, não é primo
+                ehPrimo = false;
+                break; // Não precisa mais testar
+            }
+        }
+        
+        if (ehPrimo) {
+            document.write(numero_teste + " é PRIMO<br>");
+        } else {
+            document.write(numero_teste + " NÃO é primo<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 12: For - For Aninhado (Matriz)
+        // ========================================
+        // For dentro de for - criar uma tabela/matriz
+        document.write("<h2>EXEMPLO 12: For - For Aninhado (Tabuada 3x3)</h2>");
+        
+        for (var i = 1; i <= 3; i++) {
+            for (var j = 1; j <= 3; j++) {
+                document.write(i + " x " + j + " = " + (i * j) + " | ");
+            }
+            document.write("<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 13: For - Repetir String
+        // ========================================
+        // Repetir um caractere várias vezes usando for
+        document.write("<h2>EXEMPLO 13: For - Repetir String</h2>");
+        
+        var resultado_string = "";
+        for (var i = 0; i < 7; i++) {
+            resultado_string += "⭐ ";
+        }
+        document.write(resultado_string + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 14: For - Fibonacci
+        // ========================================
+        // Sequência de Fibonacci até 10 números
+        // Série: 1, 1, 2, 3, 5, 8, 13, 21...
+        document.write("<h2>EXEMPLO 14: For - Sequência Fibonacci</h2>");
+        
+        var fib_anterior = 0;
+        var fib_atual = 1;
+        
+        for (var i = 0; i < 8; i++) {
+            var proximo = fib_anterior + fib_atual; // Soma os dois últimos
+            document.write(proximo + " ");
+            fib_anterior = fib_atual; // Atualiza anterior
+            fib_atual = proximo; // Atualiza atual
+        }
+        document.write("<br><br>");
+
+
+        // ========================================
+        // EXEMPLO 15: For - Quando Usar?
+        // ========================================
+        // Comparação: quando usar for vs while vs do-while
+        document.write("<h2>EXEMPLO 15: Quando Usar For?</h2>");
+        
+        document.write("Use FOR quando:<br>");
+        document.write("1. Sabe quantas iterações precisa<br>");
+        document.write("2. Precisa iterar sobre arrays<br>");
+        document.write("3. Quer uma sintaxe mais compacta<br><br>");
+        
+        document.write("EXEMPLO PRÁTICO - Números de 1 a 5:<br>");
+        document.write("Forma 1 - FOR (mais conciso):<br>");
+        for (var i = 1; i <= 5; i++) {
+            document.write(i + " ");
+        }
+        document.write("<br><br>");
+        
+        document.write("Forma 2 - WHILE (mais verboso):<br>");
+        var contador = 1;
+        while (contador <= 5) {
+            document.write(contador + " ");
+            contador++;
+        }
+        document.write("<br><br>");
+        
+        document.write("FOR é preferível quando conhece o número de iterações!<br>");
+        
+    </script>
+</head>
+<body>
+    <!-- O conteúdo é gerado por document.write no script -->
+</body>
+</html>

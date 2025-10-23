@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de Do While em JavaScript</title>
+    <script>
+        // ========================================
+        // EXEMPLO 1: Do While Básico - Contagem
+        // ========================================
+        // O do while executa o bloco de código pelo menos uma vez, 
+        // e depois verifica a condição para continuar ou não.
+        document.write("<h2>EXEMPLO 1: Do While Básico - Contagem</h2>");
+        
+        var contador = 1;
+        do {
+            document.write("Contador: " + contador + "<br>");
+            contador++; // Incrementa 1 a cada iteração
+        } while (contador <= 5);
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 2: Do While vs While (Diferença)
+        // ========================================
+        // Diferença importante: do-while executa ANTES de testar
+        // Enquanto while testa ANTES de executar
+        document.write("<h2>EXEMPLO 2: Do While vs While</h2>");
+        
+        document.write("WHILE (não executa):<br>");
+        var x = 10;
+        while (x < 5) { // x = 10, então a condição é falsa logo
+            document.write("Dentro do while<br>");
+            x++;
+        }
+        document.write("While não executou (10 não é menor que 5)<br><br>");
+        
+        document.write("DO-WHILE (executa uma vez):<br>");
+        var y = 10;
+        do {
+            document.write("Dentro do do-while<br>");
+            y++;
+        } while (y < 5); // Mesmo que falso, já executou uma vez!
+        document.write("Do-while executou UMA VEZ mesmo com condição falsa<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 3: Do While - Somando Números
+        // ========================================
+        // Usar do-while para somar números de 1 a 10
+        document.write("<h2>EXEMPLO 3: Do While - Somando Números</h2>");
+        
+        var n = 1;
+        var soma = 0;
+        do {
+            soma += n; // Adiciona n à soma
+            n++;
+        } while (n <= 10);
+        
+        document.write("Soma de 1 a 10: " + soma + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 4: Do While - Tabuada
+        // ========================================
+        // Usar do-while para exibir a tabuada de um número
+        document.write("<h2>EXEMPLO 4: Do While - Tabuada do 6</h2>");
+        
+        var numero = 6;
+        var multiplicador = 1;
+        do {
+            document.write(numero + " x " + multiplicador + " = " + (numero * multiplicador) + "<br>");
+            multiplicador++;
+        } while (multiplicador <= 10);
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 5: Do While - Números Pares
+        // ========================================
+        // Listar números pares de 0 a 20 usando do-while
+        document.write("<h2>EXEMPLO 5: Do While - Números Pares</h2>");
+        
+        var num = 0;
+        do {
+            if (num % 2 === 0) { // Se o resto da divisão por 2 for 0 = PAR
+                document.write(num + " ");
+            }
+            num++;
+        } while (num <= 20);
+        document.write("<br><br>");
+
+
+        // ========================================
+        // EXEMPLO 6: Do While - Percorrer Array
+        // ========================================
+        // Usar do-while para iterar sobre elementos de um array
+        document.write("<h2>EXEMPLO 6: Do While - Percorrer Array</h2>");
+        
+        var cores = ["vermelho", "azul", "verde", "amarelo", "roxo"];
+        var indice = 0;
+        do {
+            document.write(indice + ": " + cores[indice] + "<br>");
+            indice++;
+        } while (indice < cores.length);
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 7: Do While - Usar BREAK
+        // ========================================
+        // Usar break para parar o do-while quando uma condição é atendida
+        document.write("<h2>EXEMPLO 7: Do While - Usar BREAK</h2>");
+        
+        var tentativa = 1;
+        do {
+            document.write("Tentativa: " + tentativa + "<br>");
+            tentativa++;
+            
+            if (tentativa > 3) { // Se ultrapassar 3 tentativas
+                document.write("Máximo de tentativas atingido!<br>");
+                break; // Sai do loop
+            }
+        } while (true); // Condição sempre verdadeira (precisamos de break para sair)
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 8: Do While - Usar CONTINUE
+        // ========================================
+        // Usar continue para pular iterações no do-while
+        document.write("<h2>EXEMPLO 8: Do While - Usar CONTINUE</h2>");
+        
+        var z = 0;
+        do {
+            z++;
+            
+            if (z === 3 || z === 5) { // Se for 3 ou 5
+                continue; // Pula para a próxima iteração (não mostra estes números)
+            }
+            
+            document.write("Número: " + z + "<br>");
+        } while (z < 7);
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 9: Do While - Contagem Regressiva
+        // ========================================
+        // Contar de 10 até 1 usando do-while
+        document.write("<h2>EXEMPLO 9: Do While - Contagem Regressiva</h2>");
+        
+        var countdown = 10;
+        do {
+            document.write(countdown + " ");
+            countdown--;
+        } while (countdown >= 1);
+        document.write("<br>🚀 Decolagem!<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 10: Do While - Validação de Entrada
+        // ========================================
+        // Pedir entrada ao usuário até que a entrada seja válida
+        // Use do-while porque você quer pedir PELO MENOS UMA VEZ
+        document.write("<h2>EXEMPLO 10: Do While - Validação</h2>");
+        
+        var entrada;
+        do {
+            entrada = prompt("Digite sua idade (deve ser maior de 18):");
+            var idade = parseInt(entrada);
+            
+            if (idade < 18) {
+                alert("Você é muito jovem! Digite uma idade válida."); // Pede novamente
+            }
+        } while (idade < 18); // Continua pedindo enquanto idade for menor que 18
+        
+        document.write("Sua idade: " + idade + "<br>");
+        document.write("Acesso permitido!<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 11: Do While - Calcular Potência
+        // ========================================
+        // Calcular 3^5 (3 elevado a 5) usando do-while
+        document.write("<h2>EXEMPLO 11: Do While - Calcular Potência (3^5)</h2>");
+        
+        var base = 3;
+        var expoente = 5;
+        var resultado_potencia = 1;
+        var contador_potencia = 0;
+        
+        do {
+            resultado_potencia *= base; // Multiplica a base
+            contador_potencia++;
+        } while (contador_potencia < expoente);
+        
+        document.write("3 ^ 5 = " + resultado_potencia + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 12: Do While - Calcular Fatorial
+        // ========================================
+        // Calcular 6! (6 * 5 * 4 * 3 * 2 * 1 = 720) usando do-while
+        document.write("<h2>EXEMPLO 12: Do While - Calcular Fatorial (6!)</h2>");
+        
+        var num_fatorial = 6;
+        var fatorial_resultado = 1;
+        var fatorial_temp = num_fatorial;
+        
+        do {
+            fatorial_resultado *= fatorial_temp; // Multiplica
+            fatorial_temp--; // Diminui
+        } while (fatorial_temp > 1);
+        
+        document.write("6! = " + fatorial_resultado + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 13: Do While - Verificar Primo
+        // ========================================
+        // Verificar se um número é primo usando do-while
+        // Número primo: só divisível por 1 e por ele mesmo
+        document.write("<h2>EXEMPLO 13: Do While - Verificar Número Primo</h2>");
+        
+        var numero_primo = 19;
+        var primo = true;
+        var divisor = 2;
+        
+        do {
+            if (numero_primo % divisor === 0) { // Se o resto for 0, não é primo
+                primo = false;
+                break;
+            }
+            divisor++;
+        } while (divisor < numero_primo);
+        
+        if (primo) {
+            document.write(numero_primo + " é PRIMO<br>");
+        } else {
+            document.write(numero_primo + " NÃO é primo<br>");
+        }
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 14: Do While - Repetir String
+        // ========================================
+        // Repetir um caractere várias vezes usando do-while
+        document.write("<h2>EXEMPLO 14: Do While - Repetir String</h2>");
+        
+        var repeticoes = 8;
+        var contador_repeticoes = 0;
+        var resultado_string = "";
+        
+        do {
+            resultado_string += "♥ "; // Adiciona coração
+            contador_repeticoes++;
+        } while (contador_repeticoes < repeticoes);
+        
+        document.write(resultado_string + "<br>");
+        document.write("<br>");
+
+
+        // ========================================
+        // EXEMPLO 15: Do While - Quando Usar?
+        // ========================================
+        // Comparação: quando usar do-while vs while
+        document.write("<h2>EXEMPLO 15: Quando Usar Do-While?</h2>");
+        
+        document.write("Use DO-WHILE quando:<br>");
+        document.write("1. Você QUER que o código execute pelo menos uma vez<br>");
+        document.write("2. Validação de entrada (sempre pede uma vez)<br>");
+        document.write("3. Menu (sempre mostra o menu uma vez)<br><br>");
+        
+        document.write("Use WHILE quando:<br>");
+        document.write("1. Pode não executar nenhuma vez<br>");
+        document.write("2. A condição é testada antes de qualquer ação<br>");
+        document.write("3. Iterações normais sobre arrays ou números<br><br>");
+        
+        document.write("EXEMPLO PRÁTICO:<br>");
+        document.write("Menu com DO-WHILE (sempre aparece uma vez):<br>");
+        
+        var opcao = "";
+        var primeira_execucao = true;
+        do {
+            if (primeira_execucao) {
+                opcao = "1"; // Simula primeira execução
+                primeira_execucao = false;
+            } else {
+                opcao = "0"; // Simula sair
+            }
+            
+            document.write("[Menu] Opção: " + opcao + "<br>");
+        } while (opcao !== "0");
+        
+        document.write("Menu finalizado!<br>");
+
+    </script>
+</head>
+<body>
+    <!-- O conteúdo é gerado por document.write no script -->
+</body>
+</html>
