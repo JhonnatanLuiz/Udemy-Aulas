@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // ============================================
+        // EXEMPLO 1: LISTA DE FRUTAS COM WHILE
+        // ============================================
+        // Objetivo: Percorrer um array e exibir cada elemento
+
+        // Escreve um título na página HTML usando document.write()
+        document.write("<h2>Lista de Frutas usando While</h2>");
+
+        // ============================================
+        // PASSO 1: Criar e popular o array
+        // ============================================
+        
+        // Array() cria um array vazio (uma lista que pode guardar vários valores)
+        // var = palavra-chave para declarar uma variável
+        var lista_frutas = Array();
+
+        // Atribuindo valores ao array usando índices (posições)
+        // Em arrays, a contagem sempre começa em 0
+        lista_frutas[0] = "Banana";   // Primeira posição (índice 0)
+        lista_frutas[1] = "Maçã";     // Segunda posição (índice 1)
+        lista_frutas[2] = "Laranja";  // Terceira posição (índice 2)
+        lista_frutas[3] = "Manga";    // Quarta posição (índice 3)
+
+        // ============================================
+        // PASSO 2: Criar variável de controle do loop
+        // ============================================
+        
+        // Variável 'y' começa em 0 para coincidir com o primeiro índice do array
+        var y = 0;
+
+        // ============================================
+        // PASSO 3: Loop WHILE - Enquanto a condição for verdadeira, executa
+        // ============================================
+        
+        // while = enquanto
+        // (y < lista_frutas.length) = enquanto y for menor que o tamanho do array
+        // lista_frutas.length = retorna o número de elementos (4 elementos)
+        // Então: enquanto y < 4, o loop continua
+        while (y < lista_frutas.length) {
+            
+            // document.write() escreve texto diretamente no HTML
+            // lista_frutas[y] acessa o elemento na posição y
+            // <br> = quebra de linha em HTML
+            // Exemplo: quando y=0, exibe "Fruta: Banana"
+            document.write("Fruta: " + lista_frutas[y] + "<br>");
+            
+            // y++ incrementa y em 1 (y = y + 1)
+            // Isso é ESSENCIAL para o loop não ser infinito!
+            // Primeira volta: y = 0, depois vira 1
+            // Segunda volta: y = 1, depois vira 2
+            // Terceira volta: y = 2, depois vira 3
+            // Quarta volta: y = 3, depois vira 4
+            // Quando y = 4, a condição (4 < 4) é falsa, então o loop para
+            y++;
+        }
+
+        // ============================================
+        // EXEMPLO 2: TABUADA DE 1 A 10 (LOOPS ENCADEADOS)
+        // ============================================
+        // Objetivo: Criar todas as tabuadas de 1 a 10
+        // Usamos um loop DENTRO de outro loop (loops aninhados/encadeados)
+
+        document.write("<h2>Tabuada de 1 a 10</h2>");
+
+        // ============================================
+        // LOOP EXTERNO - Controla qual tabuada será exibida
+        // ============================================
+        
+        // for = para (estrutura de repetição mais compacta que while)
+        // Estrutura: for(inicialização; condição; incremento)
+        // var i = 1 : inicializa i com valor 1
+        // i <= 10 : continua enquanto i for menor ou igual a 10
+        // i++ : incrementa i em 1 a cada volta
+        for (var i = 1; i <= 10; i++) {
+            
+            // Escreve o título da tabuada atual
+            // Quando i=1, escreve "Tabuada do 1:"
+            // Quando i=2, escreve "Tabuada do 2:", e assim por diante
+            document.write("<h3>Tabuada do " + i + ":</h3>");
+            
+            // ============================================
+            // LOOP INTERNO - Multiplica o número base por 1 até 10
+            // ============================================
+            
+            // Este loop executa COMPLETAMENTE a cada volta do loop externo
+            // Exemplo: quando i=1, j vai de 1 até 10
+            // Depois quando i=2, j vai de 1 até 10 novamente
+            for (var j = 1; j <= 10; j++) {
+                
+                // Calcula a multiplicação: número base (i) x multiplicador (j)
+                // Exemplo: quando i=2 e j=3, resultado = 2 * 3 = 6
+                var resultado = i * j;
+                
+                // Exibe a linha da tabuada
+                // Exemplo: "2 x 3 = 6"
+                document.write(i + " x " + j + " = " + resultado + "<br>");
+            }
+            
+            // Adiciona uma linha em branco após cada tabuada completa
+            // Isso deixa a visualização mais organizada
+            document.write("<br>");
+        }
+
+        // ============================================
+        // RESUMO DO FUNCIONAMENTO DOS LOOPS ENCADEADOS
+        // ============================================
+        // i=1: loop interno executa 10 vezes (1x1, 1x2... 1x10)
+        // i=2: loop interno executa 10 vezes (2x1, 2x2... 2x10)
+        // i=3: loop interno executa 10 vezes (3x1, 3x2... 3x10)
+        // ... e assim por diante até i=10
+        // Total de multiplicações exibidas: 10 x 10 = 100 linhas
+
+
+        // ============================================
+        // EXEMPLO 3 EXTRA: CONTAGEM REGRESSIVA COM DO-WHILE
+        // ============================================
+        // DO-WHILE: Executa o código PRIMEIRO, depois verifica a condição
+        // Diferente do WHILE que verifica ANTES de executar
+        
+        document.write("<h2>Contagem Regressiva com Do-While</h2>");
+        
+        // Inicia o contador em 10
+        var contador = 10;
+        
+        // do = faça (execute o código abaixo)
+        do {
+            // Exibe o número atual
+            document.write("Contagem: " + contador + "<br>");
+            
+            // Decrementa (diminui) o contador em 1
+            contador--;
+            
+        // while (contador >= 0) = enquanto contador for maior ou igual a 0
+        // IMPORTANTE: A condição é verificada APÓS executar o bloco
+        // Isso garante que o código execute pelo menos UMA vez
+        } while (contador >= 0);
+        
+        document.write("🚀 Lançamento!<br><br>");
+
+
+        // ============================================
+        // EXEMPLO 4 EXTRA: NÚMEROS PARES DE 0 A 20 COM FOR
+        // ============================================
+        
+        document.write("<h2>Números Pares de 0 a 20</h2>");
+        
+        // i += 2 significa: i = i + 2 (incrementa de 2 em 2)
+        // Começa em 0, depois vai para 2, 4, 6, 8... até 20
+        for (var i = 0; i <= 20; i += 2) {
+            document.write("Número par: " + i + "<br>");
+        }
+        
+        document.write("<br>");
+
+
+        // ============================================
+        // EXEMPLO 5 EXTRA: BREAK E CONTINUE
+        // ============================================
+        // break = sair do loop imediatamente
+        // continue = pular para a próxima iteração
+        
+        document.write("<h2>Break e Continue em Ação</h2>");
+        
+        // Exemplo com BREAK - para quando encontra o número 5
+        document.write("<h3>Usando BREAK (para no 5):</h3>");
+        for (var i = 1; i <= 10; i++) {
+            if (i === 5) {
+                document.write("❌ Encontrou o 5! Parando o loop.<br>");
+                break; // SAI do loop completamente
+            }
+            document.write("Número: " + i + "<br>");
+        }
+        
+        document.write("<br>");
+        
+        // Exemplo com CONTINUE - pula o número 5
+        document.write("<h3>Usando CONTINUE (pula o 5):</h3>");
+        for (var i = 1; i <= 10; i++) {
+            if (i === 5) {
+                document.write("⏭️ Pulando o 5...<br>");
+                continue; // PULA para a próxima iteração
+            }
+            document.write("Número: " + i + "<br>");
+        }
+
+    </script>
+</body>
+</html>
