@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For...in - Guia Completo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        .exemplo {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .output {
+            background: #ecf0f1;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 FOR...IN em JavaScript - Guia Completo</h1>
+    
+    <div class="exemplo">
+        <h2>O que é o FOR...IN?</h2>
+        <p><strong>FOR...IN</strong> percorre as <strong>PROPRIEDADES (chaves/índices)</strong> de um objeto ou array.</p>
+        <p>🔑 <strong>Importante:</strong> FOR...IN retorna os <strong>ÍNDICES/CHAVES</strong>, não os valores!</p>
+    </div>
+
+    <script>
+        console.log('%c========================================', 'color: #3498db; font-weight: bold;');
+        console.log('%c FOR...IN - EXEMPLOS DIDÁTICOS', 'color: #3498db; font-weight: bold; font-size: 16px;');
+        console.log('%c========================================', 'color: #3498db; font-weight: bold;');
+
+        // ============================================
+        // EXEMPLO 1: FOR...IN com ARRAY (Básico)
+        // ============================================
+        console.log('\n📌 EXEMPLO 1: FOR...IN com Array');
+        console.log('-----------------------------------');
+        
+        // Array de convidados
+        const listaConvidados = ["João", "Maria", "José"];
+        
+        // FOR...IN percorre os ÍNDICES (0, 1, 2...)
+        // A variável 'i' recebe o ÍNDICE, não o valor!
+        for (let i in listaConvidados) {
+            // i = índice (0, 1, 2)
+            // listaConvidados[i] = valor no índice
+            console.log(`Índice: ${i} - Nome: ${listaConvidados[i]}`);
+            document.write(`<div class="output">Olá ${listaConvidados[i]}, você está convidado para a festa!</div>`);
+        }
+
+        // ============================================
+        // EXEMPLO 2: FOR...IN com OBJETO
+        // ============================================
+        console.log('\n📌 EXEMPLO 2: FOR...IN com Objeto (USO PRINCIPAL)');
+        console.log('-----------------------------------');
+        
+        // Objeto com informações de uma pessoa
+        const pessoa = {
+            nome: "Carlos",
+            idade: 28,
+            profissao: "Desenvolvedor",
+            cidade: "São Paulo"
+        };
+        
+        // FOR...IN percorre as PROPRIEDADES (chaves) do objeto
+        // A variável 'propriedade' recebe o NOME da chave
+        for (let propriedade in pessoa) {
+            // propriedade = nome da chave ("nome", "idade", etc)
+            // pessoa[propriedade] = valor da propriedade
+            console.log(`${propriedade}: ${pessoa[propriedade]}`);
+            document.write(`<div class="output"><strong>${propriedade}:</strong> ${pessoa[propriedade]}</div>`);
+        }
+
+        // ============================================
+        // EXEMPLO 3: Listar Propriedades de um Carro
+        // ============================================
+        console.log('\n📌 EXEMPLO 3: Propriedades de um Carro');
+        console.log('-----------------------------------');
+        
+        const carro = {
+            marca: "Toyota",
+            modelo: "Corolla",
+            ano: 2024,
+            cor: "Prata",
+            preco: 120000
+        };
+        
+        document.write('<div class="exemplo"><h2>🚗 Informações do Carro</h2>');
+        
+        // Percorrer todas as propriedades do carro
+        for (let chave in carro) {
+            console.log(`${chave} ➜ ${carro[chave]}`);
+            document.write(`<p><strong>${chave}:</strong> ${carro[chave]}</p>`);
+        }
+        
+        document.write('</div>');
+
+        // ============================================
+        // EXEMPLO 4: Calcular Média de Notas
+        // ============================================
+        console.log('\n📌 EXEMPLO 4: Calcular Média de Notas');
+        console.log('-----------------------------------');
+        
+        const notasAluno = {
+            matematica: 8.5,
+            portugues: 7.0,
+            historia: 9.0,
+            ciencias: 8.0
+        };
+        
+        let soma = 0;
+        let quantidadeNotas = 0;
+        
+        // Somar todas as notas
+        for (let materia in notasAluno) {
+            // materia = nome da matéria (chave)
+            // notasAluno[materia] = nota (valor)
+            console.log(`${materia}: ${notasAluno[materia]}`);
+            
+            soma += notasAluno[materia];  // Acumula a soma
+            quantidadeNotas++;             // Conta quantas notas tem
+        }
+        
+        const media = soma / quantidadeNotas;
+        
+        console.log(`Soma: ${soma}`);
+        console.log(`Quantidade: ${quantidadeNotas}`);
+        console.log(`Média: ${media.toFixed(2)}`);
+        
+        document.write(`<div class="exemplo"><h2>📊 Boletim do Aluno</h2>`);
+        document.write(`<p>Média Final: <strong>${media.toFixed(2)}</strong></p></div>`);
+
+        // ============================================
+        // EXEMPLO 5: Contar Letras em uma String
+        // ============================================
+        console.log('\n📌 EXEMPLO 5: Contar Letras (String como Array)');
+        console.log('-----------------------------------');
+        
+        const palavra = "JavaScript";
+        
+        document.write('<div class="exemplo"><h2>🔤 Letras da Palavra</h2>');
+        
+        // String pode ser iterada como array
+        for (let indice in palavra) {
+            // indice = posição (0, 1, 2...)
+            // palavra[indice] = letra naquela posição
+            console.log(`Posição ${indice}: ${palavra[indice]}`);
+            document.write(`<span style="background: #3498db; color: white; padding: 5px 10px; margin: 5px; display: inline-block; border-radius: 5px;">
+                ${indice}: ${palavra[indice]}
+            </span>`);
+        }
+        
+        document.write('</div>');
+
+        // ============================================
+        // EXEMPLO 6: Cardápio de Restaurante
+        // ============================================
+        console.log('\n📌 EXEMPLO 6: Cardápio de Restaurante');
+        console.log('-----------------------------------');
+        
+        const cardapio = {
+            hamburguer: 25.00,
+            pizza: 35.00,
+            refrigerante: 5.00,
+            suco: 8.00,
+            batataFrita: 15.00
+        };
+        
+        document.write('<div class="exemplo"><h2>🍔 Cardápio</h2>');
+        
+        // Listar todos os itens do cardápio com preços
+        for (let item in cardapio) {
+            console.log(`${item}: R$ ${cardapio[item].toFixed(2)}`);
+            document.write(`
+                <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ddd;">
+                    <span>${item}</span>
+                    <strong>R$ ${cardapio[item].toFixed(2)}</strong>
+                </div>
+            `);
+        }
+        
+        document.write('</div>');
+
+        // ============================================
+        // EXEMPLO 7: Inventário de Produtos
+        // ============================================
+        console.log('\n📌 EXEMPLO 7: Inventário de Produtos');
+        console.log('-----------------------------------');
+        
+        const estoque = {
+            notebook: 15,
+            mouse: 50,
+            teclado: 30,
+            monitor: 10,
+            webcam: 25
+        };
+        
+        document.write('<div class="exemplo"><h2>📦 Controle de Estoque</h2>');
+        
+        let totalItens = 0;
+        
+        // Contar total de itens no estoque
+        for (let produto in estoque) {
+            const quantidade = estoque[produto];
+            
+            // Verificar se está com estoque baixo
+            const status = quantidade < 20 ? '⚠️ Estoque Baixo' : '✅ Estoque OK';
+            
+            console.log(`${produto}: ${quantidade} unidades - ${status}`);
+            
+            document.write(`
+                <div style="padding: 8px; margin: 5px 0; background: ${quantidade < 20 ? '#fff3cd' : '#d4edda'}; border-radius: 5px;">
+                    <strong>${produto}:</strong> ${quantidade} unidades ${status}
+                </div>
+            `);
+            
+            totalItens += quantidade;
+        }
+        
+        console.log(`Total de itens no estoque: ${totalItens}`);
+        document.write(`<p><strong>Total:</strong> ${totalItens} itens</p></div>`);
+
+        // ============================================
+        // EXEMPLO 8: Agenda de Contatos
+        // ============================================
+        console.log('\n📌 EXEMPLO 8: Agenda de Contatos');
+        console.log('-----------------------------------');
+        
+        const agenda = {
+            'João Silva': '(11) 98765-4321',
+            'Maria Santos': '(21) 99876-5432',
+            'Pedro Costa': '(85) 97654-3210',
+            'Ana Oliveira': '(48) 96543-2109'
+        };
+        
+        document.write('<div class="exemplo"><h2>📞 Agenda de Contatos</h2>');
+        
+        // Listar todos os contatos
+        for (let nome in agenda) {
+            const telefone = agenda[nome];
+            
+            console.log(`${nome} ➜ ${telefone}`);
+            
+            document.write(`
+                <div style="padding: 10px; border-left: 4px solid #3498db; margin: 10px 0; background: #f8f9fa;">
+                    <div style="font-weight: bold; color: #2c3e50;">${nome}</div>
+                    <div style="color: #7f8c8d;">📱 ${telefone}</div>
+                </div>
+            `);
+        }
+        
+        document.write('</div>');
+
+        // ============================================
+        // EXEMPLO 9: Comparação FOR...IN vs FOR tradicional
+        // ============================================
+        console.log('\n📌 EXEMPLO 9: FOR...IN vs FOR tradicional');
+        console.log('-----------------------------------');
+        
+        const frutas = ["Maçã", "Banana", "Laranja"];
+        
+        console.log('COM FOR TRADICIONAL:');
+        for (let i = 0; i < frutas.length; i++) {
+            console.log(`${i}: ${frutas[i]}`);
+        }
+        
+        console.log('\nCOM FOR...IN:');
+        for (let indice in frutas) {
+            console.log(`${indice}: ${frutas[indice]}`);
+        }
+
+        // ============================================
+        // EXEMPLO 10: Verificar se Propriedade Existe
+        // ============================================
+        console.log('\n📌 EXEMPLO 10: Verificar Propriedades');
+        console.log('-----------------------------------');
+        
+        const usuario = {
+            username: "joao123",
+            email: "joao@email.com",
+            ativo: true
+        };
+        
+        const propriedadesProcuradas = ['username', 'email', 'senha', 'ativo'];
+        
+        document.write('<div class="exemplo"><h2>🔍 Verificar Propriedades</h2>');
+        
+        for (let prop in propriedadesProcuradas) {
+            const nomeProp = propriedadesProcuradas[prop];
+            
+            // Verifica se a propriedade existe no objeto
+            if (nomeProp in usuario) {
+                console.log(`✅ ${nomeProp} existe: ${usuario[nomeProp]}`);
+                document.write(`<p>✅ <strong>${nomeProp}:</strong> ${usuario[nomeProp]}</p>`);
+            } else {
+                console.log(`❌ ${nomeProp} NÃO existe`);
+                document.write(`<p>❌ <strong>${nomeProp}:</strong> não encontrado</p>`);
+            }
+        }
+        
+        document.write('</div>');
+
+        // ============================================
+        // RESUMO FINAL
+        // ============================================
+        console.log('\n%c========================================', 'color: #2ecc71; font-weight: bold;');
+        console.log('%c RESUMO: Quando usar FOR...IN?', 'color: #2ecc71; font-weight: bold; font-size: 14px;');
+        console.log('%c========================================', 'color: #2ecc71; font-weight: bold;');
+        console.log('✅ Para percorrer PROPRIEDADES de OBJETOS');
+        console.log('✅ Quando você precisa das CHAVES/ÍNDICES');
+        console.log('✅ Para iterar sobre propriedades enumeráveis');
+        console.log('');
+        console.log('❌ NÃO use para arrays quando precisar apenas dos valores');
+        console.log('❌ NÃO use quando a ordem importa (use for tradicional)');
+        console.log('');
+        console.log('💡 DICA: Para arrays, prefira: for...of (valores) ou forEach()');
+
+        document.write(`
+            <div class="exemplo" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <h2 style="color: white;">📝 Resumo FOR...IN</h2>
+                <ul>
+                    <li>✅ Percorre <strong>ÍNDICES</strong> de arrays</li>
+                    <li>✅ Percorre <strong>PROPRIEDADES</strong> de objetos</li>
+                    <li>✅ Retorna as <strong>CHAVES</strong>, não os valores</li>
+                    <li>✅ Ideal para objetos { }</li>
+                    <li>⚠️ Para arrays, considere usar <code>for...of</code> ou <code>forEach()</code></li>
+                </ul>
+            </div>
+        `);
+
+    </script>
+</body>
+</html>
