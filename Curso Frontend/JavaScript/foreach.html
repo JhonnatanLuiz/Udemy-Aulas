@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Each</title>
+</head>
+<body>
+    <script>
+        // ========================================
+        // EXEMPLO 1: forEach com Array de Números
+        // ========================================
+        
+        document.write("<h2>Exemplo 1: Array de Números</h2>");
+        
+        // Criando um array de números
+        const numeros = [10, 20, 30, 40, 50];
+        
+        document.write("<p>Array original: " + numeros + "</p>");
+        
+        // forEach percorre cada elemento do array
+        // Recebe 3 parâmetros: elemento atual, índice, array completo
+        document.write("<p>Cada número multiplicado por 2:</p>");
+        numeros.forEach(function(numero, indice) {
+            document.write("Índice " + indice + ": " + numero + " x 2 = " + (numero * 2) + "<br>");
+        });
+        
+        document.write("<hr>");
+        
+        // ========================================
+        // EXEMPLO 2: forEach com Array de Strings
+        // ========================================
+        
+        document.write("<h2>Exemplo 2: Array de Frutas</h2>");
+        
+        const frutas = ["Maçã", "Banana", "Laranja", "Uva", "Morango"];
+        
+        document.write("<p>Lista de frutas:</p>");
+        
+        // forEach para listar elementos
+        frutas.forEach(function(fruta, index) {
+            document.write((index + 1) + ". " + fruta + "<br>");
+        });
+        
+        document.write("<hr>");
+        
+        // ========================================
+        // EXEMPLO 3: forEach com Arrow Function
+        // ========================================
+        
+        document.write("<h2>Exemplo 3: Usando Arrow Function (sintaxe moderna)</h2>");
+        
+        const alunos = ["João", "Maria", "Pedro", "Ana"];
+        
+        document.write("<p>Bem-vindos:</p>");
+        
+        // Arrow function (=>) é uma forma mais curta de escrever funções
+        alunos.forEach((aluno, i) => {
+            document.write("Aluno " + (i + 1) + ": " + aluno + "<br>");
+        });
+        
+        document.write("<hr>");
+        
+        // ========================================
+        // EXEMPLO 4: forEach com Array de Objetos
+        // ========================================
+        
+        document.write("<h2>Exemplo 4: Array de Objetos</h2>");
+        
+        // Array com objetos (cada elemento tem propriedades)
+        const produtos = [
+            { nome: "Notebook", preco: 2500 },
+            { nome: "Mouse", preco: 50 },
+            { nome: "Teclado", preco: 150 },
+            { nome: "Monitor", preco: 800 }
+        ];
+        
+        document.write("<p>Lista de produtos:</p>");
+        
+        // forEach acessando propriedades dos objetos
+        produtos.forEach((produto, index) => {
+            document.write((index + 1) + ". " + produto.nome + " - R$ " + produto.preco + "<br>");
+        });
+        
+        document.write("<hr>");
+        
+        // ========================================
+        // EXEMPLO 5: forEach para Somar Valores
+        // ========================================
+        
+        document.write("<h2>Exemplo 5: Somando Valores</h2>");
+        
+        const notas = [7.5, 8.0, 6.5, 9.0, 7.0];
+        let soma = 0; // Variável para acumular a soma
+        
+        document.write("<p>Notas: " + notas + "</p>");
+        
+        // forEach para calcular a soma das notas
+        notas.forEach((nota) => {
+            soma += nota; // soma = soma + nota
+        });
+        
+        const media = soma / notas.length;
+        
+        document.write("<p>Soma total: " + soma + "</p>");
+        document.write("<p>Média: " + media.toFixed(2) + "</p>");
+        
+        document.write("<hr>");
+        
+        // ========================================
+        // EXEMPLO 6: forEach vs for tradicional
+        // ========================================
+        
+        document.write("<h2>Exemplo 6: Comparação forEach vs for</h2>");
+        
+        const cores = ["Vermelho", "Azul", "Verde", "Amarelo"];
+        
+        document.write("<p><strong>Usando for tradicional:</strong></p>");
+        // for tradicional - você controla o índice
+        for (let i = 0; i < cores.length; i++) {
+            document.write(cores[i] + "<br>");
+        }
+        
+        document.write("<p><strong>Usando forEach:</strong></p>");
+        // forEach - mais simples e legível
+        cores.forEach(cor => {
+            document.write(cor + "<br>");
+        });
+        
+        document.write("<hr>");
+        
+        // ========================================
+        // EXEMPLO 7: forEach NÃO pode usar break/continue
+        // ========================================
+        
+        document.write("<h2>Exemplo 7: Observação Importante</h2>");
+        
+        document.write("<p>O forEach percorre TODO o array, não pode parar no meio com break.</p>");
+        document.write("<p>Se precisar parar a execução, use for tradicional ou for...of</p>");
+        
+        const numeros2 = [1, 2, 3, 4, 5];
+        
+        document.write("<p>forEach sempre percorre todos os elementos:</p>");
+        numeros2.forEach(num => {
+            document.write(num + " ");
+        });
+    </script>
+</body>
+</html>
