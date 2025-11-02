@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parametros Variaveis</title>
+</head>
+<body>
+    <h1 style="text-align: center; margin-top: 20px;">Parâmetros Variáveis - JavaScript</h1>
+    <p style="text-align: center;">Abra o Console (F12) para ver os resultados!</p>
+    
+    <script>
+        // TESTE: Verifica se o JavaScript está funcionando
+        alert('✅ JavaScript está funcionando! Agora abra o Console (F12) para ver os exemplos.');
+        
+        console.log('%c=== ARQUIVO CARREGADO COM SUCESSO! ===', 'color: green; font-size: 20px; font-weight: bold;');
+        
+        // ========================================
+        // EXEMPLO 1: Soma de números (arguments)
+        // ========================================
+        // 'arguments' é um objeto especial que contém todos os parâmetros passados
+        // Funciona mesmo sem declarar parâmetros na função
+        function soma() {
+            var resultado = 0;
+            for(var i in arguments) {
+                resultado += arguments[i];
+            }
+            return resultado;
+        }
+        console.log('Soma:', soma(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)); // 55
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 2: Média de notas com arguments
+        // ========================================
+        // Calcula a média de qualquer quantidade de notas
+        function calcularMedia() {
+            var soma = 0;
+            for(var i = 0; i < arguments.length; i++) {
+                soma += arguments[i];
+            }
+            return soma / arguments.length;
+        }
+        console.log('Média de 3 notas:', calcularMedia(7, 8, 9)); // 8
+        console.log('Média de 5 notas:', calcularMedia(6, 7, 8, 9, 10)); // 8
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 3: Rest Parameters (ES6+) - RECOMENDADO
+        // ========================================
+        // Sintaxe moderna usando '...' (spread operator)
+        // Cria um array real, não um objeto como arguments
+        function multiplicar(...numeros) {
+            var resultado = 1;
+            for(var num of numeros) {
+                resultado *= num;
+            }
+            return resultado;
+        }
+        console.log('Multiplicação:', multiplicar(2, 3, 4)); // 24
+        console.log('Multiplicação:', multiplicar(5, 5)); // 25
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 4: Parâmetro fixo + variáveis
+        // ========================================
+        // Primeiro parâmetro fixo, os demais variáveis
+        function saudacao(nome, ...interesses) {
+            console.log('Olá ' + nome + '!');
+            console.log('Seus interesses são: ' + interesses.join(', '));
+        }
+        saudacao('João', 'JavaScript', 'Python', 'CSS', 'HTML');
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 5: Encontrar maior número
+        // ========================================
+        function maiorNumero(...numeros) {
+            return Math.max(...numeros);
+        }
+        console.log('Maior número:', maiorNumero(10, 25, 5, 40, 15)); // 40
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 6: Concatenar strings
+        // ========================================
+        function concatenar(...palavras) {
+            return palavras.join(' ');
+        }
+        console.log('Frase:', concatenar('JavaScript', 'é', 'incrível!'));
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 7: Lista de compras
+        // ========================================
+        function listaDeCompras(...itens) {
+            console.log('=== LISTA DE COMPRAS ===');
+            itens.forEach(function(item, index) {
+                console.log((index + 1) + '. ' + item);
+            });
+            console.log('Total de itens: ' + itens.length);
+        }
+        listaDeCompras('Arroz', 'Feijão', 'Macarrão', 'Leite', 'Pão');
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 8: Comparando arguments vs rest parameters
+        // ========================================
+        // Com arguments (antigo)
+        function exemploArguments() {
+            console.log('arguments é um array?', Array.isArray(arguments)); // false
+            console.log('Tipo de arguments:', typeof arguments); // object
+        }
+        
+        // Com rest parameters (moderno)
+        function exemploRest(...params) {
+            console.log('params é um array?', Array.isArray(params)); // true
+            console.log('Tipo de params:', typeof params); // object
+        }
+        
+        exemploArguments(1, 2, 3);
+        exemploRest(1, 2, 3);
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 9: Filtrar apenas números
+        // ========================================
+        function somarApenasNumeros(...valores) {
+            var soma = 0;
+            valores.forEach(function(valor) {
+                if(typeof valor === 'number') {
+                    soma += valor;
+                }
+            });
+            return soma;
+        }
+        console.log('Soma apenas números:', somarApenasNumeros(1, 'texto', 2, true, 3, null, 4)); // 10
+        console.log('---');
+
+        // ========================================
+        // EXEMPLO 10: Criador de URLs
+        // ========================================
+        function criarURL(dominio, ...caminhos) {
+            return 'https://' + dominio + '/' + caminhos.join('/');
+        }
+        console.log('URL:', criarURL('exemplo.com', 'blog', 'artigos', '2025'));
+        
+        console.log('%c=== TODOS OS EXEMPLOS EXECUTADOS! ===', 'color: green; font-size: 16px; font-weight: bold;');
+    </script>
+</body>
+</html>

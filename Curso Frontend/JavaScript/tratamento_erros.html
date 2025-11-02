@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tratamento de Erros - Try, Catch, Throw, Finally</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Tratamento de Erros em JavaScript</h1>
+    <p style="text-align: center;">Abra o Console (F12) para ver os exemplos!</p>
+    
+    <script>
+        console.log('%c=== TRATAMENTO DE ERROS EM JAVASCRIPT ===', 'color: blue; font-size: 18px; font-weight: bold;');
+        console.log('');
+
+        // ========================================
+        // EXEMPLO 1: Try-Catch Básico
+        // ========================================
+        // Try-Catch permite capturar erros sem quebrar o código
+        console.log('%c1. TRY-CATCH BÁSICO', 'color: green; font-weight: bold;');
+        
+        try {
+            // Código que pode gerar erro
+            console.log('Tentando executar código...');
+            let resultado = 10 / 0; // Isso não gera erro em JS (retorna Infinity)
+            console.log('Resultado:', resultado);
+            
+            // Mas isso gera erro:
+            let obj = null;
+            console.log(obj.propriedade); // TypeError: Cannot read property of null
+        } catch (erro) {
+            // Captura o erro e exibe informações
+            console.error('❌ Erro capturado:', erro.message);
+            console.log('Tipo do erro:', erro.name);
+        }
+        console.log('✅ O programa continua executando normalmente!');
+        console.log('---\n');
+
+        // ========================================
+        // EXEMPLO 2: Finally - Sempre Executa
+        // ========================================
+        // Finally é executado sempre, com ou sem erro
+        console.log('%c2. TRY-CATCH-FINALLY', 'color: green; font-weight: bold;');
+        
+        function testarFinally(causarErro) {
+            try {
+                console.log('🔄 Iniciando operação...');
+                
+                if (causarErro) {
+                    throw new Error('Erro proposital!');
+                }
+                
+                console.log('✅ Operação concluída com sucesso!');
+                return 'Sucesso';
+            } catch (erro) {
+                console.error('❌ Erro:', erro.message);
+                return 'Falha';
+            } finally {
+                // Finally SEMPRE executa, mesmo com return
+                console.log('🧹 Finally: Limpando recursos...');
+                console.log('(Finally executa mesmo com return no try ou catch)');
+            }
+        }
+        
+        console.log('Teste 1 - Sem erro:');
+        testarFinally(false);
+        console.log('');
+        
+        console.log('Teste 2 - Com erro:');
+        testarFinally(true);
+        console.log('---\n');
+
+        // ========================================
+        // EXEMPLO 3: Throw - Lançando Erros
+        // ========================================
+        // Throw permite criar e lançar seus próprios erros
+        console.log('%c3. THROW - LANÇANDO ERROS CUSTOMIZADOS', 'color: green; font-weight: bold;');
+        
+        function dividir(a, b) {
+            // Validação de parâmetros
+            if (typeof a !== 'number' || typeof b !== 'number') {
+                throw new TypeError('Os parâmetros devem ser números!');
+            }
+            
+            if (b === 0) {
+                throw new Error('Divisão por zero não é permitida!');
+            }
+            
+            return a / b;
+        }
+        
+        try {
+            console.log('10 / 2 =', dividir(10, 2)); // OK
+            console.log('10 / 0 =', dividir(10, 0)); // Erro!
+        } catch (erro) {
+            console.error('❌ Erro:', erro.message);
+        }
+        
+        try {
+            console.log(dividir('10', 2)); // Erro de tipo!
+        } catch (erro) {
+            console.error('❌ Erro:', erro.message);
+        }
+        console.log('---\n');
+
+        // ========================================
+        // EXEMPLO 4: Validação de Idade
+        // ========================================
+        console.log('%c4. VALIDAÇÃO COM THROW', 'color: green; font-weight: bold;');
+        
+        function validarIdade(idade) {
+            try {
+                if (typeof idade !== 'number') {
+                    throw new TypeError('Idade deve ser um número!');
+                }
+                
+                if (idade < 0) {
+                    throw new RangeError('Idade não pode ser negativa!');
+                }
+                
+                if (idade < 18) {
+                    throw new Error('Você deve ter pelo menos 18 anos!');
+                }
+                
+                console.log('✅ Idade válida:', idade);
+                return true;
+            } catch (erro) {
+                console.error('❌', erro.name + ':', erro.message);
+                return false;
+            }
+        }
+        
+        validarIdade(25);      // OK
+        validarIdade(15);      // Menor de idade
+        validarIdade(-5);      // Negativa
+        validarIdade('vinte'); // Tipo errado
+        console.log('---\n');
+
+        // ========================================
+        // EXEMPLO 5: Erros em Funções Assíncronas
+        // ========================================
+        console.log('%c5. TRATAMENTO EM FUNÇÕES ASSÍNCRONAS', 'color: green; font-weight: bold;');
+        
+        async function buscarUsuario(id) {
+            try {
+                console.log('🔍 Buscando usuário com ID:', id);
+                
+                // Simula uma requisição que pode falhar
+                if (id <= 0) {
+                    throw new Error('ID inválido!');
+                }
+                
+                // Simula sucesso
+                await new Promise(resolve => setTimeout(resolve, 100));
+                console.log('✅ Usuário encontrado!');
+                return { id: id, nome: 'João' };
+                
+            } catch (erro) {
+                console.error('❌ Erro ao buscar usuário:', erro.message);
+                return null;
+            } finally {
+                console.log('🏁 Finalizando busca...');
+            }
+        }
+        
+        // Testando a função assíncrona
+        buscarUsuario(1).then(resultado => {
+            console.log('Resultado 1:', resultado);
+        });
+        
+        buscarUsuario(-1).then(resultado => {
+            console.log('Resultado 2:', resultado);
+        });
+        
+        setTimeout(() => console.log('---\n'), 200);
+
+        // ========================================
+        // EXEMPLO 6: Múltiplos Catches (Tipos de Erro)
+        // ========================================
+        setTimeout(() => {
+            console.log('%c6. TRATAMENTO POR TIPO DE ERRO', 'color: green; font-weight: bold;');
+            
+            function processarDados(dados) {
+                try {
+                    if (!dados) {
+                        throw new ReferenceError('Dados não fornecidos!');
+                    }
+                    
+                    if (typeof dados !== 'object') {
+                        throw new TypeError('Dados devem ser um objeto!');
+                    }
+                    
+                    if (!dados.nome) {
+                        throw new Error('Campo "nome" é obrigatório!');
+                    }
+                    
+                    console.log('✅ Dados válidos:', dados.nome);
+                    
+                } catch (erro) {
+                    // Trata diferentes tipos de erro
+                    if (erro instanceof ReferenceError) {
+                        console.error('❌ ReferenceError:', erro.message);
+                    } else if (erro instanceof TypeError) {
+                        console.error('❌ TypeError:', erro.message);
+                    } else {
+                        console.error('❌ Erro genérico:', erro.message);
+                    }
+                }
+            }
+            
+            processarDados({ nome: 'Maria' }); // OK
+            processarDados('texto');            // TypeError
+            processarDados(null);               // ReferenceError
+            processarDados({});                 // Error genérico
+            console.log('---\n');
+        }, 300);
+
+        // ========================================
+        // EXEMPLO 7: Calculadora com Tratamento de Erros
+        // ========================================
+        setTimeout(() => {
+            console.log('%c7. CALCULADORA COM TRATAMENTO DE ERROS', 'color: green; font-weight: bold;');
+            
+            function calculadora(num1, operador, num2) {
+                try {
+                    // Validações
+                    if (typeof num1 !== 'number' || typeof num2 !== 'number') {
+                        throw new TypeError('Os valores devem ser números!');
+                    }
+                    
+                    if (isNaN(num1) || isNaN(num2)) {
+                        throw new Error('Valores inválidos (NaN)!');
+                    }
+                    
+                    // Operações
+                    let resultado;
+                    switch(operador) {
+                        case '+':
+                            resultado = num1 + num2;
+                            break;
+                        case '-':
+                            resultado = num1 - num2;
+                            break;
+                        case '*':
+                            resultado = num1 * num2;
+                            break;
+                        case '/':
+                            if (num2 === 0) {
+                                throw new Error('Divisão por zero!');
+                            }
+                            resultado = num1 / num2;
+                            break;
+                        default:
+                            throw new Error('Operador inválido! Use: +, -, *, /');
+                    }
+                    
+                    console.log(`✅ ${num1} ${operador} ${num2} = ${resultado}`);
+                    return resultado;
+                    
+                } catch (erro) {
+                    console.error('❌ Erro na calculadora:', erro.message);
+                    return null;
+                } finally {
+                    console.log('📊 Operação finalizada');
+                }
+            }
+            
+            calculadora(10, '+', 5);   // OK
+            calculadora(10, '/', 2);   // OK
+            calculadora(10, '/', 0);   // Erro: divisão por zero
+            calculadora(10, '%', 2);   // Erro: operador inválido
+            calculadora('10', '+', 5); // Erro: tipo inválido
+            console.log('---\n');
+        }, 400);
+
+        // ========================================
+        // EXEMPLO 8: Try-Catch em Array Operations
+        // ========================================
+        setTimeout(() => {
+            console.log('%c8. TRATAMENTO EM OPERAÇÕES DE ARRAY', 'color: green; font-weight: bold;');
+            
+            function buscarPorIndice(array, indice) {
+                try {
+                    if (!Array.isArray(array)) {
+                        throw new TypeError('O primeiro parâmetro deve ser um array!');
+                    }
+                    
+                    if (typeof indice !== 'number') {
+                        throw new TypeError('O índice deve ser um número!');
+                    }
+                    
+                    if (indice < 0 || indice >= array.length) {
+                        throw new RangeError(`Índice ${indice} fora do intervalo válido (0-${array.length - 1})`);
+                    }
+                    
+                    console.log(`✅ Elemento no índice ${indice}:`, array[indice]);
+                    return array[indice];
+                    
+                } catch (erro) {
+                    console.error('❌', erro.name + ':', erro.message);
+                    return undefined;
+                }
+            }
+            
+            const frutas = ['Maçã', 'Banana', 'Laranja'];
+            
+            buscarPorIndice(frutas, 1);     // OK
+            buscarPorIndice(frutas, 5);     // RangeError
+            buscarPorIndice(frutas, '1');   // TypeError
+            buscarPorIndice('texto', 0);    // TypeError
+            console.log('---\n');
+        }, 500);
+
+        // ========================================
+        // EXEMPLO 9: Validação de Formulário
+        // ========================================
+        setTimeout(() => {
+            console.log('%c9. VALIDAÇÃO DE FORMULÁRIO', 'color: green; font-weight: bold;');
+            
+            function validarFormulario(dados) {
+                const erros = [];
+                
+                try {
+                    // Email
+                    if (!dados.email || !dados.email.includes('@')) {
+                        throw new Error('Email inválido!');
+                    }
+                    
+                    // Senha
+                    if (!dados.senha || dados.senha.length < 6) {
+                        throw new Error('Senha deve ter no mínimo 6 caracteres!');
+                    }
+                    
+                    // Nome
+                    if (!dados.nome || dados.nome.trim() === '') {
+                        throw new Error('Nome é obrigatório!');
+                    }
+                    
+                    console.log('✅ Formulário válido!');
+                    return { valido: true, erros: [] };
+                    
+                } catch (erro) {
+                    console.error('❌', erro.message);
+                    erros.push(erro.message);
+                    return { valido: false, erros: erros };
+                } finally {
+                    console.log('🔍 Validação concluída');
+                }
+            }
+            
+            // Teste 1: Dados válidos
+            console.log('Teste 1:');
+            validarFormulario({
+                email: 'joao@email.com',
+                senha: '123456',
+                nome: 'João Silva'
+            });
+            
+            // Teste 2: Email inválido
+            console.log('\nTeste 2:');
+            validarFormulario({
+                email: 'emailinvalido',
+                senha: '123456',
+                nome: 'João'
+            });
+            
+            // Teste 3: Senha curta
+            console.log('\nTeste 3:');
+            validarFormulario({
+                email: 'maria@email.com',
+                senha: '123',
+                nome: 'Maria'
+            });
+            console.log('---\n');
+        }, 600);
+
+        // ========================================
+        // EXEMPLO 10: Erros Customizados (Custom Error)
+        // ========================================
+        setTimeout(() => {
+            console.log('%c10. CRIANDO ERROS CUSTOMIZADOS', 'color: green; font-weight: bold;');
+            
+            // Classe de erro personalizada
+            class ErroDeValidacao extends Error {
+                constructor(mensagem) {
+                    super(mensagem);
+                    this.name = 'ErroDeValidacao';
+                    this.data = new Date();
+                }
+            }
+            
+            class ErroDeAutenticacao extends Error {
+                constructor(mensagem) {
+                    super(mensagem);
+                    this.name = 'ErroDeAutenticacao';
+                    this.codigo = 401;
+                }
+            }
+            
+            function login(usuario, senha) {
+                try {
+                    if (!usuario || !senha) {
+                        throw new ErroDeValidacao('Usuário e senha são obrigatórios!');
+                    }
+                    
+                    if (usuario !== 'admin') {
+                        throw new ErroDeAutenticacao('Usuário não encontrado!');
+                    }
+                    
+                    if (senha !== 'senha123') {
+                        throw new ErroDeAutenticacao('Senha incorreta!');
+                    }
+                    
+                    console.log('✅ Login realizado com sucesso!');
+                    return true;
+                    
+                } catch (erro) {
+                    if (erro instanceof ErroDeValidacao) {
+                        console.error('❌ Validação:', erro.message, '| Data:', erro.data);
+                    } else if (erro instanceof ErroDeAutenticacao) {
+                        console.error('❌ Autenticação:', erro.message, '| Código:', erro.codigo);
+                    } else {
+                        console.error('❌ Erro desconhecido:', erro.message);
+                    }
+                    return false;
+                }
+            }
+            
+            login('admin', 'senha123');  // OK
+            login('', 'senha123');       // ErroDeValidacao
+            login('user', 'senha123');   // ErroDeAutenticacao
+            login('admin', 'errada');    // ErroDeAutenticacao
+            
+            console.log('\n%c=== FIM DOS EXEMPLOS ===', 'color: blue; font-size: 16px; font-weight: bold;');
+        }, 700);
+
+    </script>
+</body>
+</html>
