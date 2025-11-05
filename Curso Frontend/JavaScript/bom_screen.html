@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM - Screen Object - Guia Interativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            line-height: 1.8;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #e6e6e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .keyword { color: #c586c0; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+        .comment { color: #6a9955; }
+        .function { color: #dcdcaa; }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .property-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .property-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .property-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+        }
+
+        .property-list li code {
+            background: #e8eaf6;
+            padding: 2px 8px;
+            border-radius: 3px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .visual-demo {
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            background: white;
+            position: relative;
+        }
+
+        .screen-visual {
+            border: 2px solid #333;
+            background: #e3f2fd;
+            padding: 10px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .taskbar {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
+
+        footer {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 0 5px;
+        }
+
+        .highlight {
+            background: #fff59d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .comparison-table {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .stat-value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🖥️ BOM - Screen Object</h1>
+            <p class="subtitle">Guia Interativo Completo sobre o Objeto Screen em JavaScript</p>
+            <div style="margin-top: 15px;">
+                <span class="badge">JavaScript</span>
+                <span class="badge">BOM</span>
+                <span class="badge">Screen API</span>
+                <span class="badge">Interativo</span>
+            </div>
+        </header>
+
+        <!-- Introdução -->
+        <section class="section">
+            <h2>📚 O que é o Screen Object?</h2>
+            <p>O objeto <code>window.screen</code> contém informações sobre a tela do usuário. Ele pode ser escrito sem o prefixo <code>window</code>.</p>
+            
+            <div class="info-box">
+                <strong>💡 Importante:</strong> O objeto <code>screen</code> fornece informações sobre a tela física do dispositivo, não sobre a janela do navegador.
+            </div>
+
+            <h3>Propriedades Principais:</h3>
+            <div class="property-list">
+                <ul>
+                    <li><code>screen.width</code> - Largura total da tela em pixels</li>
+                    <li><code>screen.height</code> - Altura total da tela em pixels</li>
+                    <li><code>screen.availWidth</code> - Largura disponível (sem barra de tarefas)</li>
+                    <li><code>screen.availHeight</code> - Altura disponível (sem barra de tarefas)</li>
+                    <li><code>screen.colorDepth</code> - Profundidade de cor em bits</li>
+                    <li><code>screen.pixelDepth</code> - Profundidade de pixel em bits</li>
+                </ul>
+            </div>
+
+            <div class="demo-box">
+                <h3>🎯 Visualização Rápida - Sua Tela Agora</h3>
+                <button class="btn" onclick="showQuickStats()">📊 Mostrar Estatísticas da Tela</button>
+                <div id="quickStats" style="display: none; margin-top: 20px;"></div>
+            </div>
+        </section>
+
+        <!-- Screen Width -->
+        <section class="section">
+            <h2>📏 screen.width - Largura da Tela</h2>
+            <p>A propriedade <code>screen.width</code> retorna a largura total da tela do visitante em pixels.</p>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração Interativa</h3>
+                <button class="btn" onclick="showScreenWidth()">📐 Mostrar Largura da Tela</button>
+                <div id="widthOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block" style="margin-top: 20px;">
+<span class="comment">// Obter largura da tela</span>
+<span class="keyword">let</span> largura = <span class="keyword">screen</span>.width;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Largura da tela: "</span> + largura + <span class="string">"px"</span>);
+
+<span class="comment">// Usar em elemento HTML</span>
+<span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"demo"</span>).innerHTML = 
+    <span class="string">"Screen Width: "</span> + <span class="keyword">screen</span>.width;
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Uso Prático:</strong> Detectar resoluções de tela para adaptar conteúdo, determinar se é um monitor pequeno ou grande, ou ajustar layouts baseados no tamanho físico da tela.
+            </div>
+        </section>
+
+        <!-- Screen Height -->
+        <section class="section">
+            <h2>📏 screen.height - Altura da Tela</h2>
+            <p>A propriedade <code>screen.height</code> retorna a altura total da tela do visitante em pixels.</p>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração Interativa</h3>
+                <button class="btn" onclick="showScreenHeight()">📐 Mostrar Altura da Tela</button>
+                <div id="heightOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block" style="margin-top: 20px;">
+<span class="comment">// Obter altura da tela</span>
+<span class="keyword">let</span> altura = <span class="keyword">screen</span>.height;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Altura da tela: "</span> + altura + <span class="string">"px"</span>);
+
+<span class="comment">// Calcular proporção da tela</span>
+<span class="keyword">let</span> aspectRatio = (<span class="keyword">screen</span>.width / <span class="keyword">screen</span>.height).<span class="function">toFixed</span>(<span class="number">2</span>);
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Proporção: "</span> + aspectRatio);
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>📱 Exemplo: Detectar Orientação</h4>
+                    <button class="btn" onclick="detectOrientation()">🔄 Verificar Orientação</button>
+                    <div id="orientationResult" style="margin-top: 10px; font-weight: bold; color: #667eea;"></div>
+                </div>
+                <div class="card">
+                    <h4>📊 Exemplo: Calcular Proporção</h4>
+                    <button class="btn" onclick="calculateAspectRatio()">🔢 Calcular Aspect Ratio</button>
+                    <div id="ratioResult" style="margin-top: 10px; font-weight: bold; color: #764ba2;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Available Width -->
+        <section class="section">
+            <h2>📐 screen.availWidth - Largura Disponível</h2>
+            <p>A propriedade <code>screen.availWidth</code> retorna a largura da tela em pixels, <span class="highlight">menos</span> recursos de interface como a Barra de Tarefas do Windows.</p>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração - Comparação Total vs Disponível</h3>
+                <button class="btn" onclick="compareWidths()">📊 Comparar Larguras</button>
+                <div id="widthComparison" class="output" style="display: none;"></div>
+
+                <div class="code-block" style="margin-top: 20px;">
+<span class="comment">// Largura disponível (sem barra de tarefas)</span>
+<span class="keyword">let</span> larguraDisponivel = <span class="keyword">screen</span>.availWidth;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Largura disponível: "</span> + larguraDisponivel + <span class="string">"px"</span>);
+
+<span class="comment">// Calcular espaço ocupado pela barra de tarefas</span>
+<span class="keyword">let</span> espacoOcupado = <span class="keyword">screen</span>.width - <span class="keyword">screen</span>.availWidth;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Espaço ocupado: "</span> + espacoOcupado + <span class="string">"px"</span>);
+                </div>
+            </div>
+
+            <div class="visual-demo">
+                <h4 style="text-align: center; color: #667eea; margin-bottom: 15px;">📺 Visualização da Diferença</h4>
+                <div class="screen-visual">
+                    <div style="background: #4CAF50; padding: 10px; color: white; text-align: center;">
+                        <strong>Área Disponível (availWidth × availHeight)</strong><br>
+                        <small>Espaço que o navegador pode usar</small>
+                    </div>
+                    <div class="taskbar">
+                        ⊞ Barra de Tarefas (ocupa espaço vertical ou horizontal)
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 10px; color: #666;">
+                    <small>A diferença entre width e availWidth representa o espaço usado pela barra de tarefas</small>
+                </p>
+            </div>
+        </section>
+
+        <!-- Available Height -->
+        <section class="section">
+            <h2>📐 screen.availHeight - Altura Disponível</h2>
+            <p>A propriedade <code>screen.availHeight</code> retorna a altura da tela em pixels, <span class="highlight">menos</span> recursos de interface como a Barra de Tarefas do Windows.</p>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração - Comparação Total vs Disponível</h3>
+                <button class="btn" onclick="compareHeights()">📊 Comparar Alturas</button>
+                <div id="heightComparison" class="output" style="display: none;"></div>
+
+                <div class="code-block" style="margin-top: 20px;">
+<span class="comment">// Altura disponível (sem barra de tarefas)</span>
+<span class="keyword">let</span> alturaDisponivel = <span class="keyword">screen</span>.availHeight;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Altura disponível: "</span> + alturaDisponivel + <span class="string">"px"</span>);
+
+<span class="comment">// Calcular espaço ocupado</span>
+<span class="keyword">let</span> espacoOcupado = <span class="keyword">screen</span>.height - <span class="keyword">screen</span>.availHeight;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Espaço ocupado: "</span> + espacoOcupado + <span class="string">"px"</span>);
+                </div>
+            </div>
+
+            <div class="comparison-table">
+                <div class="comparison-item">
+                    <h4 style="color: #667eea;">📏 Dimensões Totais</h4>
+                    <p><strong>screen.width:</strong> Largura completa da tela física</p>
+                    <p><strong>screen.height:</strong> Altura completa da tela física</p>
+                </div>
+                <div class="comparison-item">
+                    <h4 style="color: #764ba2;">✅ Dimensões Disponíveis</h4>
+                    <p><strong>screen.availWidth:</strong> Largura menos barras laterais</p>
+                    <p><strong>screen.availHeight:</strong> Altura menos barra de tarefas</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Dica:</strong> Use <code>availWidth</code> e <code>availHeight</code> quando quiser maximizar janelas ou criar overlays em tela cheia, pois essas propriedades informam o espaço realmente utilizável.
+            </div>
+        </section>
+
+        <!-- Color Depth -->
+        <section class="section">
+            <h2>🎨 screen.colorDepth - Profundidade de Cor</h2>
+            <p>A propriedade <code>screen.colorDepth</code> retorna o número de bits usados para exibir uma cor.</p>
+
+            <div class="info-box">
+                <strong>💡 Entendendo Profundidade de Cor:</strong>
+                <ul style="margin-top: 10px; line-height: 1.8;">
+                    <li><strong>24 bits:</strong> 16.777.216 cores diferentes ("True Colors")</li>
+                    <li><strong>32 bits:</strong> 4.294.967.296 cores diferentes ("Deep Colors")</li>
+                    <li><strong>16 bits:</strong> 65.536 cores diferentes ("High Colors") - computadores mais antigos</li>
+                    <li><strong>8 bits:</strong> 256 cores diferentes ("VGA colors") - computadores muito antigos</li>
+                </ul>
+            </div>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração Interativa</h3>
+                <button class="btn" onclick="showColorDepth()">🎨 Mostrar Profundidade de Cor</button>
+                <div id="colorDepthOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block" style="margin-top: 20px;">
+<span class="comment">// Obter profundidade de cor</span>
+<span class="keyword">let</span> profundidadeCor = <span class="keyword">screen</span>.colorDepth;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Color Depth: "</span> + profundidadeCor + <span class="string">" bits"</span>);
+
+<span class="comment">// Calcular número de cores possíveis</span>
+<span class="keyword">let</span> numeroCores = <span class="keyword">Math</span>.<span class="function">pow</span>(<span class="number">2</span>, profundidadeCor);
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Cores possíveis: "</span> + numeroCores.<span class="function">toLocaleString</span>());
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="stat-card">
+                    <div class="stat-label">24 bits</div>
+                    <div class="stat-value">16.7M</div>
+                    <div class="stat-label">True Colors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">32 bits</div>
+                    <div class="stat-value">4.3B</div>
+                    <div class="stat-label">Deep Colors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">16 bits</div>
+                    <div class="stat-value">65.5K</div>
+                    <div class="stat-label">High Colors</div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>📝 Nota Histórica:</strong> Todos os computadores modernos usam hardware de 24 ou 32 bits para resolução de cores. Computadores antigos usavam 16 bits (65.536 cores) e computadores muito antigos e celulares antigos usavam 8 bits (256 cores).
+            </div>
+        </section>
+
+        <!-- Pixel Depth -->
+        <section class="section">
+            <h2>🎨 screen.pixelDepth - Profundidade de Pixel</h2>
+            <p>A propriedade <code>screen.pixelDepth</code> retorna a profundidade de pixel da tela em bits.</p>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração Interativa</h3>
+                <button class="btn" onclick="showPixelDepth()">🔍 Mostrar Profundidade de Pixel</button>
+                <div id="pixelDepthOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block" style="margin-top: 20px;">
+<span class="comment">// Obter profundidade de pixel</span>
+<span class="keyword">let</span> profundidadePixel = <span class="keyword">screen</span>.pixelDepth;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Pixel Depth: "</span> + profundidadePixel + <span class="string">" bits"</span>);
+
+<span class="comment">// Comparar com colorDepth</span>
+<span class="keyword">if</span> (<span class="keyword">screen</span>.pixelDepth === <span class="keyword">screen</span>.colorDepth) {
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"✅ Valores iguais (normal em computadores modernos)"</span>);
+}
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Diferença entre colorDepth e pixelDepth:</strong><br><br>
+                Para computadores modernos, <code>colorDepth</code> e <code>pixelDepth</code> são iguais. A distinção era relevante em hardware mais antigo onde havia diferença entre a profundidade de cor suportada e a profundidade real dos pixels.
+            </div>
+
+            <div class="demo-box">
+                <h3>🎯 Comparação Lado a Lado</h3>
+                <button class="btn" onclick="compareDepths()">⚖️ Comparar colorDepth vs pixelDepth</button>
+                <div id="depthComparison" class="output" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- Exemplos Práticos -->
+        <section class="section">
+            <h2>🚀 Exemplos Práticos de Uso</h2>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h4>📱 1. Detectar Tipo de Dispositivo</h4>
+                    <p>Use o tamanho da tela para identificar o dispositivo do usuário.</p>
+                    <button class="btn" onclick="detectDeviceType()">🔍 Detectar Dispositivo</button>
+                    <div id="deviceType" style="margin-top: 10px; font-weight: bold;"></div>
+                </div>
+
+                <div class="card">
+                    <h4>🖼️ 2. Recomendar Resolução de Imagem</h4>
+                    <p>Sugira qualidade de imagem baseada na resolução da tela.</p>
+                    <button class="btn" onclick="recommendImageQuality()">🎨 Recomendar Qualidade</button>
+                    <div id="imageQuality" style="margin-top: 10px; font-weight: bold;"></div>
+                </div>
+
+                <div class="card">
+                    <h4>📺 3. Detectar Multi-Monitor</h4>
+                    <p>Identifique se o usuário tem múltiplos monitores.</p>
+                    <button class="btn" onclick="detectMultiMonitor()">🖥️ Verificar Monitores</button>
+                    <div id="multiMonitor" style="margin-top: 10px; font-weight: bold;"></div>
+                </div>
+
+                <div class="card">
+                    <h4>🎮 4. Verificar Suporte a Cores</h4>
+                    <p>Verifique se a tela suporta cores modernas.</p>
+                    <button class="btn" onclick="checkColorSupport()">✅ Verificar Suporte</button>
+                    <div id="colorSupport" style="margin-top: 10px; font-weight: bold;"></div>
+                </div>
+            </div>
+
+            <div class="demo-box" style="margin-top: 30px;">
+                <h3>🎯 Exemplo Completo: Dashboard de Informações da Tela</h3>
+                <button class="btn" onclick="showFullDashboard()">📊 Mostrar Dashboard Completo</button>
+                <div id="fullDashboard" style="display: none; margin-top: 20px;"></div>
+
+                <div class="code-block" style="margin-top: 20px;">
+<span class="comment">// Função completa para obter todas as informações</span>
+<span class="keyword">function</span> <span class="function">getScreenInfo</span>() {
+    <span class="keyword">return</span> {
+        <span class="keyword">width</span>: <span class="keyword">screen</span>.width,
+        <span class="keyword">height</span>: <span class="keyword">screen</span>.height,
+        <span class="keyword">availWidth</span>: <span class="keyword">screen</span>.availWidth,
+        <span class="keyword">availHeight</span>: <span class="keyword">screen</span>.availHeight,
+        <span class="keyword">colorDepth</span>: <span class="keyword">screen</span>.colorDepth,
+        <span class="keyword">pixelDepth</span>: <span class="keyword">screen</span>.pixelDepth,
+        <span class="keyword">aspectRatio</span>: (<span class="keyword">screen</span>.width / <span class="keyword">screen</span>.height).<span class="function">toFixed</span>(<span class="number">2</span>),
+        <span class="keyword">totalPixels</span>: <span class="keyword">screen</span>.width * <span class="keyword">screen</span>.height
+    };
+}
+
+<span class="comment">// Usar as informações</span>
+<span class="keyword">let</span> info = <span class="function">getScreenInfo</span>();
+<span class="keyword">console</span>.<span class="function">log</span>(info);
+                </div>
+            </div>
+        </section>
+
+        <!-- Referência Completa -->
+        <section class="section">
+            <h2>📖 Referência Completa - Propriedades do Screen</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Propriedade</th>
+                        <th>Descrição</th>
+                        <th>Exemplo de Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>screen.width</code></td>
+                        <td>Largura total da tela em pixels</td>
+                        <td>1920</td>
+                    </tr>
+                    <tr>
+                        <td><code>screen.height</code></td>
+                        <td>Altura total da tela em pixels</td>
+                        <td>1080</td>
+                    </tr>
+                    <tr>
+                        <td><code>screen.availWidth</code></td>
+                        <td>Largura disponível (sem barra de tarefas)</td>
+                        <td>1920</td>
+                    </tr>
+                    <tr>
+                        <td><code>screen.availHeight</code></td>
+                        <td>Altura disponível (sem barra de tarefas)</td>
+                        <td>1040</td>
+                    </tr>
+                    <tr>
+                        <td><code>screen.colorDepth</code></td>
+                        <td>Profundidade de cor em bits</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td><code>screen.pixelDepth</code></td>
+                        <td>Profundidade de pixel em bits</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td><code>screen.orientation</code></td>
+                        <td>Orientação da tela (se disponível)</td>
+                        <td>"landscape-primary"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>🔗 Propriedades Relacionadas:</strong>
+                <ul style="margin-top: 10px; line-height: 1.8;">
+                    <li><code>window.innerWidth</code> / <code>window.innerHeight</code> - Tamanho da janela do navegador</li>
+                    <li><code>window.outerWidth</code> / <code>window.outerHeight</code> - Tamanho da janela incluindo barras</li>
+                    <li><code>window.devicePixelRatio</code> - Proporção de pixels do dispositivo (para telas Retina)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Casos de Uso -->
+        <section class="section">
+            <h2>💼 Casos de Uso Reais</h2>
+            
+            <div class="property-list">
+                <h3>Quando usar screen.width e screen.height?</h3>
+                <ul>
+                    <li>✅ Determinar o tipo de dispositivo (mobile, tablet, desktop)</li>
+                    <li>✅ Adaptar a qualidade de vídeos e imagens baseado na resolução</li>
+                    <li>✅ Criar apresentações em tela cheia otimizadas</li>
+                    <li>✅ Estatísticas de uso (analytics) sobre resoluções dos usuários</li>
+                </ul>
+
+                <h3 style="margin-top: 20px;">Quando usar availWidth e availHeight?</h3>
+                <ul>
+                    <li>✅ Maximizar janelas pop-up respeitando a barra de tarefas</li>
+                    <li>✅ Criar overlays e modais em tela cheia</li>
+                    <li>✅ Posicionar elementos para ocupar toda área utilizável</li>
+                    <li>✅ Calcular tamanhos máximos para elementos da UI</li>
+                </ul>
+
+                <h3 style="margin-top: 20px;">Quando usar colorDepth e pixelDepth?</h3>
+                <ul>
+                    <li>✅ Detectar suporte a cores para gráficos avançados</li>
+                    <li>✅ Otimizar renderização de canvas e WebGL</li>
+                    <li>✅ Adaptar paletas de cores baseado nas capacidades da tela</li>
+                    <li>✅ Diagnosticar problemas de compatibilidade de display</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p><strong>🎓 Guia Interativo BOM - Screen Object</strong></p>
+            <p>Material de estudo sobre JavaScript e Browser Object Model</p>
+            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">
+                Baseado em: <a href="https://www.w3schools.com/js/js_window_screen.asp" target="_blank" style="color: #667eea;">W3Schools - JavaScript Window Screen</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // ===== VISUALIZAÇÃO RÁPIDA =====
+        function showQuickStats() {
+            const container = document.getElementById('quickStats');
+            container.style.display = 'block';
+            
+            container.innerHTML = `
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <div class="stat-label">Largura Total</div>
+                        <div class="stat-value">${screen.width}px</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Altura Total</div>
+                        <div class="stat-value">${screen.height}px</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Profundidade de Cor</div>
+                        <div class="stat-value">${screen.colorDepth} bits</div>
+                    </div>
+                </div>
+            `;
+            
+            console.log('📊 Estatísticas da Tela:', {
+                width: screen.width,
+                height: screen.height,
+                colorDepth: screen.colorDepth
+            });
+        }
+
+        // ===== SCREEN WIDTH =====
+        function showScreenWidth() {
+            const output = document.getElementById('widthOutput');
+            output.style.display = 'block';
+            
+            output.innerHTML = `
+                <strong>📐 Largura da Tela:</strong><br><br>
+                screen.width = <span style="color: #4CAF50; font-size: 1.3em;">${screen.width}px</span><br><br>
+                <strong>Informações Adicionais:</strong><br>
+                • Largura em polegadas (aprox.): ${(screen.width / 96).toFixed(1)}"<br>
+                • Total de pixels: ${(screen.width * screen.height).toLocaleString()}
+            `;
+            
+            console.log('Screen Width:', screen.width + 'px');
+        }
+
+        // ===== SCREEN HEIGHT =====
+        function showScreenHeight() {
+            const output = document.getElementById('heightOutput');
+            output.style.display = 'block';
+            
+            output.innerHTML = `
+                <strong>📐 Altura da Tela:</strong><br><br>
+                screen.height = <span style="color: #4CAF50; font-size: 1.3em;">${screen.height}px</span><br><br>
+                <strong>Informações Adicionais:</strong><br>
+                • Altura em polegadas (aprox.): ${(screen.height / 96).toFixed(1)}"<br>
+                • Diagonal estimada: ${Math.sqrt(Math.pow(screen.width, 2) + Math.pow(screen.height, 2)) / 96}".toFixed(1)}"
+            `;
+            
+            console.log('Screen Height:', screen.height + 'px');
+        }
+
+        // ===== ORIENTAÇÃO =====
+        function detectOrientation() {
+            const result = document.getElementById('orientationResult');
+            const orientation = screen.width > screen.height ? 'Paisagem (Landscape) 🖼️' : 'Retrato (Portrait) 📱';
+            
+            result.innerHTML = `Orientação: ${orientation}`;
+            console.log('Orientação detectada:', orientation);
+        }
+
+        // ===== ASPECT RATIO =====
+        function calculateAspectRatio() {
+            const result = document.getElementById('ratioResult');
+            const ratio = (screen.width / screen.height).toFixed(2);
+            
+            let commonRatio = '';
+            if (Math.abs(ratio - 1.78) < 0.1) commonRatio = ' (16:9)';
+            else if (Math.abs(ratio - 1.6) < 0.1) commonRatio = ' (16:10)';
+            else if (Math.abs(ratio - 1.33) < 0.1) commonRatio = ' (4:3)';
+            
+            result.innerHTML = `Proporção: ${ratio}:1${commonRatio}`;
+            console.log('Aspect Ratio:', ratio);
+        }
+
+        // ===== COMPARAR LARGURAS =====
+        function compareWidths() {
+            const output = document.getElementById('widthComparison');
+            output.style.display = 'block';
+            
+            const diff = screen.width - screen.availWidth;
+            
+            output.innerHTML = `
+                <strong>📊 Comparação de Larguras:</strong><br><br>
+                • <strong>screen.width:</strong> <span style="color: #2196F3;">${screen.width}px</span> (Total)<br>
+                • <strong>screen.availWidth:</strong> <span style="color: #4CAF50;">${screen.availWidth}px</span> (Disponível)<br>
+                • <strong>Diferença:</strong> <span style="color: #FF9800;">${diff}px</span> ocupados pela interface<br><br>
+                ${diff === 0 ? '✅ Não há barra de tarefas lateral!' : '⚠️ Barra de tarefas detectada!'}
+            `;
+            
+            console.log('Comparação:', { total: screen.width, disponivel: screen.availWidth, diferenca: diff });
+        }
+
+        // ===== COMPARAR ALTURAS =====
+        function compareHeights() {
+            const output = document.getElementById('heightComparison');
+            output.style.display = 'block';
+            
+            const diff = screen.height - screen.availHeight;
+            
+            output.innerHTML = `
+                <strong>📊 Comparação de Alturas:</strong><br><br>
+                • <strong>screen.height:</strong> <span style="color: #2196F3;">${screen.height}px</span> (Total)<br>
+                • <strong>screen.availHeight:</strong> <span style="color: #4CAF50;">${screen.availHeight}px</span> (Disponível)<br>
+                • <strong>Diferença:</strong> <span style="color: #FF9800;">${diff}px</span> ocupados pela barra de tarefas<br><br>
+                📏 Porcentagem disponível: ${((screen.availHeight / screen.height) * 100).toFixed(1)}%
+            `;
+            
+            console.log('Comparação:', { total: screen.height, disponivel: screen.availHeight, diferenca: diff });
+        }
+
+        // ===== COLOR DEPTH =====
+        function showColorDepth() {
+            const output = document.getElementById('colorDepthOutput');
+            output.style.display = 'block';
+            
+            const depth = screen.colorDepth;
+            const colors = Math.pow(2, depth);
+            
+            let colorType = '';
+            if (depth === 24) colorType = 'True Colors ✨';
+            else if (depth === 32) colorType = 'Deep Colors 🌈';
+            else if (depth === 16) colorType = 'High Colors 📺';
+            else if (depth === 8) colorType = 'VGA Colors 🕹️';
+            
+            output.innerHTML = `
+                <strong>🎨 Profundidade de Cor:</strong><br><br>
+                • <strong>screen.colorDepth:</strong> <span style="color: #E91E63; font-size: 1.3em;">${depth} bits</span><br>
+                • <strong>Cores possíveis:</strong> ${colors.toLocaleString()} (${colorType})<br>
+                • <strong>Formato RGB:</strong> ${depth === 24 ? 'RGB (8+8+8)' : depth === 32 ? 'RGBA (8+8+8+8)' : 'Outro'}
+            `;
+            
+            console.log('Color Depth:', depth + ' bits =', colors.toLocaleString(), 'cores');
+        }
+
+        // ===== PIXEL DEPTH =====
+        function showPixelDepth() {
+            const output = document.getElementById('pixelDepthOutput');
+            output.style.display = 'block';
+            
+            const depth = screen.pixelDepth;
+            
+            output.innerHTML = `
+                <strong>🔍 Profundidade de Pixel:</strong><br><br>
+                • <strong>screen.pixelDepth:</strong> <span style="color: #9C27B0; font-size: 1.3em;">${depth} bits</span><br>
+                • <strong>Bytes por pixel:</strong> ${depth / 8} bytes<br>
+                • <strong>Status:</strong> ${depth >= 24 ? '✅ Moderno' : '⚠️ Antigo'}
+            `;
+            
+            console.log('Pixel Depth:', depth + ' bits');
+        }
+
+        // ===== COMPARAR DEPTHS =====
+        function compareDepths() {
+            const output = document.getElementById('depthComparison');
+            output.style.display = 'block';
+            
+            const colorD = screen.colorDepth;
+            const pixelD = screen.pixelDepth;
+            const equal = colorD === pixelD;
+            
+            output.innerHTML = `
+                <strong>⚖️ Comparação:</strong><br><br>
+                • <strong>screen.colorDepth:</strong> ${colorD} bits<br>
+                • <strong>screen.pixelDepth:</strong> ${pixelD} bits<br><br>
+                ${equal ? 
+                    '✅ <strong>Valores iguais</strong> (normal em computadores modernos)' : 
+                    '⚠️ <strong>Valores diferentes</strong> (hardware mais antigo)'}
+            `;
+            
+            console.log('Comparação:', { colorDepth: colorD, pixelDepth: pixelD, iguais: equal });
+        }
+
+        // ===== DETECTAR TIPO DE DISPOSITIVO =====
+        function detectDeviceType() {
+            const result = document.getElementById('deviceType');
+            const width = screen.width;
+            const height = screen.height;
+            const diagonal = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
+            
+            let type, icon, color;
+            
+            if (width < 768) {
+                type = 'Smartphone';
+                icon = '📱';
+                color = '#4CAF50';
+            } else if (width < 1024) {
+                type = 'Tablet';
+                icon = '📱';
+                color = '#2196F3';
+            } else if (width < 1920) {
+                type = 'Laptop/Desktop';
+                icon = '💻';
+                color = '#9C27B0';
+            } else {
+                type = 'Monitor Grande/4K';
+                icon = '🖥️';
+                color = '#FF9800';
+            }
+            
+            result.innerHTML = `<span style="color: ${color};">${icon} ${type} (${width}x${height})</span>`;
+            console.log('Dispositivo:', type);
+        }
+
+        // ===== RECOMENDAR QUALIDADE DE IMAGEM =====
+        function recommendImageQuality() {
+            const result = document.getElementById('imageQuality');
+            const totalPixels = screen.width * screen.height;
+            
+            let quality, recommendation;
+            
+            if (totalPixels < 1000000) { // < 1MP
+                quality = 'Baixa (SD)';
+                recommendation = 'Imagens até 720p';
+            } else if (totalPixels < 2000000) { // < 2MP
+                quality = 'Média (HD)';
+                recommendation = 'Imagens 720p - 1080p';
+            } else if (totalPixels < 4000000) { // < 4MP
+                quality = 'Alta (Full HD)';
+                recommendation = 'Imagens 1080p - 2K';
+            } else {
+                quality = 'Muito Alta (4K+)';
+                recommendation = 'Imagens 2K - 4K';
+            }
+            
+            result.innerHTML = `
+                <span style="color: #E91E63;">
+                    🎨 ${quality}<br>
+                    <small>${recommendation}</small>
+                </span>
+            `;
+            
+            console.log('Qualidade recomendada:', quality);
+        }
+
+        // ===== DETECTAR MULTI-MONITOR =====
+        function detectMultiMonitor() {
+            const result = document.getElementById('multiMonitor');
+            const screenX = window.screenX || window.screenLeft || 0;
+            const screenY = window.screenY || window.screenTop || 0;
+            
+            const likelyMultiMonitor = (
+                screenX < -100 || 
+                screenX > screen.width + 100 ||
+                screenY < -100 || 
+                screenY > screen.height + 100
+            );
+            
+            result.innerHTML = likelyMultiMonitor ?
+                '<span style="color: #2196F3;">🖥️🖥️ Provável múltiplos monitores</span>' :
+                '<span style="color: #4CAF50;">🖥️ Monitor único detectado</span>';
+            
+            console.log('Posição da janela:', { x: screenX, y: screenY });
+        }
+
+        // ===== VERIFICAR SUPORTE A CORES =====
+        function checkColorSupport() {
+            const result = document.getElementById('colorSupport');
+            const depth = screen.colorDepth;
+            
+            let support, icon, color;
+            
+            if (depth >= 24) {
+                support = 'Excelente suporte a cores modernas';
+                icon = '✅';
+                color = '#4CAF50';
+            } else if (depth >= 16) {
+                support = 'Suporte básico a cores';
+                icon = '⚠️';
+                color = '#FF9800';
+            } else {
+                support = 'Suporte limitado a cores';
+                icon = '❌';
+                color = '#F44336';
+            }
+            
+            result.innerHTML = `<span style="color: ${color};">${icon} ${support}</span>`;
+            console.log('Suporte de cores:', support);
+        }
+
+        // ===== DASHBOARD COMPLETO =====
+        function showFullDashboard() {
+            const output = document.getElementById('fullDashboard');
+            output.style.display = 'block';
+            
+            const aspectRatio = (screen.width / screen.height).toFixed(2);
+            const totalPixels = screen.width * screen.height;
+            const megaPixels = (totalPixels / 1000000).toFixed(2);
+            const colors = Math.pow(2, screen.colorDepth);
+            
+            output.innerHTML = `
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <div class="stat-label">Resolução</div>
+                        <div class="stat-value">${screen.width}x${screen.height}</div>
+                        <div class="stat-label">${megaPixels} MP</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Área Disponível</div>
+                        <div class="stat-value">${screen.availWidth}x${screen.availHeight}</div>
+                        <div class="stat-label">${((screen.availWidth * screen.availHeight) / 1000000).toFixed(2)} MP</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Aspect Ratio</div>
+                        <div class="stat-value">${aspectRatio}:1</div>
+                        <div class="stat-label">${screen.width > screen.height ? 'Paisagem' : 'Retrato'}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Profundidade</div>
+                        <div class="stat-value">${screen.colorDepth} bits</div>
+                        <div class="stat-label">${(colors / 1000000).toFixed(1)}M cores</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Espaço Perdido</div>
+                        <div class="stat-value">${screen.height - screen.availHeight}px</div>
+                        <div class="stat-label">Barra de Tarefas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">DPI Estimado</div>
+                        <div class="stat-value">~96</div>
+                        <div class="stat-label">Padrão Web</div>
+                    </div>
+                </div>
+            `;
+            
+            console.log('📊 Dashboard Completo:', {
+                resolucao: `${screen.width}x${screen.height}`,
+                disponivel: `${screen.availWidth}x${screen.availHeight}`,
+                aspectRatio: aspectRatio,
+                megaPixels: megaPixels,
+                colorDepth: screen.colorDepth,
+                cores: colors.toLocaleString()
+            });
+        }
+
+        // ===== INICIALIZAÇÃO =====
+        window.addEventListener('load', function() {
+            console.log('%c🖥️ Guia BOM - Screen carregado!', 'color: #667eea; font-size: 16px; font-weight: bold;');
+            console.log('%cInformações da sua tela:', 'color: #764ba2; font-size: 14px;');
+            console.log('Resolução:', screen.width + 'x' + screen.height);
+            console.log('Disponível:', screen.availWidth + 'x' + screen.availHeight);
+            console.log('Profundidade de Cor:', screen.colorDepth + ' bits');
+        });
+    </script>
+</body>
+</html>

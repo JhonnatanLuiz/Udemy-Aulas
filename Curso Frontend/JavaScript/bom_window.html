@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM - Window Object - Guia Interativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #e6e6e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .keyword { color: #c586c0; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+        .comment { color: #6a9955; }
+        .function { color: #dcdcaa; }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .property-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .property-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .property-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+        }
+
+        .property-list li code {
+            background: #e8eaf6;
+            padding: 2px 8px;
+            border-radius: 3px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        input[type="number"], input[type="text"], input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .result {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🪟 BOM - Window Object</h1>
+            <p class="subtitle">Guia Interativo Completo sobre o Objeto Window em JavaScript</p>
+            <div style="margin-top: 15px;">
+                <span class="badge">JavaScript</span>
+                <span class="badge">BOM</span>
+                <span class="badge">Interativo</span>
+            </div>
+        </header>
+
+        <!-- Introdução -->
+        <section class="section">
+            <h2>📚 O que é o Window Object?</h2>
+            <p>O objeto <code>window</code> representa a janela do navegador e é suportado por todos os navegadores. É o objeto global do JavaScript no ambiente do navegador.</p>
+            
+            <div class="info-box">
+                <strong>💡 Importante:</strong> Todos os objetos, funções e variáveis globais do JavaScript automaticamente se tornam membros do objeto <code>window</code>.
+            </div>
+
+            <h3>Características Principais:</h3>
+            <ul style="line-height: 2;">
+                <li>✅ Variáveis globais são propriedades do objeto window</li>
+                <li>✅ Funções globais são métodos do objeto window</li>
+                <li>✅ O objeto document (HTML DOM) também é uma propriedade do window</li>
+                <li>✅ Não há padrão oficial para o BOM, mas é amplamente implementado</li>
+            </ul>
+
+            <div class="code-block">
+<span class="comment">// Estes dois comandos são equivalentes:</span>
+<span class="keyword">window</span>.<span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">"header"</span>);
+<span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">"header"</span>);
+
+<span class="comment">// Variável global se torna propriedade do window</span>
+<span class="keyword">var</span> nome = <span class="string">"João"</span>;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">window</span>.nome); <span class="comment">// "João"</span>
+            </div>
+        </section>
+
+        <!-- Window Size -->
+        <section class="section">
+            <h2>📏 Tamanho da Janela (Window Size)</h2>
+            <p>Duas propriedades podem ser usadas para determinar o tamanho da janela do navegador (viewport):</p>
+
+            <div class="property-list">
+                <ul>
+                    <li><code>window.innerHeight</code> - altura interna da janela (em pixels)</li>
+                    <li><code>window.innerWidth</code> - largura interna da janela (em pixels)</li>
+                    <li><code>window.outerHeight</code> - altura externa da janela, incluindo barras</li>
+                    <li><code>window.outerWidth</code> - largura externa da janela, incluindo barras</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Atenção:</strong> As propriedades <code>innerWidth</code> e <code>innerHeight</code> NÃO incluem barras de ferramentas e scrollbars.
+            </div>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração Interativa - Dimensões da Janela</h3>
+                <button class="btn" onclick="showWindowSize()">📐 Mostrar Dimensões da Janela</button>
+                <button class="btn" onclick="startWindowMonitor()">🔄 Monitorar Redimensionamento</button>
+                <button class="btn" onclick="stopWindowMonitor()">⏹️ Parar Monitoramento</button>
+                
+                <div id="sizeOutput" class="output" style="display: none;">
+                    <div id="sizeContent"></div>
+                </div>
+
+                <div class="code-block" style="margin-top: 20px;">
+<span class="comment">// Exemplo de código:</span>
+<span class="keyword">let</span> w = <span class="keyword">window</span>.innerWidth;
+<span class="keyword">let</span> h = <span class="keyword">window</span>.innerHeight;
+
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">`Largura: ${w}px, Altura: ${h}px`</span>);
+
+<span class="comment">// Monitorar redimensionamento</span>
+<span class="keyword">window</span>.<span class="function">addEventListener</span>(<span class="string">'resize'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">'Janela redimensionada!'</span>);
+});
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 20px;">
+                <div class="card">
+                    <h4>📱 Uso Prático</h4>
+                    <p>Detectar se o usuário está em um dispositivo móvel ou desktop baseado no tamanho da janela.</p>
+                    <button class="btn" onclick="checkDeviceType()">Verificar Dispositivo</button>
+                    <div id="deviceResult" class="result"></div>
+                </div>
+                <div class="card">
+                    <h4>🎨 Design Responsivo</h4>
+                    <p>Adaptar o layout da página baseado nas dimensões da janela.</p>
+                    <button class="btn" onclick="checkViewportSize()">Verificar Viewport</button>
+                    <div id="viewportResult" class="result"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Window Methods -->
+        <section class="section">
+            <h2>🔧 Métodos do Window</h2>
+            <p>O objeto Window possui vários métodos úteis para manipular janelas do navegador:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Sintaxe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>window.open()</code></td>
+                        <td>Abre uma nova janela</td>
+                        <td><code>window.open(url, nome, especificações)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>window.close()</code></td>
+                        <td>Fecha a janela atual</td>
+                        <td><code>window.close()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>window.moveTo()</code></td>
+                        <td>Move a janela para uma posição</td>
+                        <td><code>window.moveTo(x, y)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>window.resizeTo()</code></td>
+                        <td>Redimensiona a janela</td>
+                        <td><code>window.resizeTo(largura, altura)</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-box">
+                <h3>🎯 window.open() - Abrir Nova Janela</h3>
+                <p>Abre uma nova janela ou aba do navegador com opções personalizadas.</p>
+                
+                <div class="grid-2">
+                    <div>
+                        <label for="urlInput">URL:</label>
+                        <input type="url" id="urlInput" value="https://www.google.com" placeholder="Digite uma URL">
+                        
+                        <label for="widthInput">Largura:</label>
+                        <input type="number" id="widthInput" value="800" min="100">
+                        
+                        <label for="heightInput">Altura:</label>
+                        <input type="number" id="heightInput" value="600" min="100">
+                    </div>
+                    <div>
+                        <button class="btn" onclick="openNewWindow()">🪟 Abrir Nova Janela</button>
+                        <button class="btn" onclick="openNewTab()">🔗 Abrir Nova Aba</button>
+                        <button class="btn" onclick="openWithFeatures()">⚙️ Abrir com Configurações</button>
+                        <button class="btn" onclick="closeNewWindow()">❌ Fechar Janela Aberta</button>
+                    </div>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// Abrir nova janela simples</span>
+<span class="keyword">let</span> novaJanela = <span class="keyword">window</span>.<span class="function">open</span>(<span class="string">"https://www.google.com"</span>);
+
+<span class="comment">// Abrir com especificações</span>
+<span class="keyword">let</span> janela = <span class="keyword">window</span>.<span class="function">open</span>(
+    <span class="string">"https://www.google.com"</span>,
+    <span class="string">"minhaJanela"</span>,
+    <span class="string">"width=800,height=600,left=100,top=100"</span>
+);
+
+<span class="comment">// Fechar a janela aberta</span>
+janela.<span class="function">close</span>();
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Especificações do window.open():</strong>
+                <ul style="margin-top: 10px; line-height: 1.8;">
+                    <li><code>width=número</code> - Largura da janela</li>
+                    <li><code>height=número</code> - Altura da janela</li>
+                    <li><code>left=número</code> - Posição horizontal</li>
+                    <li><code>top=número</code> - Posição vertical</li>
+                    <li><code>toolbar=yes|no</code> - Mostrar barra de ferramentas</li>
+                    <li><code>menubar=yes|no</code> - Mostrar barra de menu</li>
+                    <li><code>scrollbars=yes|no</code> - Mostrar barras de rolagem</li>
+                    <li><code>resizable=yes|no</code> - Permitir redimensionamento</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Bloqueadores de Pop-up:</strong> Muitos navegadores bloqueiam janelas abertas com <code>window.open()</code> a menos que sejam chamadas em resposta a uma ação do usuário (como clicar em um botão).
+            </div>
+        </section>
+
+        <!-- Window Scroll -->
+        <section class="section">
+            <h2>📜 Posição de Rolagem (Scroll)</h2>
+            <p>O Window object fornece propriedades e métodos para trabalhar com a rolagem da página:</p>
+
+            <div class="property-list">
+                <h3>Propriedades de Scroll:</h3>
+                <ul>
+                    <li><code>window.scrollX</code> - pixels rolados horizontalmente (somente leitura)</li>
+                    <li><code>window.scrollY</code> - pixels rolados verticalmente (somente leitura)</li>
+                    <li><code>window.pageXOffset</code> - alias para scrollX (compatibilidade)</li>
+                    <li><code>window.pageYOffset</code> - alias para scrollY (compatibilidade)</li>
+                </ul>
+
+                <h3 style="margin-top: 20px;">Métodos de Scroll:</h3>
+                <ul>
+                    <li><code>window.scrollTo(x, y)</code> - rola para coordenadas específicas</li>
+                    <li><code>window.scrollBy(x, y)</code> - rola por uma quantidade relativa</li>
+                    <li><code>window.scroll(x, y)</code> - alias para scrollTo</li>
+                </ul>
+            </div>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração de Scroll</h3>
+                <div class="grid-2">
+                    <div>
+                        <button class="btn" onclick="showScrollPosition()">📍 Mostrar Posição Atual</button>
+                        <button class="btn" onclick="scrollToTop()">⬆️ Ir para o Topo</button>
+                        <button class="btn" onclick="scrollToBottom()">⬇️ Ir para o Final</button>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="scrollSmooth(0, 500)">📊 Scroll Suave (500px)</button>
+                        <button class="btn" onclick="scrollByAmount(0, 200)">➕ Scroll Relativo (+200px)</button>
+                        <button class="btn" onclick="monitorScroll()">👁️ Monitorar Scroll</button>
+                    </div>
+                </div>
+
+                <div id="scrollOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block">
+<span class="comment">// Obter posição atual do scroll</span>
+<span class="keyword">let</span> x = <span class="keyword">window</span>.scrollX;
+<span class="keyword">let</span> y = <span class="keyword">window</span>.scrollY;
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">`Scroll: X=${x}, Y=${y}`</span>);
+
+<span class="comment">// Scroll para posição específica</span>
+<span class="keyword">window</span>.<span class="function">scrollTo</span>(<span class="number">0</span>, <span class="number">500</span>);
+
+<span class="comment">// Scroll suave (smooth)</span>
+<span class="keyword">window</span>.<span class="function">scrollTo</span>({
+    <span class="keyword">top</span>: <span class="number">0</span>,
+    <span class="keyword">left</span>: <span class="number">0</span>,
+    <span class="keyword">behavior</span>: <span class="string">'smooth'</span>
+});
+
+<span class="comment">// Scroll relativo</span>
+<span class="keyword">window</span>.<span class="function">scrollBy</span>(<span class="number">0</span>, <span class="number">100</span>); <span class="comment">// rola mais 100px para baixo</span>
+
+<span class="comment">// Detectar evento de scroll</span>
+<span class="keyword">window</span>.<span class="function">addEventListener</span>(<span class="string">'scroll'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">'Usuário rolou a página!'</span>);
+});
+                </div>
+            </div>
+        </section>
+
+        <!-- Window Location -->
+        <section class="section">
+            <h2>🌐 Propriedades de Localização</h2>
+            <p>Propriedades úteis do objeto Window para informações sobre a página e navegador:</p>
+
+            <div class="demo-box">
+                <h3>🎯 window.location - Informações da URL</h3>
+                <button class="btn" onclick="showLocationInfo()">🔍 Mostrar Informações da URL</button>
+                <button class="btn" onclick="reloadPage()">🔄 Recarregar Página</button>
+                
+                <div id="locationOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block">
+<span class="comment">// Propriedades do window.location</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">window</span>.location.href);     <span class="comment">// URL completa</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">window</span>.location.hostname); <span class="comment">// Nome do host</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">window</span>.location.pathname); <span class="comment">// Caminho da página</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">window</span>.location.protocol); <span class="comment">// Protocolo (http: ou https:)</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">window</span>.location.port);     <span class="comment">// Número da porta</span>
+
+<span class="comment">// Recarregar a página</span>
+<span class="keyword">window</span>.location.<span class="function">reload</span>();
+
+<span class="comment">// Navegar para outra URL</span>
+<span class="keyword">window</span>.location.href = <span class="string">"https://www.google.com"</span>;
+                </div>
+            </div>
+        </section>
+
+        <!-- Window Navigator -->
+        <section class="section">
+            <h2>🧭 window.navigator - Informações do Navegador</h2>
+            <p>O objeto <code>navigator</code> contém informações sobre o navegador do usuário:</p>
+
+            <div class="demo-box">
+                <h3>🎯 Informações do Navegador</h3>
+                <button class="btn" onclick="showNavigatorInfo()">🔍 Mostrar Info do Navegador</button>
+                <button class="btn" onclick="checkOnlineStatus()">📡 Status de Conexão</button>
+                <button class="btn" onclick="checkGeolocation()">📍 Verificar Geolocalização</button>
+                
+                <div id="navigatorOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block">
+<span class="comment">// Informações do navegador</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">navigator</span>.userAgent);   <span class="comment">// User agent string</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">navigator</span>.language);    <span class="comment">// Idioma do navegador</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">navigator</span>.platform);    <span class="comment">// Plataforma do SO</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">navigator</span>.onLine);      <span class="comment">// true se estiver online</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">navigator</span>.cookieEnabled); <span class="comment">// true se cookies habilitados</span>
+
+<span class="comment">// Verificar suporte a geolocalização</span>
+<span class="keyword">if</span> (<span class="keyword">navigator</span>.geolocation) {
+    <span class="keyword">navigator</span>.geolocation.<span class="function">getCurrentPosition</span>(<span class="keyword">function</span>(position) {
+        <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">`Lat: ${position.coords.latitude}`</span>);
+        <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">`Lon: ${position.coords.longitude}`</span>);
+    });
+}
+                </div>
+            </div>
+        </section>
+
+        <!-- Window Screen -->
+        <section class="section">
+            <h2>🖥️ window.screen - Informações da Tela</h2>
+            <p>O objeto <code>screen</code> contém informações sobre a tela do usuário:</p>
+
+            <div class="demo-box">
+                <h3>🎯 Propriedades da Tela</h3>
+                <button class="btn" onclick="showScreenInfo()">📺 Mostrar Info da Tela</button>
+                <button class="btn" onclick="showAvailableArea()">📐 Área Disponível</button>
+                
+                <div id="screenOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block">
+<span class="comment">// Propriedades do screen</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">screen</span>.width);         <span class="comment">// Largura total da tela</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">screen</span>.height);        <span class="comment">// Altura total da tela</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">screen</span>.availWidth);    <span class="comment">// Largura disponível</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">screen</span>.availHeight);   <span class="comment">// Altura disponível</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">screen</span>.colorDepth);    <span class="comment">// Profundidade de cor</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">screen</span>.pixelDepth);    <span class="comment">// Profundidade de pixel</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">screen</span>.orientation);   <span class="comment">// Orientação da tela</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Window History -->
+        <section class="section">
+            <h2>📖 window.history - Histórico de Navegação</h2>
+            <p>O objeto <code>history</code> contém o histórico de navegação do navegador:</p>
+
+            <div class="demo-box">
+                <h3>🎯 Navegação pelo Histórico</h3>
+                <p>Use os botões abaixo para testar a navegação pelo histórico:</p>
+                
+                <button class="btn" onclick="goBack()">⬅️ Voltar</button>
+                <button class="btn" onclick="goForward()">➡️ Avançar</button>
+                <button class="btn" onclick="showHistoryLength()">📊 Tamanho do Histórico</button>
+                
+                <div id="historyOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block">
+<span class="comment">// Métodos do history</span>
+<span class="keyword">window</span>.history.<span class="function">back</span>();     <span class="comment">// Volta uma página</span>
+<span class="keyword">window</span>.history.<span class="function">forward</span>();  <span class="comment">// Avança uma página</span>
+<span class="keyword">window</span>.history.<span class="function">go</span>(<span class="number">-2</span>);     <span class="comment">// Volta 2 páginas</span>
+<span class="keyword">window</span>.history.<span class="function">go</span>(<span class="number">1</span>);      <span class="comment">// Avança 1 página</span>
+
+<span class="comment">// Tamanho do histórico</span>
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">window</span>.history.length);
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Dica de Segurança:</strong> Por razões de privacidade, o JavaScript não pode acessar as URLs específicas no histórico do navegador, apenas pode navegar entre elas.
+            </div>
+        </section>
+
+        <!-- Window Alert/Confirm/Prompt -->
+        <section class="section">
+            <h2>💬 Caixas de Diálogo</h2>
+            <p>O Window fornece três métodos para criar caixas de diálogo:</p>
+
+            <div class="property-list">
+                <ul>
+                    <li><code>window.alert()</code> - Exibe uma mensagem de alerta</li>
+                    <li><code>window.confirm()</code> - Exibe uma caixa de confirmação (OK/Cancelar)</li>
+                    <li><code>window.prompt()</code> - Solicita entrada do usuário</li>
+                </ul>
+            </div>
+
+            <div class="demo-box">
+                <h3>🎯 Demonstração de Diálogos</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>⚠️ Alert</h4>
+                        <p>Exibe uma mensagem simples</p>
+                        <button class="btn" onclick="showAlert()">Testar Alert</button>
+                    </div>
+                    <div class="card">
+                        <h4>❓ Confirm</h4>
+                        <p>Pergunta ao usuário (Sim/Não)</p>
+                        <button class="btn" onclick="showConfirm()">Testar Confirm</button>
+                    </div>
+                    <div class="card">
+                        <h4>✏️ Prompt</h4>
+                        <p>Solicita entrada de dados</p>
+                        <button class="btn" onclick="showPrompt()">Testar Prompt</button>
+                    </div>
+                    <div class="card">
+                        <h4>🎨 Exemplo Prático</h4>
+                        <p>Login simples com prompt</p>
+                        <button class="btn" onclick="simpleLogin()">Login Interativo</button>
+                    </div>
+                </div>
+
+                <div id="dialogOutput" class="output" style="display: none;"></div>
+
+                <div class="code-block">
+<span class="comment">// Alert - apenas exibe mensagem</span>
+<span class="keyword">window</span>.<span class="function">alert</span>(<span class="string">"Bem-vindo ao site!"</span>);
+
+<span class="comment">// Confirm - retorna true ou false</span>
+<span class="keyword">let</span> resposta = <span class="keyword">window</span>.<span class="function">confirm</span>(<span class="string">"Deseja continuar?"</span>);
+<span class="keyword">if</span> (resposta) {
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Usuário clicou OK"</span>);
+} <span class="keyword">else</span> {
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Usuário clicou Cancelar"</span>);
+}
+
+<span class="comment">// Prompt - retorna o texto digitado ou null</span>
+<span class="keyword">let</span> nome = <span class="keyword">window</span>.<span class="function">prompt</span>(<span class="string">"Qual é o seu nome?"</span>, <span class="string">"Digite aqui"</span>);
+<span class="keyword">if</span> (nome) {
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">`Olá, ${nome}!`</span>);
+}
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Importante:</strong> Essas caixas de diálogo bloqueiam a execução do JavaScript até que o usuário as feche. Use com moderação!
+            </div>
+        </section>
+
+        <!-- Window Timers -->
+        <section class="section">
+            <h2>⏱️ Temporizadores (Timers)</h2>
+            <p>O Window fornece métodos para executar código após um período de tempo:</p>
+
+            <div class="property-list">
+                <ul>
+                    <li><code>setTimeout(função, milissegundos)</code> - Executa uma vez após um delay</li>
+                    <li><code>setInterval(função, milissegundos)</code> - Executa repetidamente</li>
+                    <li><code>clearTimeout(id)</code> - Cancela um setTimeout</li>
+                    <li><code>clearInterval(id)</code> - Cancela um setInterval</li>
+                </ul>
+            </div>
+
+            <div class="demo-box">
+                <h3>🎯 setTimeout - Execução Única</h3>
+                <input type="number" id="timeoutDelay" value="3" min="1" max="10" style="width: 100px;">
+                <label for="timeoutDelay">segundos</label>
+                <button class="btn" onclick="testSetTimeout()">⏰ Iniciar Timeout</button>
+                <button class="btn" onclick="cancelTimeout()">❌ Cancelar Timeout</button>
+                
+                <div id="timeoutOutput" class="output" style="display: none;"></div>
+
+                <h3>🎯 setInterval - Execução Repetida</h3>
+                <button class="btn" onclick="startCounter()">▶️ Iniciar Contador</button>
+                <button class="btn" onclick="stopCounter()">⏹️ Parar Contador</button>
+                <button class="btn" onclick="resetCounter()">🔄 Resetar Contador</button>
+                
+                <div id="counterDisplay" class="output" style="display: none;">
+                    <h3 style="color: #4CAF50; font-size: 2em; text-align: center;">0</h3>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// setTimeout - executa uma vez</span>
+<span class="keyword">let</span> timeoutId = <span class="keyword">setTimeout</span>(<span class="keyword">function</span>() {
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Executado após 3 segundos!"</span>);
+}, <span class="number">3000</span>);
+
+<span class="comment">// Cancelar timeout</span>
+<span class="keyword">clearTimeout</span>(timeoutId);
+
+<span class="comment">// setInterval - executa repetidamente</span>
+<span class="keyword">let</span> contador = <span class="number">0</span>;
+<span class="keyword">let</span> intervalId = <span class="keyword">setInterval</span>(<span class="keyword">function</span>() {
+    contador++;
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">`Contador: ${contador}`</span>);
+}, <span class="number">1000</span>);
+
+<span class="comment">// Parar interval</span>
+<span class="keyword">clearInterval</span>(intervalId);
+                </div>
+            </div>
+        </section>
+
+        <!-- Referência Completa -->
+        <section class="section">
+            <h2>📖 Referência Completa - Propriedades e Métodos</h2>
+            
+            <h3>🔹 Propriedades Principais</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Propriedade</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>window.innerWidth</code></td><td>Largura interna da janela</td></tr>
+                    <tr><td><code>window.innerHeight</code></td><td>Altura interna da janela</td></tr>
+                    <tr><td><code>window.outerWidth</code></td><td>Largura externa da janela</td></tr>
+                    <tr><td><code>window.outerHeight</code></td><td>Altura externa da janela</td></tr>
+                    <tr><td><code>window.scrollX</code></td><td>Pixels rolados horizontalmente</td></tr>
+                    <tr><td><code>window.scrollY</code></td><td>Pixels rolados verticalmente</td></tr>
+                    <tr><td><code>window.pageXOffset</code></td><td>Alias para scrollX</td></tr>
+                    <tr><td><code>window.pageYOffset</code></td><td>Alias para scrollY</td></tr>
+                    <tr><td><code>window.screenX</code></td><td>Posição X da janela na tela</td></tr>
+                    <tr><td><code>window.screenY</code></td><td>Posição Y da janela na tela</td></tr>
+                    <tr><td><code>window.location</code></td><td>Objeto com informações da URL</td></tr>
+                    <tr><td><code>window.navigator</code></td><td>Objeto com informações do navegador</td></tr>
+                    <tr><td><code>window.history</code></td><td>Objeto com histórico de navegação</td></tr>
+                    <tr><td><code>window.screen</code></td><td>Objeto com informações da tela</td></tr>
+                    <tr><td><code>window.document</code></td><td>Documento HTML (DOM)</td></tr>
+                    <tr><td><code>window.localStorage</code></td><td>Armazenamento local persistente</td></tr>
+                    <tr><td><code>window.sessionStorage</code></td><td>Armazenamento da sessão</td></tr>
+                    <tr><td><code>window.console</code></td><td>Console para debugging</td></tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 30px;">🔹 Métodos Principais</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>window.alert()</code></td><td>Exibe mensagem de alerta</td></tr>
+                    <tr><td><code>window.confirm()</code></td><td>Exibe diálogo de confirmação</td></tr>
+                    <tr><td><code>window.prompt()</code></td><td>Solicita entrada do usuário</td></tr>
+                    <tr><td><code>window.open()</code></td><td>Abre nova janela</td></tr>
+                    <tr><td><code>window.close()</code></td><td>Fecha a janela atual</td></tr>
+                    <tr><td><code>window.focus()</code></td><td>Foca na janela</td></tr>
+                    <tr><td><code>window.blur()</code></td><td>Remove foco da janela</td></tr>
+                    <tr><td><code>window.scrollTo()</code></td><td>Rola para posição específica</td></tr>
+                    <tr><td><code>window.scrollBy()</code></td><td>Rola por quantidade relativa</td></tr>
+                    <tr><td><code>window.moveTo()</code></td><td>Move a janela</td></tr>
+                    <tr><td><code>window.resizeTo()</code></td><td>Redimensiona a janela</td></tr>
+                    <tr><td><code>window.setTimeout()</code></td><td>Executa código após delay</td></tr>
+                    <tr><td><code>window.setInterval()</code></td><td>Executa código repetidamente</td></tr>
+                    <tr><td><code>window.clearTimeout()</code></td><td>Cancela setTimeout</td></tr>
+                    <tr><td><code>window.clearInterval()</code></td><td>Cancela setInterval</td></tr>
+                    <tr><td><code>window.requestAnimationFrame()</code></td><td>Otimiza animações</td></tr>
+                    <tr><td><code>window.getComputedStyle()</code></td><td>Obtém estilos CSS computados</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p><strong>🎓 Guia Interativo BOM - Window Object</strong></p>
+            <p>Material de estudo sobre JavaScript e Browser Object Model</p>
+            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">
+                Baseado em: <a href="https://www.w3schools.com/js/js_window.asp" target="_blank" style="color: #667eea;">W3Schools - JavaScript Window</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // ===== VARIÁVEIS GLOBAIS =====
+        let newWindowRef = null;
+        let scrollMonitorInterval = null;
+        let counterInterval = null;
+        let counterValue = 0;
+        let currentTimeout = null;
+
+        // ===== WINDOW SIZE =====
+        function showWindowSize() {
+            const output = document.getElementById('sizeOutput');
+            const content = document.getElementById('sizeContent');
+            
+            content.innerHTML = `
+                <strong>📐 Dimensões da Janela:</strong><br><br>
+                <strong>Inner (viewport):</strong><br>
+                • Largura: ${window.innerWidth}px<br>
+                • Altura: ${window.innerHeight}px<br><br>
+                <strong>Outer (incluindo barras):</strong><br>
+                • Largura: ${window.outerWidth}px<br>
+                • Altura: ${window.outerHeight}px<br><br>
+                <strong>Posição na tela:</strong><br>
+                • X: ${window.screenX}px<br>
+                • Y: ${window.screenY}px
+            `;
+            
+            output.style.display = 'block';
+            console.log('Dimensões da janela:', {
+                innerWidth: window.innerWidth,
+                innerHeight: window.innerHeight,
+                outerWidth: window.outerWidth,
+                outerHeight: window.outerHeight
+            });
+        }
+
+        function startWindowMonitor() {
+            const output = document.getElementById('sizeOutput');
+            const content = document.getElementById('sizeContent');
+            
+            if (scrollMonitorInterval) {
+                clearInterval(scrollMonitorInterval);
+            }
+            
+            output.style.display = 'block';
+            scrollMonitorInterval = setInterval(() => {
+                content.innerHTML = `
+                    <strong>🔄 Monitoramento Ativo</strong><br><br>
+                    Redimensione a janela para ver as mudanças em tempo real:<br><br>
+                    • Largura: <span style="color: #4CAF50; font-size: 1.2em;">${window.innerWidth}px</span><br>
+                    • Altura: <span style="color: #4CAF50; font-size: 1.2em;">${window.innerHeight}px</span>
+                `;
+            }, 100);
+            
+            console.log('Monitoramento de redimensionamento iniciado');
+        }
+
+        function stopWindowMonitor() {
+            if (scrollMonitorInterval) {
+                clearInterval(scrollMonitorInterval);
+                scrollMonitorInterval = null;
+                document.getElementById('sizeContent').innerHTML += '<br><br>⏹️ <strong>Monitoramento parado</strong>';
+                console.log('Monitoramento parado');
+            }
+        }
+
+        function checkDeviceType() {
+            const result = document.getElementById('deviceResult');
+            const width = window.innerWidth;
+            let deviceType, icon;
+            
+            if (width < 768) {
+                deviceType = 'Dispositivo Móvel';
+                icon = '📱';
+            } else if (width < 1024) {
+                deviceType = 'Tablet';
+                icon = '📱';
+            } else {
+                deviceType = 'Desktop';
+                icon = '🖥️';
+            }
+            
+            result.innerHTML = `${icon} <strong>${deviceType}</strong> (${width}px)`;
+            result.classList.add('show');
+            
+            setTimeout(() => result.classList.remove('show'), 3000);
+        }
+
+        function checkViewportSize() {
+            const result = document.getElementById('viewportResult');
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const aspectRatio = (width / height).toFixed(2);
+            
+            result.innerHTML = `
+                📏 ${width}px × ${height}px<br>
+                Proporção: ${aspectRatio}:1
+            `;
+            result.classList.add('show');
+            
+            setTimeout(() => result.classList.remove('show'), 3000);
+        }
+
+        // ===== WINDOW OPEN/CLOSE =====
+        function openNewWindow() {
+            const url = document.getElementById('urlInput').value || 'https://www.google.com';
+            const width = document.getElementById('widthInput').value || 800;
+            const height = document.getElementById('heightInput').value || 600;
+            
+            const specs = `width=${width},height=${height},left=100,top=100`;
+            newWindowRef = window.open(url, 'novaJanela', specs);
+            
+            console.log('Nova janela aberta:', url);
+            alert(`Janela aberta com dimensões ${width}x${height}px`);
+        }
+
+        function openNewTab() {
+            const url = document.getElementById('urlInput').value || 'https://www.google.com';
+            newWindowRef = window.open(url, '_blank');
+            console.log('Nova aba aberta:', url);
+        }
+
+        function openWithFeatures() {
+            const url = document.getElementById('urlInput').value || 'https://www.google.com';
+            const specs = 'width=600,height=400,toolbar=no,menubar=no,scrollbars=yes,resizable=yes';
+            newWindowRef = window.open(url, 'janelaCustomizada', specs);
+            console.log('Janela personalizada aberta');
+        }
+
+        function closeNewWindow() {
+            if (newWindowRef && !newWindowRef.closed) {
+                newWindowRef.close();
+                console.log('Janela fechada');
+                alert('Janela anterior fechada!');
+            } else {
+                alert('Nenhuma janela aberta para fechar');
+            }
+        }
+
+        // ===== SCROLL =====
+        function showScrollPosition() {
+            const output = document.getElementById('scrollOutput');
+            output.innerHTML = `
+                <strong>📍 Posição Atual do Scroll:</strong><br><br>
+                • Horizontal (X): ${window.scrollX}px (ou pageXOffset: ${window.pageXOffset}px)<br>
+                • Vertical (Y): ${window.scrollY}px (ou pageYOffset: ${window.pageYOffset}px)
+            `;
+            output.style.display = 'block';
+            console.log(`Scroll - X: ${window.scrollX}, Y: ${window.scrollY}`);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+            console.log('Rolando para o topo');
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                left: 0,
+                behavior: 'smooth'
+            });
+            console.log('Rolando para o final');
+        }
+
+        function scrollSmooth(x, y) {
+            window.scrollTo({
+                top: y,
+                left: x,
+                behavior: 'smooth'
+            });
+            console.log(`Scroll suave para Y: ${y}px`);
+        }
+
+        function scrollByAmount(x, y) {
+            window.scrollBy({
+                top: y,
+                left: x,
+                behavior: 'smooth'
+            });
+            console.log(`Scroll relativo: +${y}px`);
+        }
+
+        function monitorScroll() {
+            const output = document.getElementById('scrollOutput');
+            output.style.display = 'block';
+            
+            const updateScroll = () => {
+                output.innerHTML = `
+                    <strong>👁️ Monitorando Scroll (role a página):</strong><br><br>
+                    • X: ${window.scrollX}px<br>
+                    • Y: ${window.scrollY}px
+                `;
+            };
+            
+            window.addEventListener('scroll', updateScroll);
+            updateScroll();
+            
+            console.log('Monitoramento de scroll ativado');
+            setTimeout(() => {
+                window.removeEventListener('scroll', updateScroll);
+                output.innerHTML += '<br><br>⏹️ Monitoramento finalizado após 10 segundos';
+            }, 10000);
+        }
+
+        // ===== LOCATION =====
+        function showLocationInfo() {
+            const output = document.getElementById('locationOutput');
+            output.innerHTML = `
+                <strong>🌐 Informações da URL:</strong><br><br>
+                • <strong>href:</strong> ${window.location.href}<br>
+                • <strong>protocol:</strong> ${window.location.protocol}<br>
+                • <strong>hostname:</strong> ${window.location.hostname}<br>
+                • <strong>port:</strong> ${window.location.port || '(padrão)'}<br>
+                • <strong>pathname:</strong> ${window.location.pathname}<br>
+                • <strong>search:</strong> ${window.location.search || '(nenhum)'}<br>
+                • <strong>hash:</strong> ${window.location.hash || '(nenhum)'}
+            `;
+            output.style.display = 'block';
+            console.log('Location:', window.location);
+        }
+
+        function reloadPage() {
+            if (confirm('Deseja recarregar a página?')) {
+                window.location.reload();
+            }
+        }
+
+        // ===== NAVIGATOR =====
+        function showNavigatorInfo() {
+            const output = document.getElementById('navigatorOutput');
+            output.innerHTML = `
+                <strong>🧭 Informações do Navegador:</strong><br><br>
+                • <strong>userAgent:</strong> ${navigator.userAgent}<br><br>
+                • <strong>language:</strong> ${navigator.language}<br>
+                • <strong>platform:</strong> ${navigator.platform}<br>
+                • <strong>cookieEnabled:</strong> ${navigator.cookieEnabled}<br>
+                • <strong>onLine:</strong> ${navigator.onLine}<br>
+                • <strong>hardwareConcurrency:</strong> ${navigator.hardwareConcurrency} núcleos<br>
+                • <strong>maxTouchPoints:</strong> ${navigator.maxTouchPoints}
+            `;
+            output.style.display = 'block';
+            console.log('Navigator:', navigator);
+        }
+
+        function checkOnlineStatus() {
+            const output = document.getElementById('navigatorOutput');
+            const status = navigator.onLine ? 'Online ✅' : 'Offline ❌';
+            output.innerHTML = `<strong>📡 Status de Conexão:</strong> ${status}`;
+            output.style.display = 'block';
+            console.log('Status online:', navigator.onLine);
+        }
+
+        function checkGeolocation() {
+            const output = document.getElementById('navigatorOutput');
+            
+            if ('geolocation' in navigator) {
+                output.innerHTML = '<strong>📍 Solicitando localização...</strong>';
+                output.style.display = 'block';
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        output.innerHTML = `
+                            <strong>📍 Geolocalização Obtida:</strong><br><br>
+                            • Latitude: ${position.coords.latitude}<br>
+                            • Longitude: ${position.coords.longitude}<br>
+                            • Precisão: ${position.coords.accuracy}m
+                        `;
+                        console.log('Posição:', position.coords);
+                    },
+                    (error) => {
+                        output.innerHTML = `<strong>❌ Erro:</strong> ${error.message}`;
+                        console.error('Erro geolocalização:', error);
+                    }
+                );
+            } else {
+                output.innerHTML = '<strong>❌ Geolocalização não suportada</strong>';
+                output.style.display = 'block';
+            }
+        }
+
+        // ===== SCREEN =====
+        function showScreenInfo() {
+            const output = document.getElementById('screenOutput');
+            output.innerHTML = `
+                <strong>🖥️ Informações da Tela:</strong><br><br>
+                • <strong>Largura Total:</strong> ${screen.width}px<br>
+                • <strong>Altura Total:</strong> ${screen.height}px<br>
+                • <strong>Profundidade de Cor:</strong> ${screen.colorDepth} bits<br>
+                • <strong>Profundidade de Pixel:</strong> ${screen.pixelDepth} bits<br>
+                • <strong>Orientação:</strong> ${screen.orientation ? screen.orientation.type : 'N/A'}
+            `;
+            output.style.display = 'block';
+            console.log('Screen:', screen);
+        }
+
+        function showAvailableArea() {
+            const output = document.getElementById('screenOutput');
+            output.innerHTML = `
+                <strong>📐 Área Disponível (sem barra de tarefas):</strong><br><br>
+                • <strong>Largura Disponível:</strong> ${screen.availWidth}px<br>
+                • <strong>Altura Disponível:</strong> ${screen.availHeight}px<br><br>
+                <strong>Comparação:</strong><br>
+                • Largura perdida: ${screen.width - screen.availWidth}px<br>
+                • Altura perdida: ${screen.height - screen.availHeight}px
+            `;
+            output.style.display = 'block';
+        }
+
+        // ===== HISTORY =====
+        function goBack() {
+            const output = document.getElementById('historyOutput');
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                output.innerHTML = '❌ Não há páginas anteriores no histórico';
+                output.style.display = 'block';
+            }
+        }
+
+        function goForward() {
+            window.history.forward();
+        }
+
+        function showHistoryLength() {
+            const output = document.getElementById('historyOutput');
+            output.innerHTML = `<strong>📊 Tamanho do Histórico:</strong> ${window.history.length} páginas`;
+            output.style.display = 'block';
+            console.log('History length:', window.history.length);
+        }
+
+        // ===== DIALOGS =====
+        function showAlert() {
+            window.alert('🎉 Esta é uma caixa de alerta!\n\nUma mensagem simples para o usuário.');
+            const output = document.getElementById('dialogOutput');
+            output.innerHTML = '✅ Alert exibido com sucesso!';
+            output.style.display = 'block';
+            setTimeout(() => output.style.display = 'none', 3000);
+        }
+
+        function showConfirm() {
+            const resposta = window.confirm('❓ Você gostou deste guia interativo?');
+            const output = document.getElementById('dialogOutput');
+            
+            if (resposta) {
+                output.innerHTML = '✅ Você clicou em <strong>OK</strong>! Que bom que gostou! 😊';
+            } else {
+                output.innerHTML = '❌ Você clicou em <strong>Cancelar</strong>. O que podemos melhorar?';
+            }
+            
+            output.style.display = 'block';
+            console.log('Resposta do confirm:', resposta);
+        }
+
+        function showPrompt() {
+            const nome = window.prompt('✏️ Qual é o seu nome?', 'Digite aqui...');
+            const output = document.getElementById('dialogOutput');
+            
+            if (nome !== null && nome.trim() !== '') {
+                output.innerHTML = `👋 Olá, <strong>${nome}</strong>! Bem-vindo ao guia BOM!`;
+            } else {
+                output.innerHTML = '❌ Você cancelou ou não digitou nada';
+            }
+            
+            output.style.display = 'block';
+            console.log('Nome digitado:', nome);
+        }
+
+        function simpleLogin() {
+            const usuario = window.prompt('👤 Digite seu usuário:');
+            
+            if (usuario === null || usuario.trim() === '') {
+                alert('❌ Login cancelado!');
+                return;
+            }
+            
+            const senha = window.prompt('🔒 Digite sua senha:');
+            
+            if (senha === null || senha.trim === '') {
+                alert('❌ Login cancelado!');
+                return;
+            }
+            
+            // Simulação de login
+            if (usuario === 'admin' && senha === '1234') {
+                alert('✅ Login bem-sucedido!\n\nBem-vindo, ' + usuario + '!');
+            } else {
+                alert('❌ Usuário ou senha incorretos!\n\nDica: admin / 1234');
+            }
+        }
+
+        // ===== TIMERS =====
+        function testSetTimeout() {
+            const delay = document.getElementById('timeoutDelay').value * 1000;
+            const output = document.getElementById('timeoutOutput');
+            
+            output.innerHTML = `⏰ Timeout iniciado! Aguarde ${delay/1000} segundos...`;
+            output.style.display = 'block';
+            
+            currentTimeout = setTimeout(() => {
+                output.innerHTML = `✅ Timeout executado após ${delay/1000} segundos!`;
+                console.log('Timeout executado!');
+            }, delay);
+            
+            console.log(`setTimeout configurado para ${delay}ms`);
+        }
+
+        function cancelTimeout() {
+            if (currentTimeout) {
+                clearTimeout(currentTimeout);
+                const output = document.getElementById('timeoutOutput');
+                output.innerHTML = '❌ Timeout cancelado!';
+                output.style.display = 'block';
+                console.log('Timeout cancelado');
+            }
+        }
+
+        function startCounter() {
+            if (counterInterval) return;
+            
+            const display = document.getElementById('counterDisplay');
+            display.style.display = 'block';
+            
+            counterInterval = setInterval(() => {
+                counterValue++;
+                display.querySelector('h3').textContent = counterValue;
+            }, 1000);
+            
+            console.log('Contador iniciado');
+        }
+
+        function stopCounter() {
+            if (counterInterval) {
+                clearInterval(counterInterval);
+                counterInterval = null;
+                console.log('Contador parado');
+            }
+        }
+
+        function resetCounter() {
+            stopCounter();
+            counterValue = 0;
+            const display = document.getElementById('counterDisplay');
+            display.querySelector('h3').textContent = '0';
+            console.log('Contador resetado');
+        }
+
+        // ===== EVENTOS =====
+        // Evento de carregamento
+        window.addEventListener('load', function() {
+            console.log('%c🎉 Guia BOM - Window carregado com sucesso!', 'color: #667eea; font-size: 16px; font-weight: bold;');
+            console.log('%cExplore os exemplos interativos!', 'color: #764ba2; font-size: 14px;');
+        });
+
+        // Limpeza ao sair
+        window.addEventListener('beforeunload', function() {
+            if (scrollMonitorInterval) clearInterval(scrollMonitorInterval);
+            if (counterInterval) clearInterval(counterInterval);
+            if (currentTimeout) clearTimeout(currentTimeout);
+        });
+    </script>
+</body>
+</html>
