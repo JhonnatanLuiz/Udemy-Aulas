@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM - Browser Object Model | Guia Interativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .output {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            min-height: 50px;
+            font-family: monospace;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .property-list {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .property-list li {
+            margin: 8px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-window {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 BOM - Browser Object Model</h1>
+            <p class="subtitle">Guia Interativo Completo com Exemplos Práticos</p>
+        </header>
+
+        <!-- Introdução -->
+        <div class="card">
+            <h2><span class="emoji">📚</span>O que é BOM?</h2>
+            <div class="info-box">
+                <p><strong>BOM (Browser Object Model)</strong> é a interface que permite ao JavaScript interagir com o navegador. Diferente do DOM (que manipula o documento HTML), o BOM manipula o navegador em si.</p>
+            </div>
+            <h3>Principais Objetos do BOM:</h3>
+            <ul class="property-list">
+                <li><strong>window</strong> - Objeto global do navegador</li>
+                <li><strong>navigator</strong> - Informações sobre o navegador</li>
+                <li><strong>location</strong> - URL da página atual</li>
+                <li><strong>history</strong> - Histórico de navegação</li>
+                <li><strong>screen</strong> - Informações da tela do usuário</li>
+            </ul>
+        </div>
+
+        <!-- Window Object -->
+        <div class="card">
+            <h2><span class="emoji">🪟</span>window - Objeto Global</h2>
+            <p>O objeto <span class="highlight">window</span> representa a janela do navegador e é o objeto global do JavaScript no navegador.</p>
+            
+            <h3>Dimensões da Janela:</h3>
+            <div class="code-box">
+window.innerWidth  // Largura interna da janela
+window.innerHeight // Altura interna da janela
+window.outerWidth  // Largura total (com bordas)
+window.outerHeight // Altura total (com bordas)
+            </div>
+            
+            <button class="btn" onclick="mostrarDimensoes()">📏 Ver Dimensões da Janela</button>
+            <div id="dimensoesOutput" class="output"></div>
+
+            <h3>Métodos de Diálogo:</h3>
+            <button class="btn btn-secondary" onclick="testarAlert()">⚠️ alert()</button>
+            <button class="btn btn-secondary" onclick="testarConfirm()">❓ confirm()</button>
+            <button class="btn btn-secondary" onclick="testarPrompt()">✍️ prompt()</button>
+            <div id="dialogoOutput" class="output"></div>
+
+            <h3>Abrir/Fechar Janelas:</h3>
+            <button class="btn btn-success" onclick="abrirJanela()">🔓 Abrir Nova Janela</button>
+            <button class="btn" onclick="fecharJanela()">🔒 Fechar Janela</button>
+            <div id="janelaOutput" class="output"></div>
+        </div>
+
+        <!-- Navigator -->
+        <div class="card">
+            <h2><span class="emoji">🧭</span>navigator - Informações do Navegador</h2>
+            <p>O objeto <span class="highlight">navigator</span> fornece informações sobre o navegador do usuário.</p>
+            
+            <div class="code-box">
+navigator.userAgent    // Identificação do navegador
+navigator.language     // Idioma do navegador
+navigator.onLine       // Status de conexão
+navigator.platform     // Sistema operacional
+navigator.cookieEnabled // Cookies habilitados
+            </div>
+
+            <button class="btn" onclick="mostrarInfoNavegador()">🔍 Ver Informações do Navegador</button>
+            <div id="navigatorOutput" class="output"></div>
+
+            <h3>Geolocalização:</h3>
+            <button class="btn btn-success" onclick="obterLocalizacao()">📍 Obter Minha Localização</button>
+            <div id="geoOutput" class="output"></div>
+        </div>
+
+        <!-- Location -->
+        <div class="card">
+            <h2><span class="emoji">🔗</span>location - URL e Navegação</h2>
+            <p>O objeto <span class="highlight">location</span> contém informações sobre a URL atual e permite navegação.</p>
+            
+            <div class="code-box">
+location.href      // URL completa
+location.protocol  // http: ou https:
+location.host      // domínio + porta
+location.hostname  // apenas o domínio
+location.pathname  // caminho após o domínio
+location.search    // query string (?param=valor)
+location.hash      // fragmento (#section)
+            </div>
+
+            <button class="btn" onclick="mostrarLocation()">🌐 Ver Informações da URL</button>
+            <div id="locationOutput" class="output"></div>
+
+            <h3>Navegação:</h3>
+            <div class="input-group">
+                <label>Digite uma URL para navegar:</label>
+                <input type="text" id="urlInput" placeholder="https://www.exemplo.com">
+            </div>
+            <button class="btn btn-secondary" onclick="navegarPara()">➡️ Navegar (location.href)</button>
+            <button class="btn btn-success" onclick="recarregarPagina()">🔄 Recarregar Página</button>
+        </div>
+
+        <!-- History -->
+        <div class="card">
+            <h2><span class="emoji">⏮️</span>history - Histórico de Navegação</h2>
+            <p>O objeto <span class="highlight">history</span> permite navegar pelo histórico do navegador.</p>
+            
+            <div class="code-box">
+history.length        // Quantidade de páginas no histórico
+history.back()        // Volta uma página
+history.forward()     // Avança uma página
+history.go(-2)        // Volta 2 páginas
+history.go(1)         // Avança 1 página
+            </div>
+
+            <button class="btn" onclick="voltarPagina()">⬅️ Voltar (back)</button>
+            <button class="btn" onclick="avancarPagina()">➡️ Avançar (forward)</button>
+            <button class="btn btn-success" onclick="mostrarHistory()">📊 Ver Info do History</button>
+            <div id="historyOutput" class="output"></div>
+        </div>
+
+        <!-- Screen -->
+        <div class="card">
+            <h2><span class="emoji">🖥️</span>screen - Informações da Tela</h2>
+            <p>O objeto <span class="highlight">screen</span> fornece informações sobre a tela do usuário.</p>
+            
+            <div class="code-box">
+screen.width          // Largura da tela
+screen.height         // Altura da tela
+screen.availWidth     // Largura disponível
+screen.availHeight    // Altura disponível
+screen.colorDepth     // Profundidade de cor
+screen.pixelDepth     // Profundidade de pixel
+            </div>
+
+            <button class="btn" onclick="mostrarInfoTela()">🖥️ Ver Informações da Tela</button>
+            <div id="screenOutput" class="output"></div>
+        </div>
+
+        <!-- Timers -->
+        <div class="card">
+            <h2><span class="emoji">⏱️</span>Timers - setTimeout e setInterval</h2>
+            
+            <h3>setTimeout - Executar após um delay:</h3>
+            <div class="code-box">
+// Executar uma vez após 2 segundos
+let timerId = setTimeout(() => {
+    console.log('Executado!');
+}, 2000);
+
+// Cancelar o timeout
+clearTimeout(timerId);
+            </div>
+            
+            <button class="btn" onclick="testarSetTimeout()">⏳ Executar setTimeout (3s)</button>
+            <div id="timeoutOutput" class="output"></div>
+
+            <h3>setInterval - Executar repetidamente:</h3>
+            <div class="code-box">
+// Executar a cada 1 segundo
+let intervalId = setInterval(() => {
+    console.log('Tick!');
+}, 1000);
+
+// Cancelar o interval
+clearInterval(intervalId);
+            </div>
+
+            <div class="demo-window">
+                <div class="timer-display" id="contador">0</div>
+                <button class="btn btn-success" onclick="iniciarContador()">▶️ Iniciar Contador</button>
+                <button class="btn btn-secondary" onclick="pararContador()">⏸️ Parar Contador</button>
+                <button class="btn" onclick="resetarContador()">🔄 Resetar</button>
+            </div>
+        </div>
+
+        <!-- Console -->
+        <div class="card">
+            <h2><span class="emoji">🖨️</span>console - Métodos de Debug</h2>
+            <p>O objeto <span class="highlight">console</span> oferece métodos para debugging.</p>
+            
+            <div class="code-box">
+console.log('Mensagem normal')
+console.error('Erro!')
+console.warn('Aviso!')
+console.info('Informação')
+console.table([{nome: 'João', idade: 25}])
+console.time('timer')  // Inicia timer
+console.timeEnd('timer') // Finaliza timer
+console.clear() // Limpa o console
+            </div>
+
+            <button class="btn" onclick="testarConsole()">🧪 Testar Métodos do Console</button>
+            <p style="margin-top: 10px; color: #666;">Abra o Console do navegador (F12) para ver os resultados!</p>
+        </div>
+
+        <!-- Storage -->
+        <div class="card">
+            <h2><span class="emoji">💾</span>Web Storage - localStorage e sessionStorage</h2>
+            
+            <h3>localStorage - Persistente:</h3>
+            <div class="input-group">
+                <label>Chave:</label>
+                <input type="text" id="localKey" placeholder="minhaChave">
+            </div>
+            <div class="input-group">
+                <label>Valor:</label>
+                <input type="text" id="localValue" placeholder="meuValor">
+            </div>
+            <button class="btn btn-success" onclick="salvarLocal()">💾 Salvar no localStorage</button>
+            <button class="btn" onclick="lerLocal()">📖 Ler localStorage</button>
+            <button class="btn btn-secondary" onclick="limparLocal()">🗑️ Limpar localStorage</button>
+            <div id="storageOutput" class="output"></div>
+
+            <div class="code-box">
+// Salvar
+localStorage.setItem('nome', 'João');
+
+// Ler
+let nome = localStorage.getItem('nome');
+
+// Remover
+localStorage.removeItem('nome');
+
+// Limpar tudo
+localStorage.clear();
+            </div>
+        </div>
+
+        <!-- Exemplo Prático Completo -->
+        <div class="card">
+            <h2><span class="emoji">🎯</span>Exemplo Prático: Sistema de Notificações</h2>
+            <p>Sistema que usa múltiplos objetos BOM juntos:</p>
+            
+            <div class="demo-window">
+                <h3>Configurações de Notificação</h3>
+                <div class="input-group">
+                    <label>Mensagem:</label>
+                    <input type="text" id="notifMsg" placeholder="Digite sua mensagem">
+                </div>
+                <div class="input-group">
+                    <label for="notifDelay">Delay (segundos):</label>
+                    <input type="number" id="notifDelay" value="5" min="1" max="60">
+                </div>
+                <button class="btn btn-success" onclick="agendarNotificacao()">🔔 Agendar Notificação</button>
+                <button class="btn btn-secondary" onclick="cancelarNotificacao()">❌ Cancelar</button>
+                <div id="notifOutput" class="output"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>📚 <strong>Dica:</strong> Abra o Console do navegador (F12) para ver logs adicionais e experimentar com os códigos!</p>
+            <p style="margin-top: 10px; color: #666;">Criado para fins educacionais | Use e aprenda! 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        // ============================================
+        // WINDOW - DIMENSÕES
+        // ============================================
+        function mostrarDimensoes() {
+            const output = document.getElementById('dimensoesOutput');
+            output.innerHTML = `
+                <strong>Dimensões da Janela:</strong><br>
+                📐 Largura Interna: ${window.innerWidth}px<br>
+                📐 Altura Interna: ${window.innerHeight}px<br>
+                📐 Largura Externa: ${window.outerWidth}px<br>
+                📐 Altura Externa: ${window.outerHeight}px<br>
+                📏 Posição X: ${window.screenX}px<br>
+                📏 Posição Y: ${window.screenY}px
+            `;
+            console.log('Dimensões da janela:', {
+                innerWidth: window.innerWidth,
+                innerHeight: window.innerHeight,
+                outerWidth: window.outerWidth,
+                outerHeight: window.outerHeight
+            });
+        }
+
+        // ============================================
+        // WINDOW - DIÁLOGOS
+        // ============================================
+        function testarAlert() {
+            alert('Este é um alert! Uma caixa de diálogo simples.');
+            document.getElementById('dialogoOutput').innerHTML = '✅ Alert exibido!';
+        }
+
+        function testarConfirm() {
+            const resultado = confirm('Você quer continuar?');
+            document.getElementById('dialogoOutput').innerHTML = 
+                `Resultado do confirm: <strong>${resultado ? 'OK (true)' : 'Cancelar (false)'}</strong>`;
+            console.log('Confirm retornou:', resultado);
+        }
+
+        function testarPrompt() {
+            const nome = prompt('Qual é o seu nome?', 'Digite aqui...');
+            document.getElementById('dialogoOutput').innerHTML = 
+                nome ? `Olá, <strong>${nome}</strong>! 👋` : 'Você cancelou o prompt.';
+            console.log('Prompt retornou:', nome);
+        }
+
+        // ============================================
+        // WINDOW - JANELAS
+        // ============================================
+        let novaJanela = null;
+
+        function abrirJanela() {
+            novaJanela = window.open(
+                'https://www.example.com',
+                '_blank',
+                'width=600,height=400,left=200,top=100'
+            );
+            
+            if (novaJanela) {
+                document.getElementById('janelaOutput').innerHTML = 
+                    '✅ Nova janela aberta! Use o botão "Fechar Janela" para fechá-la.';
+            } else {
+                document.getElementById('janelaOutput').innerHTML = 
+                    '❌ Popup bloqueado! Permita popups para este site.';
+            }
+        }
+
+        function fecharJanela() {
+            if (novaJanela && !novaJanela.closed) {
+                novaJanela.close();
+                document.getElementById('janelaOutput').innerHTML = '✅ Janela fechada!';
+            } else {
+                document.getElementById('janelaOutput').innerHTML = 
+                    '⚠️ Nenhuma janela aberta ou já foi fechada.';
+            }
+        }
+
+        // ============================================
+        // NAVIGATOR
+        // ============================================
+        function mostrarInfoNavegador() {
+            const output = document.getElementById('navigatorOutput');
+            output.innerHTML = `
+                <strong>Informações do Navegador:</strong><br>
+                🌐 UserAgent: ${navigator.userAgent}<br>
+                🗣️ Idioma: ${navigator.language}<br>
+                💻 Plataforma: ${navigator.platform}<br>
+                📶 Online: ${navigator.onLine ? 'Sim ✅' : 'Não ❌'}<br>
+                🍪 Cookies: ${navigator.cookieEnabled ? 'Habilitados ✅' : 'Desabilitados ❌'}<br>
+                🧮 CPU Cores: ${navigator.hardwareConcurrency || 'N/A'}
+            `;
+            console.log('Navigator info:', {
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                platform: navigator.platform,
+                online: navigator.onLine
+            });
+        }
+
+        function obterLocalizacao() {
+            const output = document.getElementById('geoOutput');
+            
+            if ('geolocation' in navigator) {
+                output.innerHTML = '📍 Solicitando localização...';
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        output.innerHTML = `
+                            <strong>Localização Obtida:</strong><br>
+                            🌍 Latitude: ${position.coords.latitude}<br>
+                            🌍 Longitude: ${position.coords.longitude}<br>
+                            🎯 Precisão: ${position.coords.accuracy.toFixed(2)}m<br>
+                            <a href="https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}" target="_blank">Ver no Google Maps</a>
+                        `;
+                        console.log('Geolocalização:', position.coords);
+                    },
+                    (error) => {
+                        output.innerHTML = `❌ Erro: ${error.message}`;
+                        console.error('Erro de geolocalização:', error);
+                    }
+                );
+            } else {
+                output.innerHTML = '❌ Geolocalização não suportada neste navegador.';
+            }
+        }
+
+        // ============================================
+        // LOCATION
+        // ============================================
+        function mostrarLocation() {
+            const output = document.getElementById('locationOutput');
+            output.innerHTML = `
+                <strong>Informações da URL:</strong><br>
+                🔗 URL Completa: ${location.href}<br>
+                🔒 Protocolo: ${location.protocol}<br>
+                🏠 Host: ${location.host}<br>
+                🌐 Hostname: ${location.hostname}<br>
+                📂 Pathname: ${location.pathname}<br>
+                🔍 Search: ${location.search || '(vazio)'}<br>
+                #️⃣ Hash: ${location.hash || '(vazio)'}
+            `;
+            console.log('Location info:', {
+                href: location.href,
+                protocol: location.protocol,
+                host: location.host,
+                pathname: location.pathname
+            });
+        }
+
+        function navegarPara() {
+            const url = document.getElementById('urlInput').value;
+            if (url) {
+                const confirma = confirm(`Navegar para: ${url}?`);
+                if (confirma) {
+                    location.href = url;
+                }
+            } else {
+                alert('Por favor, digite uma URL válida!');
+            }
+        }
+
+        function recarregarPagina() {
+            const confirma = confirm('Recarregar a página?');
+            if (confirma) {
+                location.reload();
+            }
+        }
+
+        // ============================================
+        // HISTORY
+        // ============================================
+        function voltarPagina() {
+            history.back();
+        }
+
+        function avancarPagina() {
+            history.forward();
+        }
+
+        function mostrarHistory() {
+            const output = document.getElementById('historyOutput');
+            output.innerHTML = `
+                <strong>Informações do Histórico:</strong><br>
+                📚 Tamanho do histórico: ${history.length} páginas<br>
+                💡 Use os botões do navegador para navegar!
+            `;
+            console.log('History length:', history.length);
+        }
+
+        // ============================================
+        // SCREEN
+        // ============================================
+        function mostrarInfoTela() {
+            const output = document.getElementById('screenOutput');
+            output.innerHTML = `
+                <strong>Informações da Tela:</strong><br>
+                📺 Largura: ${screen.width}px<br>
+                📺 Altura: ${screen.height}px<br>
+                ✅ Largura Disponível: ${screen.availWidth}px<br>
+                ✅ Altura Disponível: ${screen.availHeight}px<br>
+                🎨 Profundidade de Cor: ${screen.colorDepth} bits<br>
+                🎨 Profundidade de Pixel: ${screen.pixelDepth} bits<br>
+                📐 Orientação: ${screen.orientation?.type || 'N/A'}
+            `;
+            console.log('Screen info:', {
+                width: screen.width,
+                height: screen.height,
+                availWidth: screen.availWidth,
+                availHeight: screen.availHeight,
+                colorDepth: screen.colorDepth
+            });
+        }
+
+        // ============================================
+        // TIMERS - setTimeout
+        // ============================================
+        function testarSetTimeout() {
+            const output = document.getElementById('timeoutOutput');
+            output.innerHTML = '⏳ Aguarde 3 segundos...';
+            
+            setTimeout(() => {
+                output.innerHTML = '✅ setTimeout executado após 3 segundos!';
+                console.log('setTimeout executado!');
+            }, 3000);
+        }
+
+        // ============================================
+        // TIMERS - setInterval
+        // ============================================
+        let contadorInterval = null;
+        let contadorValor = 0;
+
+        function iniciarContador() {
+            if (contadorInterval) return; // Já está rodando
+            
+            contadorInterval = setInterval(() => {
+                contadorValor++;
+                document.getElementById('contador').textContent = contadorValor;
+            }, 1000);
+            
+            console.log('Contador iniciado');
+        }
+
+        function pararContador() {
+            if (contadorInterval) {
+                clearInterval(contadorInterval);
+                contadorInterval = null;
+                console.log('Contador parado');
+            }
+        }
+
+        function resetarContador() {
+            pararContador();
+            contadorValor = 0;
+            document.getElementById('contador').textContent = '0';
+            console.log('Contador resetado');
+        }
+
+        // ============================================
+        // CONSOLE
+        // ============================================
+        function testarConsole() {
+            console.log('📝 console.log() - Mensagem normal');
+            console.error('❌ console.error() - Mensagem de erro');
+            console.warn('⚠️ console.warn() - Mensagem de aviso');
+            console.info('ℹ️ console.info() - Mensagem informativa');
+            
+            console.table([
+                { nome: 'João', idade: 25, cidade: 'São Paulo' },
+                { nome: 'Maria', idade: 30, cidade: 'Rio de Janeiro' }
+            ]);
+            
+            console.time('Teste de Timer');
+            for (let i = 0; i < 1000000; i++) {
+                // Simulação de processamento
+            }
+            console.timeEnd('Teste de Timer');
+            
+            console.log('%cTexto Estilizado!', 'color: blue; font-size: 20px; font-weight: bold;');
+            
+            alert('Métodos do console executados! Verifique o Console (F12)');
+        }
+
+        // ============================================
+        // WEB STORAGE
+        // ============================================
+        function salvarLocal() {
+            const key = document.getElementById('localKey').value;
+            const value = document.getElementById('localValue').value;
+            
+            if (key && value) {
+                localStorage.setItem(key, value);
+                document.getElementById('storageOutput').innerHTML = 
+                    `✅ Salvo: "${key}" = "${value}"`;
+                console.log('Salvo no localStorage:', { key, value });
+            } else {
+                alert('Preencha chave e valor!');
+            }
+        }
+
+        function lerLocal() {
+            const output = document.getElementById('storageOutput');
+            const items = Object.keys(localStorage);
+            
+            if (items.length === 0) {
+                output.innerHTML = '⚠️ localStorage vazio!';
+                return;
+            }
+            
+            let html = '<strong>Itens no localStorage:</strong><br>';
+            items.forEach(key => {
+                html += `🔑 ${key}: ${localStorage.getItem(key)}<br>`;
+            });
+            
+            output.innerHTML = html;
+            console.log('localStorage:', localStorage);
+        }
+
+        function limparLocal() {
+            const confirma = confirm('Limpar todo o localStorage?');
+            if (confirma) {
+                localStorage.clear();
+                document.getElementById('storageOutput').innerHTML = '🗑️ localStorage limpo!';
+                console.log('localStorage limpo');
+            }
+        }
+
+        // ============================================
+        // EXEMPLO PRÁTICO - SISTEMA DE NOTIFICAÇÕES
+        // ============================================
+        let notificacaoTimer = null;
+
+        function agendarNotificacao() {
+            const mensagem = document.getElementById('notifMsg').value;
+            const delay = parseInt(document.getElementById('notifDelay').value);
+            const output = document.getElementById('notifOutput');
+            
+            if (!mensagem) {
+                alert('Digite uma mensagem!');
+                return;
+            }
+            
+            // Cancela notificação anterior
+            if (notificacaoTimer) {
+                clearTimeout(notificacaoTimer);
+            }
+            
+            output.innerHTML = `⏳ Notificação agendada para daqui a ${delay} segundos...`;
+            
+            // Salva no localStorage
+            localStorage.setItem('ultimaNotificacao', mensagem);
+            
+            // Agenda a notificação
+            notificacaoTimer = setTimeout(() => {
+                // Exibe notificação do navegador (se permitido)
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('Notificação BOM', {
+                        body: mensagem,
+                        icon: '🔔'
+                    });
+                }
+                
+                // Exibe alert
+                alert(`🔔 NOTIFICAÇÃO:\n\n${mensagem}`);
+                
+                output.innerHTML = `✅ Notificação exibida: "${mensagem}"`;
+                console.log('Notificação exibida:', mensagem);
+                
+                notificacaoTimer = null;
+            }, delay * 1000);
+            
+            console.log(`Notificação agendada: "${mensagem}" em ${delay}s`);
+        }
+
+        function cancelarNotificacao() {
+            if (notificacaoTimer) {
+                clearTimeout(notificacaoTimer);
+                notificacaoTimer = null;
+                document.getElementById('notifOutput').innerHTML = '❌ Notificação cancelada!';
+                console.log('Notificação cancelada');
+            } else {
+                document.getElementById('notifOutput').innerHTML = '⚠️ Nenhuma notificação agendada.';
+            }
+        }
+
+        // Pedir permissão para notificações ao carregar
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        console.log('%c🌐 BOM - Browser Object Model', 'color: #667eea; font-size: 24px; font-weight: bold;');
+        console.log('%cGuia Interativo carregado com sucesso!', 'color: #764ba2; font-size: 14px;');
+        console.log('Dica: Explore os exemplos e veja os logs aqui no console! 🚀');
+    </script>
+</body>
+</html>
