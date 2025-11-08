@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo - BOM Timing (setTimeout, setInterval & cia)</title>
+    <style>
+        :root {
+            --gradient-start: #4776e6;
+            --gradient-end: #8e54e9;
+            --dark-bg: #0f172a;
+            --card-bg: #0b1120;
+            --card-border: rgba(148, 163, 184, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5f5;
+            --accent: #22d3ee;
+            --accent-2: #f472b6;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --mono: "Fira Code", "Cascadia Code", Consolas, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+            background: radial-gradient(circle at top, rgba(71, 118, 230, 0.25), transparent 45%),
+                        radial-gradient(circle at bottom, rgba(142, 84, 233, 0.25), transparent 40%),
+                        var(--dark-bg);
+            color: var(--text-primary);
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(14px);
+            border-radius: 28px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: 0 35px 70px rgba(15, 23, 42, 0.55);
+            overflow: hidden;
+        }
+
+        header {
+            padding: 54px clamp(24px, 4vw, 60px);
+            background: linear-gradient(135deg, rgba(71, 118, 230, 0.92), rgba(142, 84, 233, 0.92));
+            color: #fff;
+        }
+
+        header h1 {
+            font-size: clamp(1.9rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        header p {
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            line-height: 1.6;
+            max-width: 700px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .badge-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: rgba(15, 23, 42, 0.18);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.28);
+        }
+
+        main {
+            padding: clamp(28px, 4vw, 56px);
+        }
+
+        .section {
+            margin-bottom: clamp(32px, 5vw, 48px);
+            padding: clamp(24px, 3vw, 36px);
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(148, 163, 184, 0.23);
+        }
+
+        .section h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 18px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            border: 1px solid var(--card-border);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.45);
+        }
+
+        .card h3 {
+            color: var(--accent-2);
+            font-size: 1.2rem;
+        }
+
+        .info-box {
+            border-left: 4px solid var(--accent);
+            background: rgba(34, 211, 238, 0.08);
+            padding: 18px 22px;
+            border-radius: 14px;
+            margin: 22px 0;
+        }
+
+        .alert-box {
+            border-left: 4px solid var(--warning);
+            background: rgba(251, 191, 36, 0.1);
+            padding: 18px 22px;
+            border-radius: 14px;
+            margin-top: 18px;
+            color: #fde68a;
+        }
+
+        .code-block {
+            background: #020617;
+            border-radius: 14px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 18px;
+            font-family: var(--mono);
+            font-size: 0.95rem;
+            color: #cbd5f5;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .code-block .keyword { color: #60a5fa; }
+        .code-block .fn { color: #f472b6; }
+        .code-block .num { color: #fbbf24; }
+        .code-block .comment { color: #64748b; font-style: italic; }
+
+        button.button {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            box-shadow: 0 12px 25px rgba(71, 118, 230, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button.button:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 18px 30px rgba(142, 84, 233, 0.45);
+        }
+
+        button.button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .output {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 14px;
+            padding: 16px;
+            font-family: var(--mono);
+            font-size: 0.95rem;
+            color: #bde3ff;
+            margin-top: 16px;
+            min-height: 72px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .timer-display {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        .progress-wrapper {
+            background: rgba(148, 163, 184, 0.18);
+            border-radius: 999px;
+            overflow: hidden;
+            height: 12px;
+            margin-top: 14px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            transition: width 0.2s ease;
+        }
+
+        .table-wrapper {
+            margin-top: 24px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 560px;
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(71, 118, 230, 0.18);
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(148, 163, 184, 0.08);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(17, 24, 39, 0.85);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .kpi-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 18px;
+            padding: 18px;
+        }
+
+        .kpi-card strong {
+            font-size: 2rem;
+            color: var(--accent);
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 28px;
+            color: rgba(148, 163, 184, 0.7);
+        }
+
+        @media (max-width: 1024px) {
+            body {
+                padding: 22px;
+            }
+
+            .container {
+                border-radius: 22px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            header {
+                padding: 44px 24px;
+                text-align: center;
+            }
+
+            main {
+                padding: 24px;
+            }
+
+            .badge-strip {
+                justify-content: center;
+            }
+
+            .button-group {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⏱️ Guia Interativo BOM Timing: Domine setTimeout, setInterval e Amigos</h1>
+            <p>
+                Os métodos de <strong>timing do Browser Object Model (BOM)</strong> permitem agendar ações, executar tarefas
+                em intervalos regulares e medir desempenho no navegador. Explore abaixo exemplos práticos, armadilhas comuns
+                e boas práticas para criar animações, cronômetros, alerts programadas e muito mais.
+            </p>
+            <div class="badge-strip">
+                <span class="badge">⚡ <span>setTimeout / clearTimeout</span></span>
+                <span class="badge">🔁 <span>setInterval / clearInterval</span></span>
+                <span class="badge">🎯 <span>requestAnimationFrame</span></span>
+                <span class="badge">⏱️ <span>performance.now()</span></span>
+                <span class="badge">🧠 <span>Boas práticas assíncronas</span></span>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="intro">
+                <h2>📚 Entendendo os métodos de timing</h2>
+                <p>
+                    O JavaScript no navegador roda em um único thread principal. Para agendar tarefas sem bloquear a execução,
+                    contamos com a <strong>fila de timers</strong>. Os métodos abaixo pedem ao navegador para executar funções
+                    futuramente, depois que o call stack estiver livre:
+                </p>
+                <div class="grid">
+                    <div class="card">
+                        <h3>setTimeout(fn, delay)</h3>
+                        <p>Executa <code>fn</code> uma única vez após <code>delay</code> (em milissegundos).</p>
+                        <span class="tag">🔸 Retorna um ID numérico</span>
+                    </div>
+                    <div class="card">
+                        <h3>clearTimeout(id)</h3>
+                        <p>Cancela um timeout agendado.</p>
+                        <span class="tag">🚫 Use antes da execução</span>
+                    </div>
+                    <div class="card">
+                        <h3>setInterval(fn, delay)</h3>
+                        <p>Executa <code>fn</code> repetidamente a cada <code>delay</code> ms.</p>
+                        <span class="tag">♻️ Até ser cancelado</span>
+                    </div>
+                    <div class="card">
+                        <h3>clearInterval(id)</h3>
+                        <p>Interrompe um intervalo em andamento.</p>
+                        <span class="tag">🛑 Evite loops infinitos</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <strong>📌 Nota:</strong> O valor mínimo de <em>delay</em> real pode ser maior que o solicitado, pois o navegador
+                    respeita pacotes mínimos (4 ms) e precisa esvaziar o call stack e a fila de tarefas.
+                </div>
+            </section>
+
+            <section class="section" id="set-timeout">
+                <h2>⏳ Explorando setTimeout()</h2>
+                <p>
+                    <code>setTimeout</code> é perfeito para executar código uma única vez no futuro. Use-o para exibir mensagens,
+                    controlar tempo de espera ou criar pequenas animações sequenciais.
+                </p>
+                <div class="grid">
+                    <div class="card">
+                        <h3>Demo: lembrete agendado</h3>
+                        <p>Agende uma mensagem que aparecerá em alguns segundos. Você pode cancelar antes do disparo.</p>
+                        <label for="timeoutDelay">Tempo (ms):</label>
+                        <input type="number" id="timeoutDelay" value="3000" min="0" step="500" style="padding:10px;border-radius:12px;border:1px solid rgba(148,163,184,0.3);background:#0f172a;color:#e2e8f0;">
+                        <div class="button-group">
+                            <button class="button" onclick="agendarReminder()">Agendar lembrete</button>
+                            <button class="button" style="background:linear-gradient(135deg,#ef4444,#f97316);" onclick="cancelarReminder()">Cancelar</button>
+                        </div>
+                        <div id="timeoutOutput" class="output">Aguardando agendamento...</div>
+                    </div>
+                    <div class="card">
+                        <h3>Demo: animação com degrau</h3>
+                        <p>Acenda uma sequência de etapas com timeouts encadeados.</p>
+                        <div class="button-group">
+                            <button class="button" onclick="startSequencia()">Iniciar sequência</button>
+                            <button class="button" style="background:linear-gradient(135deg,#14b8a6,#22d3ee);" onclick="resetSequencia()">Resetar</button>
+                        </div>
+                        <div class="output" id="sequenciaOutput">
+Etapa atual: nenhum passo iniciado.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Boas práticas</h3>
+                        <ul style="color:var(--text-secondary);line-height:1.7;list-style:disc;padding-left:18px;">
+                            <li>Guarde o ID retornado para poder cancelar.</li>
+                            <li>Evite valores muito baixos em loops recursivos — prefira <code>requestAnimationFrame</code> para animações.</li>
+                            <li>Em componentes React/Vue, limpe timeouts ao desmontar o componente.</li>
+                        </ul>
+                        <div class="alert-box">
+                            <strong>⚠️ Cuidado:</strong> Timeout não garante execução exata no tempo. Outras tarefas ou abas em segundo plano
+                            podem atrasar a entrega.
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="comment">// Estrutura básica</span>
+<span class="keyword">const</span> id = <span class="fn">setTimeout</span>(() => {
+    console.log(<span class="string">"Executou após 2s"</span>);
+}, <span class="num">2000</span>);
+
+<span class="comment">// Cancelar antes de executar</span>
+<span class="fn">clearTimeout</span>(id);
+                </div>
+            </section>
+
+            <section class="section" id="set-interval">
+                <h2>🔁 Explorando setInterval()</h2>
+                <p>
+                    <code>setInterval</code> repete uma função em intervalos fixos. Útil para relógios, atualizações automáticas,
+                    polls simples e contadores. Sempre limpe o intervalo quando não for mais necessário.
+                </p>
+                <div class="grid">
+                    <div class="card">
+                        <h3>Demo: cronômetro regressivo</h3>
+                        <p>Informe quantos segundos contar e observe o timer. O intervalo se encerra sozinho.</p>
+                        <label for="countdownInput">Segundos:</label>
+                        <input type="number" id="countdownInput" value="10" min="1" max="300" style="padding:10px;border-radius:12px;border:1px solid rgba(148,163,184,0.3);background:#0f172a;color:#e2e8f0;">
+                        <div class="button-group">
+                            <button class="button" onclick="iniciarContagemRegressiva()">Iniciar</button>
+                            <button class="button" style="background:linear-gradient(135deg,#ef4444,#f97316);" onclick="cancelarContagem()">Parar</button>
+                        </div>
+                        <div class="output" id="countdownOutput">
+⏳ Aguardando início...
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Demo: relógio em tempo real</h3>
+                        <p>Mostra a hora atual atualizando a cada segundo. Clique para iniciar e parar.</p>
+                        <div class="button-group">
+                            <button class="button" onclick="iniciarRelogio()">Iniciar relógio</button>
+                            <button class="button" style="background:linear-gradient(135deg,#ef4444,#f97316);" onclick="pararRelogio()">Parar</button>
+                        </div>
+                        <div class="output" id="clockOutput">
+🕒 Relógio parado
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Demo: progresso automático</h3>
+                        <p>Um intervalo incrementa uma barra simulando download.</p>
+                        <div class="button-group">
+                            <button class="button" onclick="iniciarProgresso()">Iniciar download</button>
+                            <button class="button" style="background:linear-gradient(135deg,#14b8a6,#22d3ee);" onclick="resetarProgresso()">Resetar</button>
+                        </div>
+                        <div class="progress-wrapper">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        <div class="output" id="progressOutput">
+Progresso: 0%
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="comment">// Exemplo clássico</span>
+<span class="keyword">const</span> intervalId = <span class="fn">setInterval</span>(() => {
+    console.log(<span class="string">"Ping"</span>);
+}, <span class="num">1000</span>);
+
+<span class="comment">// Pare quando não precisar mais</span>
+<span class="fn">clearInterval</span>(intervalId);
+                </div>
+            </section>
+
+            <section class="section" id="comparativo">
+                <h2>⚖️ setTimeout vs setInterval</h2>
+                <p>
+                    Ambos aceitam uma função callback e um valor em milissegundos. A diferença está na recorrência. Compare:
+                </p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Critério</th>
+                                <th>setTimeout</th>
+                                <th>setInterval</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Execução</td>
+                                <td>Única (precisa reagendar manualmente)</td>
+                                <td>Repetida automaticamente</td>
+                            </tr>
+                            <tr>
+                                <td>Caso de uso</td>
+                                <td>Atrasos, animações em etapas, debounces</td>
+                                <td>Relógios, polls, atualizações contínuas</td>
+                            </tr>
+                            <tr>
+                                <td>Cancelamento</td>
+                                <td>clearTimeout(id)</td>
+                                <td>clearInterval(id)</td>
+                            </tr>
+                            <tr>
+                                <td>Desalinhamento</td>
+                                <td>Menor risco — reagende com base no tempo real</td>
+                                <td>Maior risco de drift se o callback demorar</td>
+                            </tr>
+                            <tr>
+                                <td>Alternativa moderna</td>
+                                <td>requestAnimationFrame, Promises</td>
+                                <td>setTimeout recursivo, Web Workers</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="info-box">
+                    <strong>💡 Dica:</strong> Para tarefas repetidas que dependem da duração do callback, considere usar
+                    <code>setTimeout</code> recursivo. Assim você calcula o próximo start com base no tempo real e reduz o drift.
+                </div>
+            </section>
+
+            <section class="section" id="mais-timing">
+                <h2>🚀 Além do básico</h2>
+                <p>
+                    Alguns recursos complementam (ou substituem) os timers tradicionais.
+                </p>
+                <div class="grid">
+                    <div class="card">
+                        <h3>requestAnimationFrame()</h3>
+                        <p>Sincroniza a execução com o próximo repaint (~60fps). Ideal para animações suaves.</p>
+                        <div class="button-group">
+                            <button class="button" onclick="iniciarAnimacao()">Rodar animação</button>
+                            <button class="button" style="background:linear-gradient(135deg,#ef4444,#f97316);" onclick="pararAnimacao()">Parar</button>
+                        </div>
+                        <canvas id="animCanvas" width="280" height="140" style="width:100%;margin-top:14px;border-radius:14px;background:#020617;border:1px solid rgba(148,163,184,0.2);"></canvas>
+                        <div class="output" id="animOutput">Status: parado</div>
+                    </div>
+                    <div class="card">
+                        <h3>performance.now()</h3>
+                        <p>Retorna um timestamp de alta resolução (sub-milissegundo). Use para medir tempos reais.</p>
+                        <div class="button-group">
+                            <button class="button" onclick="medirExecucaoPesada()">Medir loop pesado</button>
+                        </div>
+                        <div class="output" id="performanceOutput">Clique para medir.</div>
+                    </div>
+                    <div class="card">
+                        <h3>setTimeout recursivo</h3>
+                        <p>Substitua <code>setInterval</code> por timeouts encadeados para ajustar atrasos dinamicamente.</p>
+                        <div class="code-block" style="margin:0;">
+<span class="keyword">function</span> <span class="fn">tick</span>() {
+    <span class="comment">// ... sua lógica ...</span>
+    <span class="keyword">setTimeout</span>(tick, <span class="num">1000</span>);
+}
+
+<span class="keyword">setTimeout</span>(tick, <span class="num">1000</span>);
+                        </div>
+                        <div class="alert-box">
+                            <strong>✅ Benefício:</strong> Ajuste fino baseado no tempo gasto na iteração anterior. Útil para jogos e dashboards.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="diagnosticos">
+                <h2>🧪 Diagnóstico & Boas Práticas</h2>
+                <p>
+                    Entenda como monitorar timers, evitar vazamentos e garantir precisão.
+                </p>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <span class="tag">🔍 Precisão real</span>
+                        <strong id="precisionResult">-- ms</strong>
+                        <p style="color:var(--text-secondary);">Rodando teste de precisão...</p>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="tag">🧼 Limpezas feitas</span>
+                        <strong id="cleanupCount">0</strong>
+                        <p style="color:var(--text-secondary);">Timeouts/intervalos cancelados nesta sessão.</p>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="tag">🧠 Dica rápida</span>
+                        <strong id="tipHeadline">Evite vazamentos</strong>
+                        <p id="tipText" style="color:var(--text-secondary);">Sempre limpe intervalos ao ocultar componentes.</p>
+                    </div>
+                </div>
+                <div class="button-group" style="margin-top:22px;">
+                    <button class="button" onclick="rodarTestePrecisao()">Rodar teste de atraso real</button>
+                    <button class="button" style="background:linear-gradient(135deg,#22c55e,#16a34a);" onclick="gerarNovaDica()">Nova dica</button>
+                </div>
+                <div class="code-block" style="margin-top:20px;">
+<span class="comment">// Limpando tudo ao sair (ex: Single Page Apps)</span>
+<span class="keyword">const</span> timers = [];
+
+<span class="keyword">function</span> <span class="fn">safeTimeout</span>(callback, delay) {
+    <span class="keyword">const</span> id = <span class="fn">setTimeout</span>(callback, delay);
+    timers.push({ type: <span class="string">'timeout'</span>, id });
+    <span class="keyword">return</span> id;
+}
+
+<span class="keyword">function</span> <span class="fn">disposeTimers</span>() {
+    timers.forEach(item => item.type === <span class="string">'timeout'</span>
+        ? <span class="fn">clearTimeout</span>(item.id)
+        : <span class="fn">clearInterval</span>(item.id));
+}
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            Desenvolvido com ❤️ para aprender BOM Timing | Atualizado em 2025
+        </footer>
+    </div>
+
+    <script>
+        // ==============================
+        // VARIÁVEIS GLOBAIS DE APOIO
+        // ==============================
+        let timeoutId = null;
+        let sequenciaTimeouts = [];
+        let countdownInterval = null;
+        let clockInterval = null;
+        let progressoInterval = null;
+        let animationId = null;
+        let cleanupCounter = 0;
+        let lastTipIndex = -1;
+
+        const timeoutOutput = document.getElementById('timeoutOutput');
+        const sequenciaOutput = document.getElementById('sequenciaOutput');
+        const countdownOutput = document.getElementById('countdownOutput');
+        const clockOutput = document.getElementById('clockOutput');
+        const progressOutput = document.getElementById('progressOutput');
+        const progressBar = document.getElementById('progressBar');
+        const animOutput = document.getElementById('animOutput');
+        const performanceOutput = document.getElementById('performanceOutput');
+        const precisionResult = document.getElementById('precisionResult');
+        const cleanupCount = document.getElementById('cleanupCount');
+        const tipHeadline = document.getElementById('tipHeadline');
+        const tipText = document.getElementById('tipText');
+
+        const tips = [
+            { title: 'Limpe ao esconder modais', text: 'Se um modal dispara timers, chame clearTimeout/clearInterval ao fechar o modal.' },
+            { title: 'Evite memory leaks', text: 'Timers em abas escondidas continuam rodando. Limpe-os quando o usuário navegar para outra página.' },
+            { title: 'Use AbortController', text: 'AbortController pode ajudar a cancelar fetches combinados com timeouts de fallback.' },
+            { title: 'Throttle vs Debounce', text: 'Debounce típicamente usa setTimeout. Cancela o timer sempre que o usuário interage novamente.' },
+            { title: 'Web Workers', text: 'Para loops pesados, use Web Workers. Timers no worker não bloqueiam a UI.' }
+        ];
+
+        function registrarLimpeza() {
+            cleanupCounter += 1;
+            cleanupCount.textContent = cleanupCounter;
+        }
+
+        // ==============================
+        // setTimeout DEMOS
+        // ==============================
+        function agendarReminder() {
+            const delay = Number(document.getElementById('timeoutDelay').value) || 0;
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                registrarLimpeza();
+            }
+            timeoutOutput.textContent = `⏱️ Lembrete agendado para ${delay} ms. Clique em cancelar se mudar de ideia.`;
+            timeoutId = setTimeout(() => {
+                timeoutOutput.textContent = `✅ Lembrete disparado após ${delay} ms!`;
+                timeoutId = null;
+            }, delay);
+        }
+
+        function cancelarReminder() {
+            if (!timeoutId) {
+                timeoutOutput.textContent = 'ℹ️ Nenhum lembrete agendado para cancelar.';
+                return;
+            }
+            clearTimeout(timeoutId);
+            registrarLimpeza();
+            timeoutOutput.textContent = '❌ Lembrete cancelado a tempo!';
+            timeoutId = null;
+        }
+
+        function startSequencia() {
+            resetSequencia();
+            const etapas = [
+                '🎬 Iniciando sequência...',
+                '🔹 Preparando recursos...',
+                '🔸 Aplicando configurações...',
+                '✨ Tudo pronto! Sequência finalizada.'
+            ];
+            etapas.forEach((texto, index) => {
+                const id = setTimeout(() => {
+                    sequenciaOutput.textContent = `Etapa ${index + 1}/${etapas.length}: ${texto}`;
+                    sequenciaTimeouts[index] = null;
+                }, index * 1200);
+                sequenciaTimeouts.push(id);
+            });
+        }
+
+        function resetSequencia() {
+            sequenciaTimeouts.forEach(id => {
+                if (id) {
+                    clearTimeout(id);
+                    registrarLimpeza();
+                }
+            });
+            sequenciaTimeouts = [];
+            sequenciaOutput.textContent = 'Etapa atual: nenhum passo iniciado.';
+        }
+
+        // ==============================
+        // setInterval DEMOS
+        // ==============================
+        function iniciarContagemRegressiva() {
+            cancelarContagem();
+            let segundosRestantes = Number(document.getElementById('countdownInput').value) || 0;
+            if (segundosRestantes <= 0) {
+                countdownOutput.textContent = 'Digite pelo menos 1 segundo.';
+                return;
+            }
+            countdownOutput.innerHTML = `<span class="timer-display">${segundosRestantes}</span> segundos restantes`;
+            countdownInterval = setInterval(() => {
+                segundosRestantes -= 1;
+                if (segundosRestantes <= 0) {
+                    countdownOutput.innerHTML = '✅ Tempo esgotado!';
+                    cancelarContagem();
+                    return;
+                }
+                countdownOutput.innerHTML = `<span class="timer-display">${segundosRestantes}</span> segundos restantes`;
+            }, 1000);
+        }
+
+        function cancelarContagem() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                registrarLimpeza();
+                countdownInterval = null;
+            }
+        }
+
+        function iniciarRelogio() {
+            pararRelogio();
+            atualizarRelogio();
+            clockInterval = setInterval(atualizarRelogio, 1000);
+        }
+
+        function atualizarRelogio() {
+            const agora = new Date();
+            const hora = agora.toLocaleTimeString('pt-BR');
+            clockOutput.textContent = `🕓 ${hora}`;
+        }
+
+        function pararRelogio() {
+            if (clockInterval) {
+                clearInterval(clockInterval);
+                registrarLimpeza();
+                clockInterval = null;
+            }
+            clockOutput.textContent = '🕒 Relógio parado';
+        }
+
+        function iniciarProgresso() {
+            resetarProgresso();
+            let progresso = 0;
+            progressoInterval = setInterval(() => {
+                progresso += Math.floor(Math.random() * 12) + 3;
+                if (progresso >= 100) {
+                    progresso = 100;
+                    progressOutput.textContent = '✅ Download concluído!';
+                    progressBar.style.width = '100%';
+                    resetarProgresso(true);
+                    return;
+                }
+                progressOutput.textContent = `Progresso: ${progresso}%`;
+                progressBar.style.width = `${progresso}%`;
+            }, 450);
+        }
+
+        function resetarProgresso(keepWidth = false) {
+            if (progressoInterval) {
+                clearInterval(progressoInterval);
+                registrarLimpeza();
+                progressoInterval = null;
+            }
+            progressOutput.textContent = 'Progresso: 0%';
+            if (!keepWidth) {
+                progressBar.style.width = '0%';
+            }
+        }
+
+        // ==============================
+        // requestAnimationFrame DEMO
+        // ==============================
+        const canvas = document.getElementById('animCanvas');
+        const ctx = canvas.getContext('2d');
+        let animStart = null;
+        let bolaX = 20;
+        let velocidade = 160; // px/s
+
+        function desenharBola(timestamp) {
+            if (!animStart) animStart = timestamp;
+            const delta = (timestamp - animStart) / 1000;
+            animStart = timestamp;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#1f2937';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            bolaX += velocidade * delta;
+            if (bolaX > canvas.width - 20 || bolaX < 20) {
+                velocidade *= -1;
+                bolaX = Math.min(Math.max(bolaX, 20), canvas.width - 20);
+            }
+
+            ctx.beginPath();
+            ctx.arc(bolaX, canvas.height / 2, 18, 0, Math.PI * 2);
+            ctx.fillStyle = '#38bdf8';
+            ctx.fill();
+
+            animOutput.textContent = `Status: rodando | Timestamp: ${timestamp.toFixed(2)} ms`;
+            animationId = requestAnimationFrame(desenharBola);
+        }
+
+        function iniciarAnimacao() {
+            pararAnimacao();
+            bolaX = 20;
+            animStart = null;
+            animationId = requestAnimationFrame(desenharBola);
+        }
+
+        function pararAnimacao() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                registrarLimpeza();
+                animationId = null;
+            }
+            animOutput.textContent = 'Status: parado';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#1f2937';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#334155';
+            ctx.font = '16px Inter';
+            ctx.fillText('Clique em "Rodar animação"', 54, canvas.height / 2 + 6);
+        }
+
+        pararAnimacao(); // desenha mensagem inicial
+
+        // ==============================
+        // performance.now DEMO
+        // ==============================
+        function medirExecucaoPesada() {
+            const inicio = performance.now();
+            let soma = 0;
+            for (let i = 0; i < 8_000_00; i++) {
+                soma += Math.sqrt(i) % 9;
+            }
+            const fim = performance.now();
+            performanceOutput.textContent = `⏱️ Loop executou em ${(fim - inicio).toFixed(2)} ms. Resultado: ${soma.toFixed(2)}`;
+        }
+
+        // ==============================
+        // Diagnóstico de precisão
+        // ==============================
+        function rodarTestePrecisao() {
+            const delayDesejado = 500;
+            const inicio = performance.now();
+            setTimeout(() => {
+                const fim = performance.now();
+                const atraso = fim - inicio - delayDesejado;
+                precisionResult.textContent = `${atraso.toFixed(2)} ms`;
+            }, delayDesejado);
+        }
+
+        // ==============================
+        // Dicas aleatórias
+        // ==============================
+        function gerarNovaDica() {
+            let index;
+            do {
+                index = Math.floor(Math.random() * tips.length);
+            } while (index === lastTipIndex && tips.length > 1);
+            lastTipIndex = index;
+            tipHeadline.textContent = tips[index].title;
+            tipText.textContent = tips[index].text;
+        }
+
+        // Inicializações automáticas
+        rodarTestePrecisao();
+        gerarNovaDica();
+
+        // Previne erros caso o usuário saia com timers ativos
+        window.addEventListener('beforeunload', () => {
+            cancelarReminder();
+            resetSequencia();
+            cancelarContagem();
+            pararRelogio();
+            resetarProgresso();
+            pararAnimacao();
+        });
+    </script>
+</body>
+</html>
