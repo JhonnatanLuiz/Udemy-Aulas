@@ -1,4 +1,8 @@
-import pygame
+try:
+    import pygame # type: ignore
+except ImportError:
+    print("Error: pygame is not installed. Please install it using: pip install pygame")
+    exit(1)
 import random
 
 # Cores

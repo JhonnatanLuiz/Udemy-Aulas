@@ -1,4 +1,4 @@
-import pytest
+import pytest # type: ignore
 
 from aula88 import falsy
 
