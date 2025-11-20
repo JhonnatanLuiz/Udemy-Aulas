@@ -12,21 +12,46 @@
 </head>
 <body>
     
-    <div class="container">
+    <div class="container pb-5">
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-center">
-                <img src="imagens/game_over.png" alt="">
-            </div>
+                    <img src="imagens/game_over.png" alt="" class="img-fluid">
+                </div>
 
-            <div class="row">
-                <div class="col">
-                    <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='index.html'">Jogar Novamente</button>
+                <div class="row">
+                    <div class="col text-center mb-3">
+                        <h3>Pontuação Final: <span id="final-score" class="text-danger fw-bold">0</span></h3>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='levels.html'">Jogar Novamente</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="game-footer">
+        Game feito com <span class="heart-beat">❤</span> por Jhonnatan Luiz
+    </div>
+
+    <script>
+        // Play game over music
+        var audio = new Audio('sons/fim_de_jogo.mp3');
+        audio.play().catch(function(error) {
+            console.log("Autoplay prevented.");
+        });
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var score = urlParams.get('score');
+        if(score) {
+            document.getElementById('final-score').innerHTML = score;
+        }
+    </script>
 </body>
 </html>

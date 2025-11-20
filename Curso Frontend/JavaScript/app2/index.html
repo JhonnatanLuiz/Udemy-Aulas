@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
-<body onresize="ajustaTamanhoPalcoJogo()">
+<body onresize="ajustaTamanhoPalcoJogo()" class="game-body">
+
+    <div id="countdown-overlay">3</div>
 
     <div class="painel">
         <div class="vidas">
@@ -17,14 +19,30 @@
             <img id="v3" src="imagens/coracao_cheio.png" alt="Vidas">
         </div>
 
-        <div class="cronometro">Tempo restante <span id="cronometro">10</span></div>    
+        <div class="score-container">
+            Pontos: <span id="score">0</span>
+        </div>
+
+        <div class="controls">
+            <button id="btn-pause" class="btn-pause" onclick="togglePause()">PAUSE (P)</button>
+        </div>
+
+        <div class="cronometro">Tempo: <span id="cronometro">15</span></div>    
     </div>
 
     <script>
-        document.getElementById('cronometro').innerHTML = tempo;
-        var criaMosquito = setInterval(function() {
-            posicaoRandomica();
-        }, 2000);
+        // Play background music
+        var bgAudio = new Audio('sons/index.mp3');
+        bgAudio.loop = true;
+        bgAudio.volume = 0.5;
+        
+        // Inicia o jogo após carregar
+        window.onload = function() {
+            bgAudio.play().catch(function(error) {
+                console.log("Autoplay prevented. User interaction needed.");
+            });
+            iniciarContagemRegressiva();
+        }
     </script>
 </body>
 </html>
